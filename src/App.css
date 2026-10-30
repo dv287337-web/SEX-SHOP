@@ -1,0 +1,419 @@
+
+/* ENCABEZADO */
+.header {
+  background: #080708;
+  color: white;
+}
+
+.top-bar {
+  height: 38px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #292329;
+  font-size: 12px;
+}
+
+.top-bar span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.top-bar svg {
+  width: 17px;
+  color: #fa2680;
+}
+
+.adult {
+  color: #ff4c91;
+}
+
+.adult span {
+  background: #ed2676;
+  color: white;
+  border-radius: 50%;
+  padding: 4px;
+  font-size: 10px;
+}
+
+.main-header {
+  height: 77px;
+  padding: 0 7%;
+  display: grid;
+  grid-template-columns: 260px 1fr 370px;
+  align-items: center;
+  gap: 25px;
+}
+
+.logo {
+  width: fit-content;
+}
+
+.logo div {
+  font-family: 'Great Vibes', cursive;
+  font-size: 52px;
+  line-height: 0.95;
+  color: white;
+}
+
+.logo div span,
+.logo div b {
+  color: #f32a80;
+}
+
+.logo div b {
+  font-family: sans-serif;
+  font-size: 17px;
+  vertical-align: top;
+  margin-left: 5px;
+}
+
+.logo small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+
+.search-box {
+  display: flex;
+  height: 41px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 0 16px;
+  color: #222;
+  font-size: 13px;
+}
+
+.search-box button {
+  width: 49px;
+  background: #f52276;
+  border: none;
+  color: white;
+}
+
+.search-box button svg {
+  width: 20px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.header-actions a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  font-size: 12px;
+  position: relative;
+}
+
+.header-actions svg {
+  width: 22px;
+  height: 22px;
+}
+
+.header-actions i {
+  position: absolute;
+  top: -17px;
+  right: -7px;
+  background: #f52276;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-style: normal;
+  font-size: 9px;
+}
+
+.navigation {
+  height: 31px;
+  padding: 0 9%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation a {
+  height: 31px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  border-bottom: 3px solid transparent;
+  padding: 0 10px;
+}
+
+.navigation a:hover,
+.navigation a.active {
+  color: #ff3689;
+  border-bottom-color: #ff3689;
+}
+
+/* BANNER PRINCIPAL */
+.hero {
+  min-height: 245px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 30px 7%;
+  color: white;
+  background:
+    radial-gradient(ellipse at 65% 50%, #76203f 0%, transparent 42%),
+    linear-gradient(90deg, #10050a 0%, #320817 52%, #090408 100%);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #10050a 0%, transparent 70%, #10050a 100%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content > span {
+  color: #ff398a;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 53px;
+  line-height: 1.04;
+  margin: 8px 0 15px;
+}
+
+.hero h1 strong {
+  color: #fa3688;
+}
+
+.hero-content button {
+  background: linear-gradient(90deg, #f33183, #fa679e);
+  color: white;
+  border: none;
+  padding: 12px 27px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.hero-content button span {
+  margin-left: 10px;
+  font-size: 17px;
+}
+
+.hero-values {
+  position: absolute;
+  right: 7%;
+  z-index: 2;
+  display: grid;
+  gap: 19px;
+}
+
+.hero-values span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.hero-values svg {
+  width: 21px;
+  color: #fa3688;
+}
+
+/* CATEGORÍAS */
+.categories-section {
+  padding: 17px 3.5% 24px;
+  background: #fffafa;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.section-heading h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+}
+
+.section-heading > span {
+  width: 40px;
+  height: 1px;
+  background: #ef77a4;
+}
+
+.section-heading a {
+  margin-left: auto;
+  color: #ed2878;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.category-card {
+  height: 185px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 13px;
+  color: white;
+  background: linear-gradient(145deg, #c34c75, #220914 85%);
+  transition: transform .25s, box-shadow .25s;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px #e92b7835;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #080408 0%, transparent 75%);
+}
+
+.category-symbol {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 85px;
+  color: #ffffff38;
+}
+
+.category-info {
+  position: relative;
+  z-index: 1;
+}
+
+.category-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  margin-bottom: 5px;
+}
+
+.category-info span {
+  font-size: 9px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.ella { background-color: #852c49; }
+.el { background-color: #48202c; }
+.parejas { background-color: #922c48; }
+.lenceria { background-color: #a13b5b; }
+.juguetes { background-color: #d34c83; }
+.cosmetica { background-color: #873b2b; }
+.bdsm { background-color: #27151b; }
+.ofertas { background-color: #9c164d; }
+
+/* BENEFICIOS */
+.benefits {
+  margin: 5px 3% 20px;
+  padding: 19px 20px;
+  background: #fce8ef;
+  border-radius: 9px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.benefits > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  border-right: 1px solid #f5cedc;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.benefits > div:last-child {
+  border: none;
+}
+
+.benefits svg {
+  width: 29px;
+  height: 29px;
+  color: #171317;
+  flex-shrink: 0;
+}
+
+/* WHATSAPP */
+.whatsapp-button {
+  position: fixed;
+  z-index: 20;
+  right: 25px;
+  bottom: 24px;
+  width: 59px;
+  height: 59px;
+  border-radius: 50%;
+  background: #18cb70;
+  color: white;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 15px #0003;
+}
+
+.whatsapp-button svg {
+  width: 34px;
+  height: 34px;
+}
+
+/* ESCRITORIOS */
+@media (min-width: 1500px) {
+  .category-card {
+    height: 185px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-header {
+    grid-template-columns: 200px 1fr 300px;
+    padding: 0 3%;
+    gap: 12px;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .navigation {
+    padding: 0 3%;
+  }
+
+  .categories-grid {
+    gap: 8px;
+  }
+}
