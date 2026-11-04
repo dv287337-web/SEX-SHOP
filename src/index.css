@@ -18,18 +18,31 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 body {
-  min-width: 1100px;
+  width: 100%;
+  min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-button, input {
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+button,
+input,
+select,
+textarea {
   font: inherit;
 }
 
-button, a {
+button,
+a {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -40,4 +53,8 @@ a {
 
 button {
   cursor: pointer;
+}
+
+img {
+  max-width: 100%;
 }

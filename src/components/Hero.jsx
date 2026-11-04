@@ -1,14 +1,17 @@
-
 import {
   Sparkles,
   Heart,
   Flame,
   HeartHandshake
 } from "lucide-react";
+import campaignImage from "../assets/campaign-hero.jpg";
 
 function Hero() {
   return (
-    <section className="hero">
+    <section
+      className="hero"
+      style={{ "--hero-image": `url(${campaignImage})` }}
+    >
       <div className="hero-content">
         <span className="hero-subtitle">
           DESCUBRE UNA NUEVA FORMA DE SENTIR
@@ -39,5 +42,4 @@ function Hero() {
     </section>
   );
 }
-
 export default Hero;

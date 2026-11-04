@@ -2,6 +2,7 @@
 import {
   Link
 } from "react-router-dom";
+import categorySprite from "../assets/category-editorial-grid.jpg";
 
 const categories = [
   {
@@ -78,15 +79,18 @@ function Categories() {
       </div>
 
       <div className="categories-grid">
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <Link
             to={category.path}
             className={`category-card ${category.style}`}
             key={category.name}
+            style={{
+              "--sprite-x": `${(index % 4) * (100 / 3)}%`,
+              "--sprite-y": index < 4 ? "0%" : "100%",
+              "--category-sprite": `url(${categorySprite})`
+            }}
           >
-            <div className="category-symbol">
-              {category.icon}
-            </div>
+            <div className="category-image" aria-hidden="true" />
 
             <div className="category-info">
               <h3>{category.name}</h3>
