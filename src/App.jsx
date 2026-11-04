@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import WhatsAppButton from "./components/WhatsAppButton";
+import Footer from "./components/Footer";
 import Home from "./Pages/Home";
 
 // Catálogos
@@ -20,6 +21,11 @@ import Favoritos from "./Pages/favorites/Favoritos";
 import Carrito from "./Pages/cart/Carrito";
 import ProductDetail from "./Pages/product/ProductDetail";
 import SearchResults from "./Pages/search/SearchResults";
+import AboutStore from "./Pages/about/AboutStore";
+import PrivacySecurity from "./Pages/legal/PrivacySecurity";
+import PaymentMethods from "./Pages/legal/PaymentMethods";
+import DiscreetShipping from "./Pages/legal/DiscreetShipping";
+import StorePickup from "./Pages/help/StorePickup";
 
 import "./App.css";
 
@@ -49,9 +55,15 @@ function App() {
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/producto/:productId" element={<ProductDetail />} />
           <Route path="/buscar" element={<SearchResults />} />
+          <Route path="/sobre-nosotros" element={<AboutStore />} />
+          <Route path="/privacidad-y-seguridad" element={<PrivacySecurity />} />
+          <Route path="/metodos-de-pago" element={<PaymentMethods />} />
+          <Route path="/envios-discretos" element={<DiscreetShipping />} />
+          <Route path="/recojo-en-tienda" element={<StorePickup />} />
         </Routes>
       </main>
 
+      <Footer />
       <WhatsAppButton />
     </>
   );
