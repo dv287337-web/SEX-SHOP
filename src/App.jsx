@@ -18,8 +18,8 @@ import Ofertas from "./Pages/catalog/Ofertas";
 import MiCuenta from "./Pages/account/MiCuenta";
 import Favoritos from "./Pages/favorites/Favoritos";
 import Carrito from "./Pages/cart/Carrito";
-import ProductDetail from "./pages/product/ProductDetail";
-import SearchResults from "./pages/search/SearchResults";
+import ProductDetail from "./Pages/product/ProductDetail";
+import SearchResults from "./Pages/search/SearchResults";
 
 import "./App.css";
 
