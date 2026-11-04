@@ -19,6 +19,7 @@ function Favoritos() {
 
   const handleAddToCart = (product) => {
     addToCart(product);
+    alert(`${product.name} se agregó al carrito.`);
   };
 
   return (

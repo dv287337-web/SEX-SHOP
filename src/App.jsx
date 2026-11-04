@@ -18,6 +18,8 @@ import Ofertas from "./Pages/catalog/Ofertas";
 import MiCuenta from "./Pages/account/MiCuenta";
 import Favoritos from "./Pages/favorites/Favoritos";
 import Carrito from "./Pages/cart/Carrito";
+import ProductDetail from "./pages/product/ProductDetail";
+import SearchResults from "./pages/search/SearchResults";
 
 import "./App.css";
 
@@ -45,6 +47,8 @@ function App() {
           <Route path="/mi-cuenta" element={<MiCuenta />} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/carrito" element={<Carrito />} />
+          <Route path="/producto/:productId" element={<ProductDetail />} />
+          <Route path="/buscar" element={<SearchResults />} />
         </Routes>
       </main>
 

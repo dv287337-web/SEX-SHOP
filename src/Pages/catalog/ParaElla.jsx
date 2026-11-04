@@ -1,5 +1,6 @@
 
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Heart,
   ShoppingBag,
@@ -30,7 +31,7 @@ const products = [
 ];
 
 // IDENTIFICADORES ÚNICOS PARA PARA ELLA
-const catalogProducts = products.map((product) => ({
+export const catalogProducts = products.map((product) => ({
   ...product,
   id: `para-ella-${product.id}`
 }));
@@ -54,6 +55,11 @@ function ParaElla() {
     isFavorite,
     addToCart
   } = useShop();
+  const navigate = useNavigate();
+  const openProductDetails = (product) => {
+    sessionStorage.setItem(`sexshop-product-${product.id}`, JSON.stringify(product));
+    navigate(`/producto/${encodeURIComponent(product.id)}`, { state: { product } });
+  };
 
   // ESTADOS
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -296,7 +302,26 @@ function ParaElla() {
 
               {filteredProducts.map((product) => (
 
-                <article className="product-card" key={product.id}>
+                <article
+                  className="product-card"
+                  key={product.id}
+                  role="group"
+                  tabIndex={0}
+                  aria-label={`Selecciona para ver los detalles de ${product.name}`}
+                  onClick={(event) => {
+                    if (event.target.closest("button, a")) return;
+                    openProductDetails(product);
+                  }}
+                  onKeyDown={(event) => {
+                    if (
+                      event.target === event.currentTarget &&
+                      (event.key === "Enter" || event.key === " ")
+                    ) {
+                      event.preventDefault();
+                      openProductDetails(product);
+                    }
+                  }}
+                >
 
                   <div className="product-image">
 
@@ -355,6 +380,14 @@ function ParaElla() {
                       <Star size={14} fill="currentColor" />
                       <span>{product.rating}</span>
                     </div>
+
+                    <button
+                      type="button"
+                      className="product-details-button"
+                      onClick={() => openProductDetails(product)}
+                    >
+                      Ver detalles del producto
+                    </button>
 
                     <div className="product-price">
                       <strong>

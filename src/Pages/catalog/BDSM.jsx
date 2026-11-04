@@ -1,5 +1,6 @@
 
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Heart,
   ShoppingBag,
@@ -136,7 +137,7 @@ const products = [
 ];
 
 // Identificadores únicos para la categoría BDSM
-const catalogProducts = products.map((product) => ({
+export const catalogProducts = products.map((product) => ({
   ...product,
   id: `bdsm-${product.id}`,
 }));
@@ -157,6 +158,11 @@ function BDSM() {
     isFavorite,
     addToCart,
   } = useShop();
+  const navigate = useNavigate();
+  const openProductDetails = (product) => {
+    sessionStorage.setItem(`sexshop-product-${product.id}`, JSON.stringify(product));
+    navigate(`/producto/${encodeURIComponent(product.id)}`, { state: { product } });
+  };
 
   const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [selectedType, setSelectedType] = useState("Todos");
@@ -356,7 +362,26 @@ function BDSM() {
                 const favorite = isFavorite(product.id);
 
                 return (
-                  <article className="product-card" key={product.id}>
+                  <article
+                    className="product-card"
+                    key={product.id}
+                    role="group"
+                    tabIndex={0}
+                    aria-label={`Selecciona para ver los detalles de ${product.name}`}
+                    onClick={(event) => {
+                      if (event.target.closest("button, a")) return;
+                      openProductDetails(product);
+                    }}
+                    onKeyDown={(event) => {
+                      if (
+                        event.target === event.currentTarget &&
+                        (event.key === "Enter" || event.key === " ")
+                      ) {
+                        event.preventDefault();
+                        openProductDetails(product);
+                      }
+                    }}
+                  >
                     <div className="product-image">
                       <div className="product-placeholder">
                         <Shield size={42} />
@@ -410,6 +435,14 @@ function BDSM() {
                         <Star size={14} fill="currentColor" />
                         <span>{product.rating}</span>
                       </div>
+
+                      <button
+                        type="button"
+                        className="product-details-button"
+                        onClick={() => openProductDetails(product)}
+                      >
+                        Ver detalles del producto
+                      </button>
 
                       <div className="product-price">
                         <strong>

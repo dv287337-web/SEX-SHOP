@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import {
   Search,
   UserRound,
@@ -9,11 +10,26 @@ import {
   ShieldCheck
 } from "lucide-react";
 
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 
 function Header() {
   const { favorites, cartCount } = useShop();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const queryFromUrl = searchParams.get("q") || "";
+  const [searchTerm, setSearchTerm] = useState(queryFromUrl);
+
+  useEffect(() => {
+    setSearchTerm(queryFromUrl);
+  }, [queryFromUrl]);
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = searchTerm.trim();
+    if (!query) return;
+    navigate(`/buscar?q=${encodeURIComponent(query)}`);
+  };
 
   const navigation = [
     { name: "Inicio", path: "/" },
@@ -55,16 +71,19 @@ function Header() {
           <small>TU PLACER, SIN LÍMITES</small>
         </Link>
 
-        <div className="search-box">
+        <form className="search-box" onSubmit={handleSearch} role="search">
           <input
             type="text"
             placeholder="¿Qué deseas explorar hoy?"
+            aria-label="Buscar productos"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
           />
 
-          <button aria-label="Buscar">
+          <button type="submit" aria-label="Buscar">
             <Search />
           </button>
-        </div>
+        </form>
 
         <div className="header-actions">
           <Link to="/mi-cuenta" aria-label="Mi cuenta">
