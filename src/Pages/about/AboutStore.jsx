@@ -23,7 +23,7 @@ export default function AboutStore() {
   return (
     <div className="about-store-page">
       <section className="about-store-hero">
-        <div className="about-store-hero-copy">
+        <div className="about-store-hero-copy" data-reveal>
           <span className="about-store-eyebrow">ACERCA DE SEXSHOP</span>
           <h1>Bienestar íntimo,<br /><em>a tu manera.</em></h1>
           <p>
@@ -35,7 +35,7 @@ export default function AboutStore() {
           </Link>
         </div>
 
-        <div className="about-store-art" aria-hidden="true">
+        <div className="about-store-art" data-reveal aria-hidden="true">
           <span className="about-store-orbit about-store-orbit-one" />
           <span className="about-store-orbit about-store-orbit-two" />
           <span className="about-store-heart"><Heart size={62} strokeWidth={1.1} /></span>
@@ -44,11 +44,11 @@ export default function AboutStore() {
       </section>
 
       <section className="about-store-story">
-        <div className="about-store-story-heading">
+        <div className="about-store-story-heading" data-reveal="left">
           <span className="about-store-eyebrow">NUESTRA ESENCIA</span>
           <h2>Un lugar para sentirte bien siendo tú.</h2>
         </div>
-        <div className="about-store-story-copy">
+        <div className="about-store-story-copy" data-reveal="right">
           <p>
             Creemos que el bienestar íntimo forma parte de conocerte, cuidarte
             y compartir. Por eso reunimos colecciones para distintas formas de
@@ -63,13 +63,13 @@ export default function AboutStore() {
       </section>
 
       <section className="about-store-values">
-        <div className="about-store-section-heading">
+        <div className="about-store-section-heading" data-reveal>
           <span className="about-store-eyebrow">LO QUE NOS MUEVE</span>
           <h2>Una experiencia hecha para ti</h2>
         </div>
         <div className="about-store-value-grid">
           {values.map(({ icon: Icon, title, description }) => (
-            <article className="about-store-value-card" key={title}>
+            <article className="about-store-value-card" data-reveal key={title}>
               <span className="about-store-value-icon"><Icon size={22} /></span>
               <h3>{title}</h3>
               <p>{description}</p>

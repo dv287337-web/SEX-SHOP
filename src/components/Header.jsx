@@ -10,11 +10,22 @@ import {
   ShieldCheck
 } from "lucide-react";
 
-import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 
 function Header() {
-  const { favorites, cartCount } = useShop();
+  const { favorites, cartCount, openCartDrawer, openFavoritesDrawer } = useShop();
+  const { pathname } = useLocation();
+  const isCatalogPage = [
+    "/para-ella",
+    "/para-el",
+    "/para-parejas",
+    "/lenceria",
+    "/juguetes",
+    "/cosmetica-erotica",
+    "/bdsm",
+    "/ofertas",
+  ].includes(pathname);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const queryFromUrl = searchParams.get("q") || "";
@@ -44,7 +55,7 @@ function Header() {
   ];
 
   return (
-    <header className="header">
+    <header className={`header${isCatalogPage ? " header--catalog-sticky" : ""}`}>
       <div className="top-bar">
         <span>
           <Truck /> Envíos discretos a todo el Perú
@@ -88,24 +99,24 @@ function Header() {
         <div className="header-actions">
           <Link to="/mi-cuenta" aria-label="Mi cuenta">
             <UserRound />
-            Mi cuenta
+            <span className="header-action-label">Mi cuenta</span>
           </Link>
 
-          <Link to="/favoritos" aria-label="Mis favoritos">
+          <button className="header-favorites-trigger" type="button" aria-label={`Abrir favoritos, ${favorites.length} productos`} onClick={openFavoritesDrawer}>
             <Heart />
-            Favoritos
-            <i className="header-count">
+            <span className="header-action-label">Favoritos</span>
+            <i className="header-count" key={favorites.length}>
               {favorites.length}
             </i>
-          </Link>
+          </button>
 
-          <Link to="/carrito" aria-label="Mi carrito">
+          <button className="header-cart-trigger" type="button" aria-label={`Abrir carrito, ${cartCount} productos`} onClick={openCartDrawer}>
             <ShoppingBag />
-            Mi carrito
-            <i className="header-count">
+            <span className="header-action-label">Mi carrito</span>
+            <i className="header-count" key={cartCount}>
               {cartCount}
             </i>
-          </Link>
+          </button>
         </div>
       </div>
 

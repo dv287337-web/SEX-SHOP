@@ -32,7 +32,7 @@ const collections = [
 function HomeCollections() {
   return (
     <section className="home-collections">
-      <div className="home-section-heading">
+      <div className="home-section-heading" data-reveal>
         <span>DESCUBRE A TU MANERA</span>
         <h2>Un espacio para cada deseo</h2>
         <p>Explora nuestras colecciones y encuentra aquello que conecta contigo.</p>
@@ -42,6 +42,7 @@ function HomeCollections() {
         {collections.map((collection) => (
           <Link
             className={`home-collection-card ${collection.theme}`}
+            data-reveal
             key={collection.path}
             to={collection.path}
             style={{

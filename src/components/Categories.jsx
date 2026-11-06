@@ -67,7 +67,7 @@ function Categories() {
   return (
     <section className="categories-section" id="categorias">
 
-      <div className="section-heading">
+      <div className="section-heading" data-reveal>
         <div>
           <span>ENCUENTRA LO QUE BUSCAS</span>
           <h2>NUESTRAS CATEGORÍAS</h2>
@@ -79,24 +79,30 @@ function Categories() {
       </div>
 
       <div className="categories-grid">
-        {categories.map((category, index) => (
-          <Link
-            to={category.path}
-            className={`category-card ${category.style}`}
-            key={category.name}
-            style={{
-              "--sprite-x": `${(index % 4) * (100 / 3)}%`,
-              "--sprite-y": index < 4 ? "0%" : "100%",
-              "--category-sprite": `url(${categorySprite})`
-            }}
-          >
-            <div className="category-image" aria-hidden="true" />
-
-            <div className="category-info">
-              <h3>{category.name}</h3>
-              <span>{category.subtitle} →</span>
-            </div>
-          </Link>
+        {Array.from({ length: Math.ceil(categories.length / 2) }, (_, pairIndex) => (
+          <div className="category-pair" key={pairIndex}>
+            {categories.slice(pairIndex * 2, pairIndex * 2 + 2).map((category) => {
+              const index = categories.indexOf(category);
+              return (
+                <Link
+                  to={category.path}
+                  className={`category-card ${category.style}`}
+                  key={category.name}
+                  style={{
+                    "--sprite-x": `${(index % 4) * (100 / 3)}%`,
+                    "--sprite-y": index < 4 ? "0%" : "100%",
+                    "--category-sprite": `url(${categorySprite})`
+                  }}
+                >
+                  <div className="category-image" aria-hidden="true" />
+                  <div className="category-info">
+                    <h3>{category.name}</h3>
+                    <span>{category.subtitle} →</span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         ))}
       </div>
 

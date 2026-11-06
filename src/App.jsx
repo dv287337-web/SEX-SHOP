@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Footer from "./components/Footer";
+import ScrollRevealController from "./components/ScrollRevealController";
+import CartDrawer from "./components/CartDrawer";
+import FavoritesDrawer from "./components/FavoritesDrawer";
 import Home from "./Pages/Home";
 
 // Catálogos
@@ -33,6 +36,7 @@ function App() {
   return (
     <>
       <Header />
+      <ScrollRevealController />
 
       <main>
         <Routes>
@@ -65,6 +69,8 @@ function App() {
 
       <Footer />
       <WhatsAppButton />
+      <CartDrawer />
+      <FavoritesDrawer />
     </>
   );
 }

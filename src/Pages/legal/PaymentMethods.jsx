@@ -35,7 +35,7 @@ export default function PaymentMethods() {
 
       <section className="payments-methods" aria-label="Métodos de pago previstos">
         {methods.map(({ icon: Icon, name, description, tag }) => (
-          <article className="payments-method-card" key={name}>
+          <article className="payments-method-card" data-reveal key={name}>
             <span className="payments-method-icon"><Icon size={24} /></span>
             <span className="payments-method-tag">{tag}</span>
             <h2>{name}</h2>
@@ -44,7 +44,7 @@ export default function PaymentMethods() {
         ))}
       </section>
 
-      <aside className="payments-status">
+      <aside className="payments-status" data-reveal>
         <span className="payments-status-icon"><WalletCards size={22} /></span>
         <div>
           <strong>El proceso de pago aún está en preparación</strong>

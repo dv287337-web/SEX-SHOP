@@ -17,7 +17,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-main">
-        <nav className="footer-column" aria-label="Colecciones">
+        <nav className="footer-column" data-reveal aria-label="Colecciones">
           <h2>Colecciones</h2>
           {collections.map((collection) => (
             <Link key={collection.to} to={collection.to}>
@@ -26,7 +26,7 @@ function Footer() {
           ))}
         </nav>
 
-        <section className="footer-column">
+        <section className="footer-column" data-reveal>
           <h2>Información corporativa</h2>
           <Link to="/sobre-nosotros">SOBRE NUESTRA TIENDA</Link>
           <Link to="/envios-discretos">ENVÍOS DISCRETOS</Link>
@@ -43,7 +43,7 @@ function Footer() {
           </a>
         </section>
 
-        <section className="footer-column footer-help">
+        <section className="footer-column footer-help" data-reveal>
           <h2>Ayuda</h2>
           <div className="footer-help-layout">
             <nav className="footer-help-links" aria-label="Enlaces de ayuda">
@@ -75,7 +75,7 @@ function Footer() {
           </div>
         </section>
 
-        <section className="footer-member">
+        <section className="footer-member" data-reveal>
           <h2>Únete a nuestra comunidad</h2>
           <p>
             Descubre novedades, nuevas colecciones y beneficios especiales
@@ -85,7 +85,7 @@ function Footer() {
         </section>
       </div>
 
-      <div className="footer-legal">
+      <div className="footer-legal" data-reveal>
         <span>© {new Date().getFullYear()} SexShop. Todos los derechos reservados.</span>
         <span>Solo para mayores de 18 años</span>
       </div>

@@ -20,7 +20,7 @@ export default function StorePickup() {
 
       <section className="pickup-steps" aria-label="Cómo funcionará el recojo en tienda">
         {steps.map(({ icon: Icon, title, text }, index) => (
-          <article className="pickup-step" key={title}>
+          <article className="pickup-step" data-reveal key={title}>
             <span className="pickup-step-number">0{index + 1}</span>
             <span className="pickup-step-icon"><Icon size={22} /></span>
             <h2>{title}</h2>
@@ -29,7 +29,7 @@ export default function StorePickup() {
         ))}
       </section>
 
-      <aside className="pickup-status">
+      <aside className="pickup-status" data-reveal>
         <Clock3 size={22} aria-hidden="true" />
         <div>
           <strong>El recojo aún no está habilitado</strong>

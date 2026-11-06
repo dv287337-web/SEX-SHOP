@@ -32,7 +32,7 @@ export default function DiscreetShipping() {
 
       <section className="shipping-details" aria-label="Experiencia de envío">
         {details.map(({ icon: Icon, title, description }) => (
-          <article className="shipping-detail-card" key={title}>
+          <article className="shipping-detail-card" data-reveal key={title}>
             <span className="shipping-detail-icon"><Icon size={23} /></span>
             <h2>{title}</h2>
             <p>{description}</p>
@@ -40,7 +40,7 @@ export default function DiscreetShipping() {
         ))}
       </section>
 
-      <aside className="shipping-status">
+      <aside className="shipping-status" data-reveal>
         <strong>Detalles del servicio</strong>
         <p>
           El costo, la cobertura, el tiempo de entrega y el tipo de empaque aún

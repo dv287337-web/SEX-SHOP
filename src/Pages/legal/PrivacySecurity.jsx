@@ -20,17 +20,17 @@ export default function PrivacySecurity() {
       </section>
 
       <section className="privacy-principles" aria-label="Nuestros principios">
-        <article>
+        <article data-reveal>
           <span><Eye size={22} /></span>
           <h2>Claridad</h2>
           <p>Comparte solo la información necesaria para tu consulta o compra.</p>
         </article>
-        <article>
+        <article data-reveal>
           <span><LockKeyhole size={22} /></span>
           <h2>Cuidado</h2>
           <p>No compartas contraseñas ni códigos de verificación por mensajes.</p>
         </article>
-        <article>
+        <article data-reveal>
           <span><ShieldCheck size={22} /></span>
           <h2>Control</h2>
           <p>Puedes ejercer tus derechos sobre tus datos personales.</p>
@@ -38,7 +38,7 @@ export default function PrivacySecurity() {
       </section>
 
       <section className="privacy-rights">
-        <div className="privacy-rights-intro">
+        <div className="privacy-rights-intro" data-reveal>
           <span className="privacy-eyebrow">TUS DERECHOS</span>
           <h2>También tienes el control de tus datos.</h2>
           <p>
@@ -52,7 +52,7 @@ export default function PrivacySecurity() {
         </div>
         <div className="privacy-rights-list">
           {rights.map((right) => (
-            <article key={right.title}>
+            <article data-reveal key={right.title}>
               <h3>{right.title}</h3>
               <p>{right.text}</p>
             </article>
@@ -60,7 +60,7 @@ export default function PrivacySecurity() {
         </div>
       </section>
 
-      <aside className="privacy-note">
+      <aside className="privacy-note" data-reveal>
         <strong>Una nota importante</strong>
         <p>
           Esta sección brinda información general. Antes de recibir pedidos en

@@ -39,7 +39,7 @@ function Benefits() {
   return (
     <section className="benefits">
       {benefits.map((benefit, index) => (
-        <div className="benefit-item" key={index}>
+        <div className="benefit-item" data-reveal key={index}>
           <div className="benefit-icon">
             {benefit.icon}
           </div>

@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import Categories from "../components/Categories";
 import Benefits from "../components/Benefits";
 import HomeCollections from "../components/HomeCollections";
+import TrustSection from "../components/TrustSection";
 import { Link } from "react-router-dom";
 import categorySprite from "../assets/category-editorial-grid.jpg";
 
@@ -12,14 +13,16 @@ function Home() {
       <Hero />
       <Benefits />
       <Categories />
+      <TrustSection />
       <HomeCollections />
       <section className="brand-story">
         <div
           className="brand-story-art"
+          data-reveal="left"
           aria-hidden="true"
           style={{ "--category-sprite": `url(${categorySprite})` }}
         />
-        <div className="brand-story-copy">
+        <div className="brand-story-copy" data-reveal="right">
           <span>UN LUGAR PARA SENTIRTE BIEN</span>
           <h2>Tu bienestar merece un espacio propio.</h2>
           <p>

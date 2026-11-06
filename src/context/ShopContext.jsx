@@ -3,6 +3,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState
 } from "react";
 
@@ -24,6 +25,99 @@ export function ShopProvider({ children }) {
       return [];
     }
   });
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [favoritesDrawerOpen, setFavoritesDrawerOpen] = useState(false);
+  const [lastAddedId, setLastAddedId] = useState(null);
+  const addButtonRef = useRef(null);
+  const favoriteButtonRef = useRef(null);
+
+  useEffect(() => {
+    const rememberAddButton = (event) => {
+      const button = event.target.closest?.(".add-cart-button");
+      if (button) addButtonRef.current = button;
+      const favoriteButton = event.target.closest?.(".favorite-button");
+      if (favoriteButton) favoriteButtonRef.current = favoriteButton;
+    };
+
+    document.addEventListener("click", rememberAddButton, true);
+    return () => document.removeEventListener("click", rememberAddButton, true);
+  }, []);
+
+  const animateCartArrival = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const sourceButton = addButtonRef.current;
+    const cartButton = document.querySelector(".header-cart-trigger");
+    const sourceIcon = sourceButton?.querySelector("svg") || sourceButton;
+    const cartIcon = cartButton?.querySelector("svg");
+    if (!sourceIcon || !cartIcon) return;
+
+    const source = sourceIcon.getBoundingClientRect();
+    const target = cartIcon.getBoundingClientRect();
+    const startX = source.left + source.width / 2;
+    const startY = source.top + source.height / 2;
+    const endX = target.left + target.width / 2;
+    const endY = target.top + target.height / 2;
+    const spark = document.createElement("span");
+    spark.className = "cart-flight-spark";
+    spark.textContent = "✦";
+    spark.setAttribute("aria-hidden", "true");
+    spark.style.left = `${startX - 14}px`;
+    spark.style.top = `${startY - 14}px`;
+    document.body.appendChild(spark);
+
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+    const flight = spark.animate([
+      { transform: "translate(0, 0) scale(.7) rotate(0deg)", opacity: 0 },
+      { transform: `translate(${deltaX * 0.42}px, ${deltaY * 0.42 - 24}px) scale(1.25) rotate(150deg)`, opacity: 1, offset: 0.48 },
+      { transform: `translate(${deltaX}px, ${deltaY}px) scale(.18) rotate(330deg)`, opacity: 0.1 },
+    ], { duration: 1150, easing: "cubic-bezier(.2, .7, .25, 1)" });
+    flight.onfinish = () => spark.remove();
+
+    cartButton?.animate([
+      { transform: "scale(1)", filter: "drop-shadow(0 0 0 rgb(245 34 118 / 0%))" },
+      { transform: "scale(1.22)", filter: "drop-shadow(0 0 9px rgb(245 34 118 / 75%))", offset: 0.55 },
+      { transform: "scale(1)", filter: "drop-shadow(0 0 0 rgb(245 34 118 / 0%))" },
+    ], { duration: 680, easing: "cubic-bezier(.2, .7, .25, 1)" });
+  };
+
+  const animateFavoriteArrival = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const sourceIcon = favoriteButtonRef.current?.querySelector("svg");
+    const favoritesButton = document.querySelector(".header-favorites-trigger");
+    const targetIcon = favoritesButton?.querySelector("svg");
+    if (!sourceIcon || !targetIcon) return;
+
+    const source = sourceIcon.getBoundingClientRect();
+    const target = targetIcon.getBoundingClientRect();
+    const startX = source.left + source.width / 2;
+    const startY = source.top + source.height / 2;
+    const endX = target.left + target.width / 2;
+    const endY = target.top + target.height / 2;
+    const heart = document.createElement("span");
+    heart.className = "favorite-flight-heart";
+    heart.textContent = "♥";
+    heart.setAttribute("aria-hidden", "true");
+    heart.style.left = `${startX - 14}px`;
+    heart.style.top = `${startY - 14}px`;
+    document.body.appendChild(heart);
+
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+    const flight = heart.animate([
+      { transform: "translate(0, 0) scale(.65) rotate(-15deg)", opacity: 0 },
+      { transform: `translate(${deltaX * .42}px, ${deltaY * .42 - 25}px) scale(1.2) rotate(8deg)`, opacity: 1, offset: .48 },
+      { transform: `translate(${deltaX}px, ${deltaY}px) scale(.2) rotate(0deg)`, opacity: .15 },
+    ], { duration: 1150, easing: "cubic-bezier(.2, .7, .25, 1)" });
+    flight.onfinish = () => heart.remove();
+
+    favoritesButton?.animate([
+      { transform: "scale(1)", filter: "drop-shadow(0 0 0 rgb(245 34 118 / 0%))" },
+      { transform: "scale(1.22)", filter: "drop-shadow(0 0 9px rgb(245 34 118 / 75%))", offset: .55 },
+      { transform: "scale(1)", filter: "drop-shadow(0 0 0 rgb(245 34 118 / 0%))" },
+    ], { duration: 680, easing: "cubic-bezier(.2, .7, .25, 1)" });
+  };
 
   // Guardar favoritos y carrito en el navegador
   useEffect(() => {
@@ -36,6 +130,8 @@ export function ShopProvider({ children }) {
 
   // Agregar o quitar favoritos
   const toggleFavorite = (product) => {
+    const isAlreadyFavorite = favorites.some((item) => item.id === product.id);
+    if (!isAlreadyFavorite) animateFavoriteArrival();
     setFavorites((current) => {
       const exists = current.some((item) => item.id === product.id);
 
@@ -57,6 +153,9 @@ export function ShopProvider({ children }) {
 
   // Agregar productos al carrito
   const addToCart = (product) => {
+    animateCartArrival();
+    setLastAddedId(product.id);
+    window.setTimeout(() => setLastAddedId(null), 700);
     setCart((current) => {
       const exists = current.find((item) => item.id === product.id);
 
@@ -117,7 +216,14 @@ export function ShopProvider({ children }) {
     removeFromCart,
     clearCart,
     cartCount,
-    cartTotal
+    cartTotal,
+    cartDrawerOpen,
+    favoritesDrawerOpen,
+    openCartDrawer: () => { setFavoritesDrawerOpen(false); setCartDrawerOpen(true); },
+    closeCartDrawer: () => setCartDrawerOpen(false),
+    openFavoritesDrawer: () => { setCartDrawerOpen(false); setFavoritesDrawerOpen(true); },
+    closeFavoritesDrawer: () => setFavoritesDrawerOpen(false),
+    lastAddedId
   };
 
   return (

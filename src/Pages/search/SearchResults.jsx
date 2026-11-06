@@ -46,6 +46,7 @@ export default function SearchResults() {
           {results.map((product) => (
             <Link
               className="search-result-card"
+              data-reveal
               key={product.id}
               to={`/producto/${encodeURIComponent(product.id)}`}
               state={{ product }}

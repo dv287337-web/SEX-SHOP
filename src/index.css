@@ -1,13 +1,16 @@
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Great+Vibes&display=swap');
-
 :root {
-  font-family: 'DM Sans', sans-serif;
+  --font-body: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-brand: 'Great Vibes', cursive;
+
+  font-family: var(--font-body);
   color: #171317;
   background: #fffafa;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   font-optical-sizing: auto;
+  font-weight: 400;
 }
 
 * {
@@ -22,6 +25,9 @@ html {
 }
 
 body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
