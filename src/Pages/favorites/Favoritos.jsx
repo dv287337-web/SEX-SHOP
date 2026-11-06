@@ -1,4 +1,3 @@
-
 import {
   Heart,
   ShoppingBag,
@@ -19,12 +18,10 @@ function Favoritos() {
 
   const handleAddToCart = (product) => {
     addToCart(product);
-    alert(`${product.name} se agregó al carrito.`);
   };
 
   return (
     <section className="favorites-page">
-
       <div className="favorites-banner">
         <span>COLECCIÓN PERSONAL</span>
         <h1>Mis favoritos</h1>
@@ -33,7 +30,6 @@ function Favoritos() {
       </div>
 
       <div className="favorites-container">
-
         <div className="favorites-heading">
           <div>
             <span>TU SELECCIÓN PERSONAL</span>
@@ -47,10 +43,8 @@ function Favoritos() {
 
         {favorites.length > 0 ? (
           <div className="favorites-grid">
-
             {favorites.map((product) => (
               <article className="favorite-card" key={product.id}>
-
                 <div className="favorite-card-image">
                   <div className="product-placeholder">
                     <Sparkles size={42} />
@@ -98,10 +92,8 @@ function Favoritos() {
                     Agregar al carrito
                   </button>
                 </div>
-
               </article>
             ))}
-
           </div>
         ) : (
           <div className="favorites-empty">
@@ -122,7 +114,6 @@ function Favoritos() {
             </Link>
           </div>
         )}
-
       </div>
     </section>
   );

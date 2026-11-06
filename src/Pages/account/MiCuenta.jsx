@@ -1,20 +1,23 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { UserRound, LockKeyhole, Mail, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { useShop } from "../../context/ShopContext";
 
 function MiCuenta() {
   const [mostrarPassword, setMostrarPassword] = useState(false);
+  const { showToast } = useShop();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert("Próximamente habilitaremos el inicio de sesión.");
+    showToast({
+      title: "Cuenta de usuario",
+      message: "Próximamente habilitaremos el inicio de sesión y registro.",
+      type: "info",
+    });
   };
 
   return (
     <section className="account-page">
       <div className="account-container">
-
         <div className="account-decoration">
           <span className="account-decoration-icon">♥</span>
           <h2>Bienvenido a <span>SexShop</span></h2>
@@ -83,7 +86,13 @@ function MiCuenta() {
               <button
                 type="button"
                 className="forgot-password"
-                onClick={() => alert("Próximamente habilitaremos esta opción.")}
+                onClick={() =>
+                  showToast({
+                    title: "Recuperación de contraseña",
+                    message: "Próximamente habilitaremos la recuperación de acceso.",
+                    type: "info",
+                  })
+                }
               >
                 ¿Olvidaste tu contraseña?
               </button>
@@ -98,7 +107,13 @@ function MiCuenta() {
             <p>¿Aún no tienes una cuenta?</p>
             <button
               type="button"
-              onClick={() => alert("Próximamente habilitaremos el registro.")}
+              onClick={() =>
+                showToast({
+                  title: "Registro de clientes",
+                  message: "Próximamente habilitaremos el registro de nuevas cuentas.",
+                  type: "info",
+                })
+              }
             >
               Regístrate aquí
             </button>
@@ -109,7 +124,6 @@ function MiCuenta() {
             <span>Compra con confianza y discreción</span>
           </div>
         </div>
-
       </div>
     </section>
   );

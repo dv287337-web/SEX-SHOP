@@ -117,7 +117,7 @@ function ParaEl() {
   };
 
   return (
-    <div className="catalog-page">
+    <div className="catalog-page catalog-page--el">
 
       {/* BANNER */}
       <section className="catalog-banner">

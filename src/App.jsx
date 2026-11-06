@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import ScrollRevealController from "./components/ScrollRevealController";
 import CartDrawer from "./components/CartDrawer";
 import FavoritesDrawer from "./components/FavoritesDrawer";
+import SmoothScroll from "./components/SmoothScroll";
+import LuxuryToast from "./components/LuxuryToast";
 import Home from "./Pages/Home";
 
 // Catálogos
@@ -35,6 +37,7 @@ import "./App.css";
 function App() {
   return (
     <>
+      <SmoothScroll />
       <Header />
       <ScrollRevealController />
 
@@ -71,6 +74,7 @@ function App() {
       <WhatsAppButton />
       <CartDrawer />
       <FavoritesDrawer />
+      <LuxuryToast />
     </>
   );
 }

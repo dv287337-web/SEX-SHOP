@@ -2,7 +2,7 @@
 export const whatsappNumber = "";
 
 const initialMessage = encodeURIComponent(
-  "Hola, quisiera recibir información sobre sus productos."
+  "Hola, quisiera recibir información sobre sus productos de forma discreta."
 );
 
 export const whatsappUrl = whatsappNumber
@@ -11,7 +11,15 @@ export const whatsappUrl = whatsappNumber
 
 export function openWhatsApp() {
   if (!whatsappUrl) {
-    window.alert("Próximamente habilitaremos nuestro WhatsApp.");
+    window.dispatchEvent(
+      new CustomEvent("sexshop-toast", {
+        detail: {
+          title: "Atención por WhatsApp",
+          message: "Próximamente habilitaremos nuestro canal oficial de WhatsApp para asesoría discreta.",
+          type: "info",
+        },
+      })
+    );
     return;
   }
 

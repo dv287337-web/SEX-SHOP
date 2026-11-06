@@ -118,7 +118,7 @@ function Juguetes() {
   };
 
   return (
-    <div className="catalog-page">
+    <div className="catalog-page catalog-page--juguetes">
 
       {/* BANNER */}
       <section className="catalog-banner">

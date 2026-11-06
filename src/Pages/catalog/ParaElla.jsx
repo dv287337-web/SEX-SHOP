@@ -119,7 +119,7 @@ function ParaElla() {
   };
 
   return (
-    <div className="catalog-page">
+    <div className="catalog-page catalog-page--ella">
 
       {/* BANNER */}
       <section className="catalog-banner">

@@ -1,4 +1,3 @@
-
 import {
   ShoppingBag,
   Trash2,
@@ -20,6 +19,7 @@ function Carrito() {
     clearCart,
     cartCount,
     cartTotal,
+    showToast,
   } = useShop();
 
   const handleDecrease = (product) => {
@@ -34,18 +34,28 @@ function Carrito() {
 
   const handleRemove = (product) => {
     removeFromCart(product.id);
+    showToast({
+      title: "Producto removido",
+      message: `${product.name} fue retirado del carrito.`,
+      type: "info",
+    });
   };
 
   const handleClearCart = () => {
-    if (window.confirm("¿Estás seguro de que deseas vaciar el carrito?")) {
-      clearCart();
-    }
+    clearCart();
+    showToast({
+      title: "Carrito vaciado",
+      message: "Se eliminaron todos los productos de tu carrito.",
+      type: "info",
+    });
   };
 
   const handleCheckout = () => {
-    alert(
-      "¡Genial! Tu carrito está listo. Próximamente habilitaremos el proceso de pago."
-    );
+    showToast({
+      title: "Checkout en preparación",
+      message: "Próximamente podrás finalizar tu pedido directamente con Yape, Plin y Tarjeta.",
+      type: "info",
+    });
   };
 
   return (

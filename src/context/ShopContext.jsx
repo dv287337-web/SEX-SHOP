@@ -1,4 +1,3 @@
-
 import {
   createContext,
   useContext,
@@ -28,8 +27,32 @@ export function ShopProvider({ children }) {
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [favoritesDrawerOpen, setFavoritesDrawerOpen] = useState(false);
   const [lastAddedId, setLastAddedId] = useState(null);
+  const [toasts, setToasts] = useState([]);
   const addButtonRef = useRef(null);
   const favoriteButtonRef = useRef(null);
+
+  const showToast = ({ title, message, type = "info", action = null, duration = 3600 }) => {
+    const id = Date.now() + Math.random().toString(36).substring(2, 7);
+    setToasts((prev) => [...prev, { id, title, message, type, action }]);
+    if (duration > 0) {
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, duration);
+    }
+    return id;
+  };
+
+  const removeToast = (id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  useEffect(() => {
+    const handleCustomToast = (event) => {
+      if (event.detail) showToast(event.detail);
+    };
+    window.addEventListener("sexshop-toast", handleCustomToast);
+    return () => window.removeEventListener("sexshop-toast", handleCustomToast);
+  }, []);
 
   useEffect(() => {
     const rememberAddButton = (event) => {
@@ -131,7 +154,20 @@ export function ShopProvider({ children }) {
   // Agregar o quitar favoritos
   const toggleFavorite = (product) => {
     const isAlreadyFavorite = favorites.some((item) => item.id === product.id);
-    if (!isAlreadyFavorite) animateFavoriteArrival();
+    if (!isAlreadyFavorite) {
+      animateFavoriteArrival();
+      showToast({
+        title: "Añadido a tus favoritos",
+        message: product.name,
+        type: "success",
+      });
+    } else {
+      showToast({
+        title: "Removido de favoritos",
+        message: product.name,
+        type: "info",
+      });
+    }
     setFavorites((current) => {
       const exists = current.some((item) => item.id === product.id);
 
@@ -152,7 +188,7 @@ export function ShopProvider({ children }) {
   };
 
   // Agregar productos al carrito
-  const addToCart = (product) => {
+  const addToCart = (product, options = {}) => {
     animateCartArrival();
     setLastAddedId(product.id);
     window.setTimeout(() => setLastAddedId(null), 700);
@@ -169,6 +205,15 @@ export function ShopProvider({ children }) {
 
       return [...current, { ...product, quantity: 1 }];
     });
+
+    if (!options.silent) {
+      showToast({
+        title: "Agregado al carrito",
+        message: product.name,
+        type: "cart",
+        action: "cart",
+      });
+    }
   };
 
   // Cambiar cantidad
@@ -223,7 +268,10 @@ export function ShopProvider({ children }) {
     closeCartDrawer: () => setCartDrawerOpen(false),
     openFavoritesDrawer: () => { setCartDrawerOpen(false); setFavoritesDrawerOpen(true); },
     closeFavoritesDrawer: () => setFavoritesDrawerOpen(false),
-    lastAddedId
+    lastAddedId,
+    toasts,
+    showToast,
+    removeToast
   };
 
   return (

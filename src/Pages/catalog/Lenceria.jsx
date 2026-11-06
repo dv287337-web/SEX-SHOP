@@ -228,7 +228,7 @@ function Lenceria() {
   };
 
   return (
-    <section className="catalog-page">
+    <section className="catalog-page catalog-page--lenceria">
 
       {/* BANNER */}
       <div className="catalog-banner">

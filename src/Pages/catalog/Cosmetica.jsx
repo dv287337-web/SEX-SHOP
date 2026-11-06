@@ -210,7 +210,7 @@ function Cosmetica() {
   };
 
   return (
-    <section className="catalog-page">
+    <section className="catalog-page catalog-page--cosmetica">
       <div className="catalog-banner">
         <div>
           <span className="catalog-eyebrow">

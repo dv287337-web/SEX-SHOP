@@ -211,7 +211,7 @@ function ParaParejas() {
   };
 
   return (
-    <section className="catalog-page">
+    <section className="catalog-page catalog-page--parejas">
       <div className="catalog-banner">
         <div>
           <span className="catalog-eyebrow">

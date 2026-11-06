@@ -202,7 +202,7 @@ function BDSM() {
   };
 
   return (
-    <section className="catalog-page">
+    <section className="catalog-page catalog-page--bdsm">
       <div className="catalog-banner">
         <div>
           <span className="catalog-eyebrow">
