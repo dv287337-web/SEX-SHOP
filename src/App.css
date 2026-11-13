@@ -8451,3 +8451,128 @@ html.motion-ready .motion-reveal {
     transition: none;
   }
 }
+
+/* Carrusel editorial de categorías */
+.categories-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.categories-carousel .categories-grid {
+  display: flex;
+  flex: 1;
+  gap: 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 8px 2px 18px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #c51b60 #f1e3e9;
+}
+
+.categories-carousel .category-pair {
+  display: contents;
+}
+
+.categories-carousel .category-card {
+  flex: 0 0 clamp(250px, 27vw, 330px);
+  height: clamp(270px, 29vw, 350px);
+  scroll-snap-align: start;
+}
+
+.categories-carousel-button {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #eadce2;
+  border-radius: 50%;
+  background: #fff;
+  color: #a63261;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgb(52 22 37 / 8%);
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.categories-carousel-button:hover {
+  background: #c51b60;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.categories-carousel-button:focus-visible,
+.categories-carousel .categories-grid:focus-visible {
+  outline: 2px solid #f3478b;
+  outline-offset: 4px;
+}
+
+.back-to-top {
+  right: 22px;
+  bottom: 104px;
+}
+
+@media (max-width: 700px) {
+  .categories-carousel {
+    display: block;
+    margin-inline: -5%;
+  }
+
+  .categories-carousel .categories-grid {
+    gap: 12px;
+    padding-inline: 5%;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+  }
+
+  .categories-carousel .categories-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .categories-carousel .category-card {
+    flex-basis: min(78vw, 310px);
+    height: 214px;
+  }
+
+  .categories-carousel-button {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    width: 36px;
+    height: 36px;
+    transform: translateY(-50%);
+  }
+
+  .categories-carousel-button:hover {
+    transform: translateY(-50%);
+  }
+
+  .categories-carousel-button--prev {
+    left: 3%;
+  }
+
+  .categories-carousel-button--next {
+    right: 3%;
+  }
+
+  .back-to-top {
+    right: 14px;
+    bottom: 94px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .categories-carousel .categories-grid {
+    scroll-behavior: auto;
+  }
+
+  .categories-carousel-button {
+    transition: none;
+  }
+}

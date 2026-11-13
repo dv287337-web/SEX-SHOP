@@ -1,7 +1,7 @@
 
-import {
-  Link
-} from "react-router-dom";
+import { useRef } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import categorySprite from "../assets/category-editorial-grid.jpg";
 
 const categories = [
@@ -64,6 +64,15 @@ const categories = [
 ];
 
 function Categories() {
+  const carouselRef = useRef(null);
+
+  const scrollCategories = (direction) => {
+    carouselRef.current?.scrollBy({
+      left: direction * Math.min(carouselRef.current.clientWidth * 0.82, 420),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section className="categories-section" id="categorias">
 
@@ -78,10 +87,12 @@ function Categories() {
         </a>
       </div>
 
-      <div className="categories-grid">
-        {Array.from({ length: Math.ceil(categories.length / 2) }, (_, pairIndex) => (
-          <div className="category-pair" key={pairIndex}>
-            {categories.slice(pairIndex * 2, pairIndex * 2 + 2).map((category) => {
+      <div className="categories-carousel">
+        <button type="button" className="categories-carousel-button categories-carousel-button--prev" onClick={() => scrollCategories(-1)} aria-label="Ver categorías anteriores">
+          <ArrowLeft size={18} />
+        </button>
+        <div className="categories-grid" ref={carouselRef} tabIndex="0" aria-label="Carrusel de categorías">
+          {categories.map((category) => {
               const index = categories.indexOf(category);
               return (
                 <Link
@@ -102,8 +113,10 @@ function Categories() {
                 </Link>
               );
             })}
-          </div>
-        ))}
+        </div>
+        <button type="button" className="categories-carousel-button categories-carousel-button--next" onClick={() => scrollCategories(1)} aria-label="Ver más categorías">
+          <ArrowRight size={18} />
+        </button>
       </div>
 
     </section>
