@@ -9835,13 +9835,11 @@ html.motion-ready .motion-reveal {
 
 .intro-splash-progress span {
   display: block;
-  width: 75%;
+  width: 0;
   height: 100%;
   background: linear-gradient(90deg, #f12a7b, #ffb2cf);
   box-shadow: 0 0 14px #f12a7b;
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: intro-progress 2.8s cubic-bezier(.2, .75, .3, 1) both;
+  transition: width 60ms linear;
 }
 
 .intro-splash-progress-row {
@@ -10132,7 +10130,7 @@ html.motion-ready .motion-reveal {
   }
 
   .intro-splash-progress span {
-    transform: scaleX(1);
+    transition: none;
   }
 }
 

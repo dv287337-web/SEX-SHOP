@@ -4,12 +4,17 @@ import { Box, Heart, LockKeyhole, ShieldCheck } from "lucide-react";
 export default function IntroSplash() {
   const [isVisible, setIsVisible] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const exitTimer = window.setTimeout(() => setIsExiting(true), 2100);
-    const hideTimer = window.setTimeout(() => setIsVisible(false), 2700);
+    const progressTimer = window.setInterval(() => {
+      setProgress((currentProgress) => Math.min(currentProgress + 2, 100));
+    }, 60);
+    const exitTimer = window.setTimeout(() => setIsExiting(true), 3300);
+    const hideTimer = window.setTimeout(() => setIsVisible(false), 3900);
 
     return () => {
+      window.clearInterval(progressTimer);
       window.clearTimeout(exitTimer);
       window.clearTimeout(hideTimer);
     };
@@ -53,9 +58,9 @@ export default function IntroSplash() {
 
         <div className="intro-splash-progress-row">
           <div className="intro-splash-progress" aria-hidden="true">
-            <span />
+            <span style={{ width: `${progress}%` }} />
           </div>
-          <strong>75%</strong>
+          <strong>{progress}%</strong>
         </div>
         <p className="intro-splash-loading">Preparando una experiencia más íntima para ti...</p>
 
