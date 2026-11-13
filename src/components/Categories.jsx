@@ -1,5 +1,5 @@
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import categorySprite from "../assets/category-editorial-grid.jpg";
@@ -65,6 +65,26 @@ const categories = [
 
 function Categories() {
   const carouselRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel || !("IntersectionObserver" in window)) return undefined;
+
+    const cards = [...carousel.querySelectorAll(".category-card")];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleCard = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visibleCard) setActiveIndex(cards.indexOf(visibleCard.target));
+      },
+      { root: carousel, threshold: [0.55, 0.72, 0.9] }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
 
   const scrollCategories = (direction) => {
     carouselRef.current?.scrollBy({
@@ -97,7 +117,7 @@ function Categories() {
               return (
                 <Link
                   to={category.path}
-                  className={`category-card ${category.style}`}
+                  className={`category-card ${category.style} ${index === activeIndex ? "is-active" : ""}`}
                   key={category.name}
                   style={{
                     "--sprite-x": `${(index % 4) * (100 / 3)}%`,

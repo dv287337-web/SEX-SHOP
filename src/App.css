@@ -8472,8 +8472,12 @@ html.motion-ready .motion-reveal {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #c51b60 #f1e3e9;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.categories-carousel .categories-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .categories-carousel .category-pair {
@@ -8484,6 +8488,31 @@ html.motion-ready .motion-reveal {
   flex: 0 0 calc((100% - 16px) / 2);
   height: clamp(270px, 29vw, 350px);
   scroll-snap-align: start;
+}
+
+.categories-carousel .category-image {
+  transform: scale(1);
+  transition: transform 720ms cubic-bezier(.16, 1, .3, 1), filter 720ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.categories-carousel .category-card.is-active .category-image {
+  transform: scale(1.055);
+  filter: saturate(1.08) brightness(1.04);
+}
+
+.categories-carousel .category-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid rgb(255 255 255 / 0%);
+  border-radius: inherit;
+  content: "";
+  transition: border-color 500ms ease, box-shadow 500ms ease;
+}
+
+.categories-carousel .category-card.is-active::after {
+  border-color: rgb(255 255 255 / 18%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 5%);
 }
 
 .categories-carousel-button {
@@ -8574,7 +8603,14 @@ html.motion-ready .motion-reveal {
     scroll-behavior: auto;
   }
 
-  .categories-carousel-button {
+  .categories-carousel-button,
+  .categories-carousel .category-image,
+  .categories-carousel .category-card::after {
     transition: none;
+  }
+
+  .categories-carousel .category-card.is-active .category-image {
+    transform: none;
+    filter: none;
   }
 }
