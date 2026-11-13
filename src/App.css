@@ -8038,3 +8038,20 @@ input.price-slider {
   text-align: center;
   margin-top: 40px;
 }
+
+
+/* ==========================================================================
+   FOTOGRAFÍAS REALES EN TARJETAS DE CATÁLOGO
+   ========================================================================== */
+
+.product-image .product-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  display: block;
+}
+
+.product-card:hover .product-card-img {
+  transform: scale(1.05);
+}

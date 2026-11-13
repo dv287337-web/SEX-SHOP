@@ -10,7 +10,6 @@ import {
   Star,
   ChevronDown,
   Tag,
-  Flame,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { mergeCustomProducts } from "../../utils/catalogHelpers";
@@ -367,10 +366,14 @@ function Ofertas() {
                     }}
                   >
                     <div className="product-image">
+                      {product.image ? (
+                      <img src={product.image} alt={product.name} className="product-card-img" loading="lazy" />
+                    ) : (
                       <div className="product-placeholder">
-                        <Flame size={42} />
+                        <ShoppingBag size={42} />
                         <span>Imagen del producto</span>
                       </div>
+                    )}
 
                       {product.tag && (
                         <span className="product-tag">

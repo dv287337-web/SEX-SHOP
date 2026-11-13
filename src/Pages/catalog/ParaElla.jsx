@@ -331,10 +331,14 @@ function ParaElla() {
 
                   <div className="product-image">
 
-                    <div className="product-placeholder">
-                      <ShoppingBag size={42} />
-                      <span>Imagen del producto</span>
-                    </div>
+                    {product.image ? (
+                      <img src={product.image} alt={product.name} className="product-card-img" loading="lazy" />
+                    ) : (
+                      <div className="product-placeholder">
+                        <ShoppingBag size={42} />
+                        <span>Imagen del producto</span>
+                      </div>
+                    )}
 
                     {product.tag && (
                       <span className="product-tag">
