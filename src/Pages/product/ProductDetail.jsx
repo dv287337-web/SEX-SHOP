@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Check, Package, ShoppingBag, Sparkles, ShieldCheck, Truck } from "lucide-react";
+import { ArrowLeft, Check, Heart, Package, ShoppingBag, Sparkles, ShieldCheck, Star, Truck } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { getProductDescription, getProductFeatures, getProductFromSession } from "../../utils/productDetails";
 import { allCatalogProducts } from "../../data/catalogProducts";
@@ -19,7 +19,7 @@ export default function ProductDetail() {
   const { productId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { addToCart, openCartDrawer, customProducts } = useShop();
+  const { addToCart, openCartDrawer, customProducts, toggleFavorite, isFavorite } = useShop();
 
   const product =
     location.state?.product ||
@@ -60,16 +60,6 @@ export default function ProductDetail() {
       </div>
 
       <section className="product-detail-layout">
-        <div className="product-detail-visual" aria-hidden="true">
-          <span className="product-detail-visual-glow" />
-          <div className="product-detail-icon">
-            <Package size={62} strokeWidth={1.25} />
-          </div>
-          <span className="product-detail-visual-caption">
-            <Sparkles size={14} /> Descubre tu momento
-          </span>
-        </div>
-
         <div className="product-detail-content">
           <span className="product-detail-eyebrow">
             {product.category || "Nuestra selección"}
@@ -92,26 +82,49 @@ export default function ProductDetail() {
               </li>
             ))}
           </ul>
+        </div>
 
+        <div className="product-detail-visual">
+          <span className="product-detail-visual-glow" />
+          {product.image ? (
+            <img className="product-detail-product-image" src={product.image} alt={product.name} />
+          ) : (
+            <div className="product-detail-icon">
+              <Package size={62} strokeWidth={1.25} />
+              <span>Imagen del producto</span>
+            </div>
+          )}
+          <button
+            type="button"
+            className={`product-detail-favorite ${isFavorite(product.id) ? "is-favorite" : ""}`}
+            onClick={() => toggleFavorite(product)}
+            aria-label={isFavorite(product.id) ? "Quitar de favoritos" : "Agregar a favoritos"}
+          >
+            <Heart size={20} fill={isFavorite(product.id) ? "currentColor" : "none"} />
+          </button>
+          <span className="product-detail-visual-caption">
+            <Sparkles size={14} /> Descubre tu momento
+          </span>
+        </div>
+
+        <aside className="product-detail-buy">
+          <span className="product-detail-buy-label">SELECCIÓN ESPECIAL</span>
+          <div className="product-detail-rating">
+            <Star size={15} fill="currentColor" /> {Number(product.rating || 5).toFixed(1)}
+          </div>
+          <div className="product-detail-price">
+            <strong>S/ {product.price.toFixed(2)}</strong>
+            {product.oldPrice && <del>S/ {product.oldPrice.toFixed(2)}</del>}
+          </div>
+          <span className="product-detail-availability"><span /> Disponible para envío discreto</span>
+          <button type="button" className="add-cart-button" onClick={handleBuyNow}>
+            <ShoppingBag size={17} /> Agregar al carrito
+          </button>
           <div className="product-detail-trust-pills">
             <span><ShieldCheck size={14} /> Empaque 100% discreto</span>
             <span><Truck size={14} /> Envíos seguros a todo el Perú</span>
           </div>
-
-          <div className="product-detail-purchase">
-            <div className="product-detail-price">
-              <strong>S/ {product.price.toFixed(2)}</strong>
-              {product.oldPrice && <del>S/ {product.oldPrice.toFixed(2)}</del>}
-            </div>
-            <button
-              type="button"
-              className="add-cart-button"
-              onClick={handleBuyNow}
-            >
-              <ShoppingBag size={17} /> Agregar al carrito
-            </button>
-          </div>
-        </div>
+        </aside>
       </section>
     </main>
   );
