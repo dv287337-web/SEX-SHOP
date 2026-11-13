@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Heart, LockKeyhole, ShieldCheck } from "lucide-react";
+import { Box, Heart, LoaderCircle, LockKeyhole, ShieldCheck } from "lucide-react";
 
 export default function IntroSplash() {
   const [isVisible, setIsVisible] = useState(true);
@@ -9,9 +9,9 @@ export default function IntroSplash() {
   useEffect(() => {
     const progressTimer = window.setInterval(() => {
       setProgress((currentProgress) => Math.min(currentProgress + 2, 100));
-    }, 60);
-    const exitTimer = window.setTimeout(() => setIsExiting(true), 3300);
-    const hideTimer = window.setTimeout(() => setIsVisible(false), 3900);
+    }, 36);
+    const exitTimer = window.setTimeout(() => setIsExiting(true), 1800);
+    const hideTimer = window.setTimeout(() => setIsVisible(false), 2350);
 
     return () => {
       window.clearInterval(progressTimer);
@@ -62,7 +62,10 @@ export default function IntroSplash() {
           </div>
           <strong>{progress}%</strong>
         </div>
-        <p className="intro-splash-loading">Preparando una experiencia más íntima para ti...</p>
+        <p className="intro-splash-loading">
+          <LoaderCircle size={15} aria-hidden="true" />
+          Preparando una experiencia más íntima para ti...
+        </p>
 
         <div className="intro-splash-benefits">
           <span><ShieldCheck size={25} /><b>Compra segura</b></span>

@@ -9856,11 +9856,19 @@ html.motion-ready .motion-reveal {
 }
 
 .intro-splash-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin: 17px 0 0;
   color: #ecd5df;
   font-size: 15px;
   letter-spacing: .5px;
   animation: intro-text-in 600ms ease-out 1s both;
+}
+
+.intro-splash-loading svg {
+  color: #ff4d9a;
+  animation: intro-loading-spin .9s linear infinite;
 }
 
 .intro-splash-orbit {
@@ -10028,6 +10036,10 @@ html.motion-ready .motion-reveal {
   to { transform: scaleX(1); }
 }
 
+@keyframes intro-loading-spin {
+  to { transform: rotate(360deg); }
+}
+
 @keyframes intro-orbit {
   from { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
   50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.04); }
@@ -10076,6 +10088,7 @@ html.motion-ready .motion-reveal {
   }
 
   .intro-splash-loading {
+    gap: 6px;
     font-size: 11px;
   }
 
@@ -10122,6 +10135,7 @@ html.motion-ready .motion-reveal {
   .intro-splash-ribbon,
   .intro-splash-lace,
   .intro-splash-benefits,
+  .intro-splash-loading svg,
   .intro-splash-kicker,
   .intro-splash h1,
   .intro-splash-tagline,
