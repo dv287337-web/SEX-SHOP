@@ -9317,6 +9317,42 @@ html.motion-ready .motion-reveal {
   }
 }
 
+/* Ajuste de escritorio: evita que la tarjeta heredada de dos columnas
+   deforme la composición editorial en monitores amplios. */
+@media (min-width: 951px) {
+  .product-page {
+    width: min(100%, 1440px);
+    box-sizing: border-box;
+    padding-inline: clamp(24px, 5vw, 72px);
+  }
+
+  .product-detail-layout {
+    width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: minmax(0, .92fr) minmax(420px, 1.15fr) minmax(0, .8fr);
+    gap: clamp(28px, 4vw, 72px);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .product-detail-content,
+  .product-detail-buy {
+    min-width: 0;
+  }
+
+  .product-detail-visual {
+    width: 100%;
+    min-height: clamp(500px, 43vw, 650px);
+  }
+
+  .product-detail-buy > .add-cart-button {
+    max-width: 280px;
+  }
+}
+
 /* Mi cuenta: acceso editorial, cálido y enfocado en confianza. */
 .account-page {
   position: relative;
