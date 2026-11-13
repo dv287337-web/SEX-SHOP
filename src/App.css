@@ -8175,7 +8175,7 @@ input.price-slider {
 
 .hero-scroll-cue {
   position: absolute;
-  bottom: 28px;
+  bottom: 76px;
   left: 7%;
   z-index: 10;
   display: inline-flex;
@@ -8214,7 +8214,7 @@ input.price-slider {
   }
 
   .hero-scroll-cue {
-    bottom: 62px;
+    bottom: 92px;
     left: 6%;
     font-size: 8px;
   }
