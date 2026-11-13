@@ -10,6 +10,7 @@ import FavoritesDrawer from "./components/FavoritesDrawer";
 import SmoothScroll from "./components/SmoothScroll";
 import LuxuryToast from "./components/LuxuryToast";
 import BackToTop from "./components/BackToTop";
+import IntroSplash from "./components/IntroSplash";
 
 // Catálogos
 const Home = lazy(() => import("./Pages/Home"));
@@ -40,6 +41,7 @@ import "./App.css";
 function App() {
   return (
     <>
+      <IntroSplash />
       <SmoothScroll />
       <Header />
       <ScrollRevealController />
