@@ -9866,6 +9866,28 @@ html.motion-ready .motion-reveal {
   }
 }
 
+/* Alineación estable para los precios de novedades. */
+.home-featured-footer {
+  align-items: stretch;
+}
+
+.home-featured-price-group {
+  flex: 0 0 auto;
+  justify-content: center;
+  min-width: max-content;
+}
+
+.home-featured-price {
+  white-space: nowrap;
+}
+
+.home-featured-footer .add-cart-button {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 auto;
+  white-space: nowrap;
+}
+
 @media (max-width: 700px) {
   .home-featured-section {
     padding-top: 44px;
