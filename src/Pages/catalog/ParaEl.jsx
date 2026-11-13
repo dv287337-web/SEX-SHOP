@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { useShop } from "../../context/ShopContext";
+import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 // PRODUCTOS
 const products = [
@@ -52,7 +53,8 @@ function ParaEl() {
   const {
     toggleFavorite,
     isFavorite,
-    addToCart
+    addToCart,
+    customProducts
   } = useShop();
   const navigate = useNavigate();
   const openProductDetails = (product) => {
@@ -75,9 +77,11 @@ function ParaEl() {
     );
   };
 
-  // FILTRAR Y ORDENAR
+  // FILTRAR Y ORDENAR (INCLUYE PRODUCTOS SUBIDOS DESDE EL ADMIN)
   const filteredProducts = useMemo(() => {
-    let result = catalogProducts.filter((product) => {
+    const combinedList = mergeCustomProducts(catalogProducts, customProducts, "para-el");
+
+    let result = combinedList.filter((product) => {
       const categoryMatch =
         selectedCategories.length === 0 ||
         selectedCategories.includes(product.category);
@@ -86,7 +90,9 @@ function ParaEl() {
         selectedMaterials.length === 0 ||
         selectedMaterials.includes(product.material);
 
-      return categoryMatch && materialMatch && product.price <= maxPrice;
+      const withinPrice = maxPrice ? product.price <= maxPrice : true;
+
+      return categoryMatch && materialMatch && withinPrice;
     });
 
     if (sort === "price-low") {
@@ -102,7 +108,7 @@ function ParaEl() {
     }
 
     return result;
-  }, [selectedCategories, selectedMaterials, maxPrice, sort]);
+  }, [selectedCategories, selectedMaterials, maxPrice, sort, customProducts]);
 
   // LIMPIAR FILTROS
   const clearFilters = () => {

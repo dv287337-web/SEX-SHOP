@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
+import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 const products = [
   {
@@ -165,6 +166,7 @@ function Cosmetica() {
     toggleFavorite,
     isFavorite,
     addToCart,
+    customProducts,
   } = useShop();
   const navigate = useNavigate();
   const openProductDetails = (product) => {
@@ -180,16 +182,20 @@ function Cosmetica() {
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredProducts = useMemo(() => {
-    let result = catalogProducts.filter((product) => {
+    const combinedList = mergeCustomProducts(catalogProducts, customProducts, "cosmetica");
+
+    let result = combinedList.filter((product) => {
       const categoryMatch =
         selectedCategory === "Todas" ||
         product.category === selectedCategory;
 
       const typeMatch =
         selectedType === "Todos" ||
-        product.type === selectedType;
+        (product.type ? product.type === selectedType : true);
 
-      return categoryMatch && typeMatch && product.price <= maxPrice;
+      const priceMatch = maxPrice ? product.price <= maxPrice : true;
+
+      return categoryMatch && typeMatch && priceMatch;
     });
 
     if (sort === "low") {
@@ -201,7 +207,7 @@ function Cosmetica() {
     }
 
     return result;
-  }, [selectedCategory, selectedType, maxPrice, sort]);
+  }, [selectedCategory, selectedType, maxPrice, sort, customProducts]);
 
   const clearFilters = () => {
     setSelectedCategory("Todas");

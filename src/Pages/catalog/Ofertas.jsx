@@ -13,6 +13,7 @@ import {
   Flame,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
+import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 const products = [
   {
@@ -145,6 +146,7 @@ function Ofertas() {
     toggleFavorite,
     isFavorite,
     addToCart,
+    customProducts,
   } = useShop();
   const navigate = useNavigate();
   const openProductDetails = (product) => {
@@ -159,12 +161,17 @@ function Ofertas() {
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredProducts = useMemo(() => {
-    let result = catalogProducts.filter((product) => {
+    // En ofertas incluimos los productos con categoría 'ofertas' o que tengan 'old_price'
+    const combinedList = mergeCustomProducts(catalogProducts, customProducts, "ofertas");
+
+    let result = combinedList.filter((product) => {
       const categoryMatch =
         selectedCategory === "Todas" ||
         product.category === selectedCategory;
 
-      return categoryMatch && product.price <= maxPrice;
+      const priceMatch = maxPrice ? product.price <= maxPrice : true;
+
+      return categoryMatch && priceMatch;
     });
 
     if (sort === "low") {
@@ -176,12 +183,12 @@ function Ofertas() {
     } else if (sort === "discount") {
       result.sort(
         (a, b) =>
-          (b.oldPrice - b.price) - (a.oldPrice - a.price)
+          ((b.oldPrice || b.price) - b.price) - ((a.oldPrice || a.price) - a.price)
       );
     }
 
     return result;
-  }, [selectedCategory, maxPrice, sort]);
+  }, [selectedCategory, maxPrice, sort, customProducts]);
 
   const clearFilters = () => {
     setSelectedCategory("Todas");

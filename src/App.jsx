@@ -31,6 +31,7 @@ import PrivacySecurity from "./Pages/legal/PrivacySecurity";
 import PaymentMethods from "./Pages/legal/PaymentMethods";
 import DiscreetShipping from "./Pages/legal/DiscreetShipping";
 import StorePickup from "./Pages/help/StorePickup";
+import AdminDashboard from "./Pages/admin/AdminDashboard";
 
 import "./App.css";
 
@@ -67,6 +68,9 @@ function App() {
           <Route path="/metodos-de-pago" element={<PaymentMethods />} />
           <Route path="/envios-discretos" element={<DiscreetShipping />} />
           <Route path="/recojo-en-tienda" element={<StorePickup />} />
+
+          {/* Panel Administrador */}
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </main>
 

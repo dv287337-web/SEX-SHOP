@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { useShop } from "../../context/ShopContext";
+import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 // PRODUCTOS
 const products = [
@@ -53,7 +54,8 @@ function ParaElla() {
   const {
     toggleFavorite,
     isFavorite,
-    addToCart
+    addToCart,
+    customProducts
   } = useShop();
   const navigate = useNavigate();
   const openProductDetails = (product) => {
@@ -77,9 +79,11 @@ function ParaElla() {
     );
   };
 
-  // FILTRAR Y ORDENAR
+  // FILTRAR Y ORDENAR (INCLUYE PRODUCTOS SUBIDOS DESDE EL ADMIN)
   const filteredProducts = useMemo(() => {
-    let result = catalogProducts.filter((product) => {
+    const combinedList = mergeCustomProducts(catalogProducts, customProducts, "para-ella");
+
+    let result = combinedList.filter((product) => {
       const categoryMatch =
         selectedCategories.length === 0 ||
         selectedCategories.includes(product.category);
@@ -88,7 +92,9 @@ function ParaElla() {
         selectedMaterials.length === 0 ||
         selectedMaterials.includes(product.material);
 
-      return categoryMatch && materialMatch && product.price <= maxPrice;
+      const withinPrice = maxPrice ? product.price <= maxPrice : true;
+
+      return categoryMatch && materialMatch && withinPrice;
     });
 
     if (sort === "price-low") {
@@ -104,7 +110,7 @@ function ParaElla() {
     }
 
     return result;
-  }, [selectedCategories, selectedMaterials, maxPrice, sort]);
+  }, [selectedCategories, selectedMaterials, maxPrice, sort, customProducts]);
 
   // LIMPIAR FILTROS
   const clearFilters = () => {

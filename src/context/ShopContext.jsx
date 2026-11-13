@@ -3,8 +3,10 @@ import {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
+  useCallback
 } from "react";
+import { supabase, isSupabaseConfigured } from "../utils/supabase";
 
 const ShopContext = createContext(null);
 
@@ -30,6 +32,126 @@ export function ShopProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const addButtonRef = useRef(null);
   const favoriteButtonRef = useRef(null);
+
+  // GESTIÓN DE PRODUCTOS PERSONALIZADOS (SUPABASE + LOCALSTORAGE FALLBACK)
+  const [customProducts, setCustomProducts] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("sexshop-custom-products")) || [];
+    } catch {
+      return [];
+    }
+  });
+  const [isProductsLoading, setIsProductsLoading] = useState(false);
+
+  // Carga inicial y sincronización con Supabase si está disponible
+  const fetchProductsFromSupabase = useCallback(async () => {
+    if (!isSupabaseConfigured || !supabase) return;
+    try {
+      setIsProductsLoading(true);
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.warn("Supabase fetch warning:", error.message);
+        return;
+      }
+
+      if (data && Array.isArray(data)) {
+        setCustomProducts(data);
+        localStorage.setItem("sexshop-custom-products", JSON.stringify(data));
+      }
+    } catch (err) {
+      console.warn("Error cargando productos de Supabase:", err);
+    } finally {
+      setIsProductsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProductsFromSupabase();
+  }, [fetchProductsFromSupabase]);
+
+  // Función para agregar producto
+  const addCustomProduct = async (productData) => {
+    const tempId = `prod-${Date.now()}`;
+    const newProduct = {
+      ...productData,
+      id: tempId,
+      created_at: new Date().toISOString()
+    };
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .insert([productData])
+          .select()
+          .single();
+
+        if (!error && data) {
+          setCustomProducts(prev => [data, ...prev]);
+          const updated = [data, ...customProducts];
+          localStorage.setItem("sexshop-custom-products", JSON.stringify(updated));
+          return data;
+        }
+      } catch (err) {
+        console.error("Error guardando en Supabase:", err);
+      }
+    }
+
+    // Fallback local
+    const updated = [newProduct, ...customProducts];
+    setCustomProducts(updated);
+    localStorage.setItem("sexshop-custom-products", JSON.stringify(updated));
+    return newProduct;
+  };
+
+  // Función para editar producto
+  const updateCustomProduct = async (id, updatedData) => {
+    if (isSupabaseConfigured && supabase && typeof id === "number") {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .update(updatedData)
+          .eq("id", id)
+          .select()
+          .single();
+
+        if (!error && data) {
+          setCustomProducts(prev => prev.map(p => p.id === id ? data : p));
+          return data;
+        }
+      } catch (err) {
+        console.error("Error actualizando en Supabase:", err);
+      }
+    }
+
+    // Fallback local
+    setCustomProducts(prev => {
+      const next = prev.map(p => p.id === id ? { ...p, ...updatedData } : p);
+      localStorage.setItem("sexshop-custom-products", JSON.stringify(next));
+      return next;
+    });
+  };
+
+  // Función para eliminar producto
+  const deleteCustomProduct = async (id) => {
+    if (isSupabaseConfigured && supabase && typeof id === "number") {
+      try {
+        await supabase.from("products").delete().eq("id", id);
+      } catch (err) {
+        console.error("Error eliminando en Supabase:", err);
+      }
+    }
+
+    setCustomProducts(prev => {
+      const next = prev.filter(p => p.id !== id);
+      localStorage.setItem("sexshop-custom-products", JSON.stringify(next));
+      return next;
+    });
+  };
 
   const showToast = ({ title, message, type = "info", action = null, duration = 3600 }) => {
     const id = Date.now() + Math.random().toString(36).substring(2, 7);
@@ -271,7 +393,13 @@ export function ShopProvider({ children }) {
     lastAddedId,
     toasts,
     showToast,
-    removeToast
+    removeToast,
+    customProducts,
+    addCustomProduct,
+    updateCustomProduct,
+    deleteCustomProduct,
+    refreshProducts: fetchProductsFromSupabase,
+    isProductsLoading
   };
 
   return (

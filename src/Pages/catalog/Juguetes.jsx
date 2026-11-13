@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { useShop } from "../../context/ShopContext";
+import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 // PRODUCTOS
 const products = [
@@ -52,7 +53,8 @@ function Juguetes() {
   const {
     toggleFavorite,
     isFavorite,
-    addToCart
+    addToCart,
+    customProducts
   } = useShop();
   const navigate = useNavigate();
   const openProductDetails = (product) => {
@@ -76,9 +78,11 @@ function Juguetes() {
     );
   };
 
-  // FILTRAR Y ORDENAR PRODUCTOS
+  // FILTRAR Y ORDENAR PRODUCTOS (INCLUYE ADMIN)
   const filteredProducts = useMemo(() => {
-    let result = catalogProducts.filter((product) => {
+    const combinedList = mergeCustomProducts(catalogProducts, customProducts, "juguetes");
+
+    let result = combinedList.filter((product) => {
       const categoryMatch =
         selectedCategories.length === 0 ||
         selectedCategories.includes(product.category);
@@ -87,7 +91,9 @@ function Juguetes() {
         selectedMaterials.length === 0 ||
         selectedMaterials.includes(product.material);
 
-      return categoryMatch && materialMatch && product.price <= maxPrice;
+      const priceMatch = maxPrice ? product.price <= maxPrice : true;
+
+      return categoryMatch && materialMatch && priceMatch;
     });
 
     if (sort === "price-low") {
@@ -103,7 +109,7 @@ function Juguetes() {
     }
 
     return result;
-  }, [selectedCategories, selectedMaterials, maxPrice, sort]);
+  }, [selectedCategories, selectedMaterials, maxPrice, sort, customProducts]);
 
   // LIMPIAR FILTROS
   const clearFilters = () => {

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { useShop } from "../../context/ShopContext";
+import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 // PRODUCTOS
 const products = [
@@ -171,6 +172,7 @@ function Lenceria() {
     toggleFavorite,
     isFavorite,
     addToCart,
+    customProducts,
   } = useShop();
   const navigate = useNavigate();
   const openProductDetails = (product) => {
@@ -186,9 +188,11 @@ function Lenceria() {
   const [view, setView] = useState("grid");
   const [showFilters, setShowFilters] = useState(false);
 
-  // FILTRAR Y ORDENAR PRODUCTOS
+  // FILTRAR Y ORDENAR PRODUCTOS (INCLUYE ADMIN)
   const filteredProducts = useMemo(() => {
-    let result = catalogProducts.filter((product) => {
+    const combinedList = mergeCustomProducts(catalogProducts, customProducts, "lenceria");
+
+    let result = combinedList.filter((product) => {
       const categoryMatch =
         selectedCategory === "Todas" ||
         product.category === selectedCategory;
@@ -197,10 +201,12 @@ function Lenceria() {
         selectedMaterial === "Todos" ||
         product.material === selectedMaterial;
 
+      const priceMatch = maxPrice ? product.price <= maxPrice : true;
+
       return (
         categoryMatch &&
         materialMatch &&
-        product.price <= maxPrice
+        priceMatch
       );
     });
 
@@ -213,7 +219,7 @@ function Lenceria() {
     }
 
     return result;
-  }, [selectedCategory, selectedMaterial, maxPrice, sort]);
+  }, [selectedCategory, selectedMaterial, maxPrice, sort, customProducts]);
 
   // LIMPIAR FILTROS
   const clearFilters = () => {

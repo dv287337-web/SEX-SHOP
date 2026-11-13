@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
+import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 const products = [
   {
@@ -165,6 +166,7 @@ function ParaParejas() {
     toggleFavorite,
     isFavorite,
     addToCart,
+    customProducts,
   } = useShop();
   const navigate = useNavigate();
   const openProductDetails = (product) => {
@@ -179,7 +181,9 @@ function ParaParejas() {
   const [view, setView] = useState("grid");
 
   const filteredProducts = useMemo(() => {
-    let result = catalogProducts.filter((product) => {
+    const combinedList = mergeCustomProducts(catalogProducts, customProducts, "para-parejas");
+
+    let result = combinedList.filter((product) => {
       const categoryMatch =
         selectedCategory === "Todos" ||
         product.category === selectedCategory;
@@ -188,7 +192,7 @@ function ParaParejas() {
         selectedMaterial === "Todos" ||
         product.material === selectedMaterial;
 
-      const priceMatch = product.price <= maxPrice;
+      const priceMatch = maxPrice ? product.price <= maxPrice : true;
 
       return categoryMatch && materialMatch && priceMatch;
     });
@@ -202,7 +206,7 @@ function ParaParejas() {
     }
 
     return result;
-  }, [selectedCategory, selectedMaterial, maxPrice, sort]);
+  }, [selectedCategory, selectedMaterial, maxPrice, sort, customProducts]);
 
   const clearFilters = () => {
     setSelectedCategory("Todos");
