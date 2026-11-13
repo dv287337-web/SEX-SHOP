@@ -9659,9 +9659,9 @@ html.motion-ready .motion-reveal {
   overflow: hidden;
   place-items: center;
   background:
-    radial-gradient(circle at 50% 38%, rgb(214 25 105 / 19%), transparent 24%),
-    radial-gradient(circle at 50% 100%, rgb(238 24 109 / 10%), transparent 35%),
-    #12070d;
+    radial-gradient(circle at 50% 43%, rgb(245 24 111 / 18%), transparent 26%),
+    radial-gradient(circle at 50% 100%, rgb(238 24 109 / 16%), transparent 42%),
+    #12050b;
   color: #fff;
   opacity: 1;
   transition: opacity 600ms cubic-bezier(.76, 0, .24, 1), visibility 600ms;
@@ -9686,21 +9686,21 @@ html.motion-ready .motion-reveal {
 .intro-splash-mark {
   position: relative;
   display: grid;
-  width: clamp(150px, 18vw, 205px);
-  height: clamp(150px, 18vw, 205px);
+  width: clamp(168px, 18vw, 220px);
+  height: clamp(168px, 18vw, 220px);
   place-items: center;
   overflow: hidden;
-  margin-bottom: 42px;
+  margin-bottom: 34px;
   border: 1px solid rgb(255 255 255 / 18%);
   border-radius: 34%;
   background:
-    linear-gradient(145deg, #f02d82 0%, #d31b69 48%, #a20f4b 100%);
+    linear-gradient(145deg, #f261a0 0%, #d51c69 42%, #7b0d3d 100%);
   color: #fff;
   box-shadow:
-    0 0 0 1px rgb(255 255 255 / 22%),
-    0 26px 75px rgb(226 24 106 / 32%),
-    0 0 54px rgb(226 24 106 / 25%),
-    inset 0 1px 0 rgb(255 255 255 / 30%);
+    0 0 0 1px rgb(255 255 255 / 30%),
+    0 25px 75px rgb(226 24 106 / 40%),
+    0 0 60px rgb(226 24 106 / 30%),
+    inset 0 1px 0 rgb(255 255 255 / 40%);
   transform: rotate(-4deg);
   animation: intro-mark-enter 900ms cubic-bezier(.16, 1, .3, 1) both,
     intro-mark-float 4s ease-in-out 1.1s infinite;
@@ -9733,13 +9733,28 @@ html.motion-ready .motion-reveal {
   animation: intro-mark-shine 2.6s ease-in-out 1.1s infinite;
 }
 
-.intro-splash-mark svg {
+.intro-splash-mark-art {
   position: relative;
   z-index: 1;
+  width: 72%;
+  height: 72%;
+  fill: none;
+  color: #ffb2d1;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+  filter: drop-shadow(0 0 5px rgb(255 63 150 / 80%));
   transform: rotate(4deg);
 }
 
 .intro-splash-heart {
+  position: absolute !important;
+  z-index: 3 !important;
+  top: 15%;
+  right: 16%;
+  color: #ffb5d2;
+  filter: drop-shadow(0 0 6px #ff3d91);
   animation: intro-heart-pulse 1.8s ease-in-out 1.2s infinite;
 }
 
@@ -9754,12 +9769,27 @@ html.motion-ready .motion-reveal {
 }
 
 .intro-splash-kicker {
-  margin: 0 0 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  margin: 0 0 18px;
   color: #f895bb;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 3px;
   animation: intro-text-in 650ms ease-out .45s both;
+}
+
+.intro-splash-kicker::before,
+.intro-splash-kicker::after {
+  width: 78px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e51e72);
+  content: "";
+}
+
+.intro-splash-kicker::after {
+  background: linear-gradient(90deg, #e51e72, transparent);
 }
 
 .intro-splash h1 {
@@ -9787,7 +9817,7 @@ html.motion-ready .motion-reveal {
 }
 
 .intro-splash-tagline {
-  margin: 22px 0 52px;
+  margin: 18px 0 58px;
   color: #e8cbd7;
   font-size: 15px;
   letter-spacing: 1.5px;
@@ -9796,7 +9826,7 @@ html.motion-ready .motion-reveal {
 }
 
 .intro-splash-progress {
-  width: min(72vw, 325px);
+  width: min(72vw, 505px);
   height: 2px;
   overflow: hidden;
   border-radius: 99px;
@@ -9805,19 +9835,32 @@ html.motion-ready .motion-reveal {
 
 .intro-splash-progress span {
   display: block;
-  width: 100%;
+  width: 75%;
   height: 100%;
   background: linear-gradient(90deg, #f12a7b, #ffb2cf);
   box-shadow: 0 0 14px #f12a7b;
   transform: scaleX(0);
   transform-origin: left;
-  animation: intro-progress 2.15s cubic-bezier(.2, .75, .3, 1) both;
+  animation: intro-progress 2.8s cubic-bezier(.2, .75, .3, 1) both;
+}
+
+.intro-splash-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: min(80vw, 540px);
+}
+
+.intro-splash-progress-row strong {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .intro-splash-loading {
-  margin: 18px 0 0;
-  color: #bfa3ae;
-  font-size: 10px;
+  margin: 17px 0 0;
+  color: #ecd5df;
+  font-size: 15px;
   letter-spacing: .5px;
   animation: intro-text-in 600ms ease-out 1s both;
 }
@@ -9843,6 +9886,107 @@ html.motion-ready .motion-reveal {
   height: min(56vw, 650px);
   border-color: rgb(241 42 123 / 18%);
   animation: intro-orbit 13s linear reverse infinite;
+}
+
+.intro-splash-orbit-glow {
+  width: min(67vw, 780px);
+  height: min(67vw, 780px);
+  border: 2px solid transparent;
+  background: conic-gradient(from 225deg, transparent 0 31%, #ff2b83 38%, #ffb2d0 42%, transparent 49% 100%) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 7px #ff2b83);
+  animation: intro-orbit 8s linear infinite;
+}
+
+.intro-splash-ribbon,
+.intro-splash-lace {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.intro-splash-ribbon {
+  width: 240px;
+  height: 90px;
+  border: 18px solid rgb(220 19 94 / 45%);
+  filter: blur(.2px) drop-shadow(0 0 14px rgb(220 19 94 / 45%));
+  opacity: .9;
+  transform: rotate(35deg);
+  animation: intro-ribbon-drift 8s ease-in-out infinite;
+}
+
+.intro-splash-ribbon-top {
+  top: -55px;
+  right: -45px;
+  border-radius: 50% 0 55% 50%;
+}
+
+.intro-splash-ribbon-bottom {
+  bottom: -55px;
+  left: -55px;
+  border-radius: 55% 50% 50% 0;
+  transform: rotate(215deg);
+  animation-delay: -3s;
+}
+
+.intro-splash-lace {
+  width: 230px;
+  height: 155px;
+  background:
+    radial-gradient(circle, transparent 0 3px, #f31b76 4px 5px, transparent 6px) 0 0 / 15px 15px,
+    radial-gradient(circle, transparent 0 5px, #b70d53 6px 7px, transparent 8px) 7px 7px / 15px 15px;
+  filter: drop-shadow(0 0 8px #e4166b);
+  opacity: .7;
+  mask-image: linear-gradient(135deg, #000 15%, transparent 80%);
+  animation: intro-lace-breathe 5s ease-in-out infinite;
+}
+
+.intro-splash-lace-top-left {
+  top: -22px;
+  left: -18px;
+  transform: rotate(-12deg);
+}
+
+.intro-splash-lace-bottom-right {
+  right: -20px;
+  bottom: -18px;
+  transform: rotate(168deg);
+  animation-delay: -2.5s;
+}
+
+.intro-splash-benefits {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(22px, 5vw, 62px);
+  width: min(90vw, 680px);
+  margin-top: 60px;
+  color: #fff;
+  animation: intro-text-in 700ms ease-out 1.2s both;
+}
+
+.intro-splash-benefits span {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 120px;
+  color: #ff4d9a;
+}
+
+.intro-splash-benefits b {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.intro-splash-benefits i {
+  width: 1px;
+  height: 66px;
+  background: linear-gradient(transparent, #e51972, transparent);
 }
 
 @keyframes intro-content-in {
@@ -9892,14 +10036,76 @@ html.motion-ready .motion-reveal {
   to { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
 }
 
+@keyframes intro-ribbon-drift {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: 12px; }
+}
+
+@keyframes intro-lace-breathe {
+  0%, 100% { opacity: .55; transform: scale(1) rotate(-12deg); }
+  50% { opacity: .9; transform: scale(1.04) rotate(-9deg); }
+}
+
 @media (max-width: 600px) {
   .intro-splash-mark {
-    margin-bottom: 27px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 24px;
+  }
+
+  .intro-splash-kicker {
+    gap: 8px;
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .intro-splash-kicker::before,
+  .intro-splash-kicker::after {
+    width: 28px;
   }
 
   .intro-splash-tagline {
     margin-bottom: 34px;
     font-size: 11px;
+  }
+
+  .intro-splash-progress-row {
+    gap: 10px;
+  }
+
+  .intro-splash-progress-row strong {
+    font-size: 16px;
+  }
+
+  .intro-splash-loading {
+    font-size: 11px;
+  }
+
+  .intro-splash-benefits {
+    gap: 4px;
+    margin-top: 40px;
+  }
+
+  .intro-splash-benefits span {
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .intro-splash-benefits b {
+    font-size: 10px;
+  }
+
+  .intro-splash-benefits i {
+    height: 45px;
+  }
+
+  .intro-splash-ribbon {
+    width: 160px;
+  }
+
+  .intro-splash-lace {
+    width: 150px;
+    height: 110px;
   }
 }
 
@@ -9914,7 +10120,10 @@ html.motion-ready .motion-reveal {
   .intro-splash-orbit,
   .intro-splash-progress span,
   .intro-splash-heart,
-  .intro-splash-sparkle,
+  .intro-splash-orbit-glow,
+  .intro-splash-ribbon,
+  .intro-splash-lace,
+  .intro-splash-benefits,
   .intro-splash-kicker,
   .intro-splash h1,
   .intro-splash-tagline,
