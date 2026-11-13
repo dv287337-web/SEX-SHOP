@@ -72,6 +72,7 @@ function Categories() {
   };
 
   const handleGestureStart = (event) => {
+    event.currentTarget.setPointerCapture?.(event.pointerId);
     gestureStart.current = event.clientX ?? event.touches?.[0]?.clientX ?? null;
   };
 
@@ -80,6 +81,7 @@ function Categories() {
     const endX = event.clientX ?? event.changedTouches?.[0]?.clientX ?? gestureStart.current;
     const distance = endX - gestureStart.current;
     gestureStart.current = null;
+    event.currentTarget.releasePointerCapture?.(event.pointerId);
     if (Math.abs(distance) < 42) return;
     changeCategory(distance < 0 ? 1 : -1);
   };
@@ -121,6 +123,10 @@ function Categories() {
           className="categories-grid"
           onPointerDown={handleGestureStart}
           onPointerUp={handleGestureEnd}
+          onPointerCancel={(event) => {
+            gestureStart.current = null;
+            event.currentTarget.releasePointerCapture?.(event.pointerId);
+          }}
           onWheel={handleWheel}
         >
           {categories.map((category) => {
