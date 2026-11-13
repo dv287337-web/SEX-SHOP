@@ -2,6 +2,7 @@ import { useRef } from "react";
 import Hero from "../components/Hero";
 import Categories from "../components/Categories";
 import Benefits from "../components/Benefits";
+import FeaturedProducts from "../components/FeaturedProducts";
 import HomeCollections from "../components/HomeCollections";
 import TrustSection from "../components/TrustSection";
 import { Link } from "react-router-dom";
@@ -24,6 +25,7 @@ function Home() {
     <>
       <Hero />
       <Benefits />
+      <FeaturedProducts />
       <Categories />
       <TrustSection />
       <HomeCollections />
