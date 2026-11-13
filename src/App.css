@@ -5862,7 +5862,7 @@ html.motion-ready .motion-reveal.is-revealed[data-reveal="right"] {
 
 html.motion-ready .category-card.motion-reveal {
   opacity: 0;
-  transform: translate3d(0, 30px, 0) scale(.76);
+  transform: translate3d(0, 22px, 0) scale(.94);
 }
 
 html.motion-ready .category-card.motion-reveal.is-revealed {
@@ -5870,8 +5870,8 @@ html.motion-ready .category-card.motion-reveal.is-revealed {
 }
 
 @keyframes category-pair-arrive {
-  0% { opacity: 0; transform: translate3d(0, 30px, 0) scale(.76); }
-  64% { opacity: 1; transform: translate3d(0, -3px, 0) scale(1.06); }
+  0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(.94); }
+  64% { opacity: 1; transform: translate3d(0, -2px, 0) scale(1.015); }
   100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
