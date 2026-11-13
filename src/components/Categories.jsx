@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import categorySprite from "../assets/category-editorial-grid.jpg";
@@ -64,33 +64,16 @@ const categories = [
 ];
 
 function Categories() {
-  const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const changeCategory = (direction) => {
+    setActiveIndex((current) => (current + direction + categories.length) % categories.length);
+  };
 
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel || !("IntersectionObserver" in window)) return undefined;
-
-    const cards = [...carousel.querySelectorAll(".category-card")];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleCard = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visibleCard) setActiveIndex(cards.indexOf(visibleCard.target));
-      },
-      { root: carousel, threshold: [0.55, 0.72, 0.9] }
-    );
-
-    cards.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
-  }, []);
-
-  const scrollCategories = (direction) => {
-    carouselRef.current?.scrollBy({
-      left: direction * Math.min(carouselRef.current.clientWidth * 0.82, 420),
-      behavior: "smooth",
-    });
+  const getOffset = (index) => {
+    let offset = index - activeIndex;
+    if (offset > categories.length / 2) offset -= categories.length;
+    if (offset < -categories.length / 2) offset += categories.length;
+    return offset;
   };
 
   return (
@@ -107,17 +90,25 @@ function Categories() {
         </a>
       </div>
 
-      <div className="categories-carousel">
-        <button type="button" className="categories-carousel-button categories-carousel-button--prev" onClick={() => scrollCategories(-1)} aria-label="Ver categorías anteriores">
+      <div className="categories-carousel" role="region" aria-roledescription="carrusel" aria-label="Nuestras categorías">
+        <button type="button" className="categories-carousel-button categories-carousel-button--prev" onClick={() => changeCategory(-1)} aria-label="Ver categoría anterior">
           <ArrowLeft size={18} />
         </button>
-        <div className="categories-grid" ref={carouselRef} tabIndex="0" aria-label="Carrusel de categorías">
+        <div className="categories-grid">
           {categories.map((category) => {
               const index = categories.indexOf(category);
+              const offset = getOffset(index);
               return (
                 <Link
                   to={category.path}
-                  className={`category-card ${category.style} ${index === activeIndex ? "is-active" : ""}`}
+                  className={`category-card ${category.style} position-${offset} ${index === activeIndex ? "is-active" : ""}`}
+                  onClick={(event) => {
+                    if (index !== activeIndex) {
+                      event.preventDefault();
+                      setActiveIndex(index);
+                    }
+                  }}
+                  aria-current={index === activeIndex ? "true" : undefined}
                   key={category.name}
                   style={{
                     "--sprite-x": `${(index % 4) * (100 / 3)}%`,
@@ -134,7 +125,7 @@ function Categories() {
               );
             })}
         </div>
-        <button type="button" className="categories-carousel-button categories-carousel-button--next" onClick={() => scrollCategories(1)} aria-label="Ver más categorías">
+        <button type="button" className="categories-carousel-button categories-carousel-button--next" onClick={() => changeCategory(1)} aria-label="Ver categoría siguiente">
           <ArrowRight size={18} />
         </button>
       </div>

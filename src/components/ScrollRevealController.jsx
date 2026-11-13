@@ -20,8 +20,10 @@ export default function ScrollRevealController() {
     const root = document.documentElement;
     const observed = new Set();
     root.classList.add("motion-ready");
-    const categoryCards = [...document.querySelectorAll(".categories-section .category-card")];
     const categoryPairs = [...document.querySelectorAll(".categories-section .category-pair")];
+    const categoryCards = categoryPairs.length
+      ? [...document.querySelectorAll(".categories-section .category-card")]
+      : [];
     const categoryAnimationEndHandlers = new Map();
 
     categoryCards.forEach((card) => {
