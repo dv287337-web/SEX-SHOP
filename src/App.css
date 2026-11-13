@@ -9696,7 +9696,8 @@ html.motion-ready .motion-reveal {
   color: #fff;
   box-shadow: 0 24px 70px rgb(226 24 106 / 28%), inset 0 1px 0 rgb(255 255 255 / 22%);
   transform: rotate(-4deg);
-  animation: intro-mark-float 4s ease-in-out .8s infinite;
+  animation: intro-mark-enter 900ms cubic-bezier(.16, 1, .3, 1) both,
+    intro-mark-float 4s ease-in-out 1.1s infinite;
 }
 
 .intro-splash-mark::before {
@@ -9716,10 +9717,23 @@ html.motion-ready .motion-reveal {
   opacity: .28;
 }
 
+.intro-splash-mark::after {
+  position: absolute;
+  inset: -30% 30% -30% -55%;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 35%), transparent 65%);
+  content: "";
+  transform: translateX(-120%) rotate(12deg);
+  animation: intro-mark-shine 2.6s ease-in-out 1.1s infinite;
+}
+
 .intro-splash-mark svg {
   position: relative;
   z-index: 1;
   transform: rotate(4deg);
+}
+
+.intro-splash-heart {
+  animation: intro-heart-pulse 1.8s ease-in-out 1.2s infinite;
 }
 
 .intro-splash-sparkle {
@@ -9729,6 +9743,7 @@ html.motion-ready .motion-reveal {
   top: 13%;
   color: #ffbad3;
   transform: rotate(4deg);
+  animation: intro-sparkle-twinkle 1.5s ease-in-out 1.4s infinite;
 }
 
 .intro-splash-kicker {
@@ -9737,6 +9752,7 @@ html.motion-ready .motion-reveal {
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 3px;
+  animation: intro-text-in 650ms ease-out .45s both;
 }
 
 .intro-splash h1 {
@@ -9747,6 +9763,7 @@ html.motion-ready .motion-reveal {
   font-weight: 500;
   letter-spacing: -3px;
   line-height: .95;
+  animation: intro-text-in 700ms ease-out .65s both;
 }
 
 .intro-splash h1 span {
@@ -9768,6 +9785,7 @@ html.motion-ready .motion-reveal {
   font-size: 13px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  animation: intro-text-in 650ms ease-out .85s both;
 }
 
 .intro-splash-progress {
@@ -9794,6 +9812,7 @@ html.motion-ready .motion-reveal {
   color: #bfa3ae;
   font-size: 10px;
   letter-spacing: .5px;
+  animation: intro-text-in 600ms ease-out 1s both;
 }
 
 .intro-splash-orbit {
@@ -9824,6 +9843,32 @@ html.motion-ready .motion-reveal {
 @keyframes intro-mark-float {
   0%, 100% { transform: rotate(-4deg) translateY(0); }
   50% { transform: rotate(-1deg) translateY(-8px); }
+}
+
+@keyframes intro-mark-enter {
+  from { opacity: 0; transform: rotate(-18deg) scale(.55) translateY(28px); }
+  to { opacity: 1; transform: rotate(-4deg) scale(1) translateY(0); }
+}
+
+@keyframes intro-mark-shine {
+  0%, 25% { transform: translateX(-120%) rotate(12deg); }
+  55%, 100% { transform: translateX(220%) rotate(12deg); }
+}
+
+@keyframes intro-heart-pulse {
+  0%, 100% { transform: rotate(4deg) scale(1); }
+  12% { transform: rotate(4deg) scale(1.16); }
+  24% { transform: rotate(4deg) scale(1); }
+}
+
+@keyframes intro-sparkle-twinkle {
+  0%, 100% { opacity: .55; transform: rotate(4deg) scale(.85); }
+  50% { opacity: 1; transform: rotate(18deg) scale(1.18); }
+}
+
+@keyframes intro-text-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes intro-progress {
@@ -9857,7 +9902,13 @@ html.motion-ready .motion-reveal {
 
   .intro-splash-mark,
   .intro-splash-orbit,
-  .intro-splash-progress span {
+  .intro-splash-progress span,
+  .intro-splash-heart,
+  .intro-splash-sparkle,
+  .intro-splash-kicker,
+  .intro-splash h1,
+  .intro-splash-tagline,
+  .intro-splash-loading {
     animation: none;
   }
 

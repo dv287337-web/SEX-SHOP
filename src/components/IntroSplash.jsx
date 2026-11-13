@@ -29,7 +29,7 @@ export default function IntroSplash() {
       <div className="intro-splash-content">
         <div className="intro-splash-mark">
           <span className="intro-splash-mark-glow" />
-          <Heart size={42} fill="currentColor" strokeWidth={1.5} />
+          <Heart className="intro-splash-heart" size={42} fill="currentColor" strokeWidth={1.5} />
           <Sparkles className="intro-splash-sparkle" size={18} />
         </div>
 
