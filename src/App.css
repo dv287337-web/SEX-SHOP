@@ -8481,7 +8481,7 @@ html.motion-ready .motion-reveal {
 }
 
 .categories-carousel .category-card {
-  flex: 0 0 clamp(250px, 27vw, 330px);
+  flex: 0 0 calc((100% - 16px) / 2);
   height: clamp(270px, 29vw, 350px);
   scroll-snap-align: start;
 }
@@ -8514,7 +8514,8 @@ html.motion-ready .motion-reveal {
 }
 
 .back-to-top {
-  right: 22px;
+  right: auto;
+  left: 22px;
   bottom: 104px;
 }
 
@@ -8562,7 +8563,8 @@ html.motion-ready .motion-reveal {
   }
 
   .back-to-top {
-    right: 14px;
+    right: auto;
+    left: 14px;
     bottom: 94px;
   }
 }
