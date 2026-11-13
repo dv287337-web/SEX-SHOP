@@ -8665,8 +8665,9 @@ html.motion-ready .motion-reveal {
 
 /* Carrusel 3D editorial: una tarjeta protagonista y laterales en profundidad. */
 .categories-carousel {
+  display: block;
   max-width: 1320px;
-  gap: 24px;
+  margin-inline: auto;
 }
 
 .categories-section .section-heading h2 {
@@ -8683,6 +8684,7 @@ html.motion-ready .motion-reveal {
   perspective: 1200px;
   touch-action: pan-y;
   cursor: grab;
+  width: 100%;
 }
 
 .categories-carousel .categories-grid:active {
@@ -8753,19 +8755,36 @@ html.motion-ready .motion-reveal {
 }
 
 .categories-carousel-button {
-  position: relative;
+  position: absolute;
+  top: 50%;
   z-index: 8;
   flex: 0 0 52px;
   width: 52px;
   height: 52px;
+  transform: translateY(-50%);
   background: rgb(41 24 33 / 92%);
   backdrop-filter: blur(10px);
+}
+
+.categories-carousel-button:hover {
+  transform: translateY(-50%) translateY(-2px);
+}
+
+.categories-carousel-button:active {
+  transform: translateY(-50%) scale(.94);
+}
+
+.categories-carousel-button--prev {
+  left: 18px;
+}
+
+.categories-carousel-button--next {
+  right: 18px;
 }
 
 @media (max-width: 700px) {
   .categories-carousel {
     margin-inline: 0;
-    gap: 8px;
   }
 
   .categories-carousel .categories-grid {
@@ -8791,9 +8810,16 @@ html.motion-ready .motion-reveal {
   }
 
   .categories-carousel-button {
-    flex-basis: 40px;
     width: 40px;
     height: 40px;
+  }
+
+  .categories-carousel-button--prev {
+    left: 8px;
+  }
+
+  .categories-carousel-button--next {
+    right: 8px;
   }
 }
 

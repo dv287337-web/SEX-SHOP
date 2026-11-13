@@ -121,6 +121,11 @@ function Categories() {
         </button>
         <div
           className="categories-grid"
+          tabIndex="0"
+          onKeyDown={(event) => {
+            if (event.key === "ArrowLeft") changeCategory(-1);
+            if (event.key === "ArrowRight") changeCategory(1);
+          }}
           onPointerDown={handleGestureStart}
           onPointerUp={handleGestureEnd}
           onPointerCancel={(event) => {
