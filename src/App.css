@@ -8055,3 +8055,106 @@ input.price-slider {
 .product-card:hover .product-card-img {
   transform: scale(1.05);
 }
+
+/* Carrito y favoritos: navegación visual y acciones más claras */
+.cart-product-image,
+.favorites-drawer-thumb,
+.cart-drawer-thumb {
+  overflow: hidden;
+}
+
+.cart-product-image img,
+.cart-drawer-thumb img,
+.favorites-drawer-thumb img,
+.favorite-card-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.cart-product-image,
+.favorite-card-image > a {
+  display: block;
+}
+
+.cart-product-info h3 a,
+.cart-drawer-info strong a,
+.favorites-drawer-info strong a,
+.favorite-card-info h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cart-product-info h3 a:hover,
+.cart-drawer-info strong a:hover,
+.favorites-drawer-info strong a:hover,
+.favorite-card-info h3 a:hover {
+  color: #c51b60;
+}
+
+.favorites-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: -22px 0 22px;
+}
+
+.favorites-clear-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid #eadce2;
+  border-radius: 7px;
+  background: #fff;
+  color: #8d405c;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.favorites-clear-button:hover {
+  border-color: #c51b60;
+  color: #c51b60;
+}
+
+.cart-product-image:focus-visible,
+.cart-drawer-thumb:focus-visible,
+.favorites-drawer-thumb:focus-visible,
+.cart-product-info h3 a:focus-visible,
+.favorite-card-info h3 a:focus-visible {
+  outline: 2px solid #f3478b;
+  outline-offset: 3px;
+}
+
+/* Los drawers viven sobre un fondo claro: no heredar el color crema del header. */
+.cart-drawer,
+.favorites-drawer {
+  color: #291821;
+}
+
+.cart-drawer-header > span,
+.favorites-drawer-header > span {
+  color: #291821;
+}
+
+.cart-drawer-header > button,
+.favorites-drawer-header > button {
+  color: #392832;
+  cursor: pointer;
+}
+
+.cart-drawer-empty h3,
+.favorites-drawer-empty h3 {
+  color: #392832;
+}
+
+.cart-drawer-empty p,
+.favorites-drawer-empty p {
+  color: #806b75;
+}
+
+.cart-drawer-empty button,
+.favorites-drawer-empty > button {
+  font-weight: 700;
+}

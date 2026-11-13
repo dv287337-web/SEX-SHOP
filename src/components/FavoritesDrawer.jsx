@@ -36,9 +36,11 @@ export default function FavoritesDrawer() {
           <div className="favorites-drawer-items">
             {favorites.map((product) => (
               <article className="favorites-drawer-item" key={product.id}>
-                <div className="favorites-drawer-thumb"><Heart /></div>
-                <div className="favorites-drawer-info">
-                  <strong>{product.name}</strong>
+                 <Link className="favorites-drawer-thumb" to={`/producto/${product.id}`} onClick={closeFavoritesDrawer} aria-label={`Ver ${product.name}`}>
+                   {product.image ? <img src={product.image} alt="" /> : <Heart />}
+                 </Link>
+                 <div className="favorites-drawer-info">
+                   <strong><Link to={`/producto/${product.id}`} onClick={closeFavoritesDrawer}>{product.name}</Link></strong>
                   <span>S/ {product.price.toFixed(2)}</span>
                   <button className="favorites-drawer-add add-cart-button" onClick={() => addToCart(product)}>
                     <ShoppingBag size={15} /> Agregar al carrito

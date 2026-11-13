@@ -106,16 +106,16 @@ function Carrito() {
               <div className="cart-products-list">
                 {cart.map((product) => (
                   <article className="cart-product" key={product.id}>
-                    <div className="cart-product-image">
-                      <ShoppingBag size={38} />
-                    </div>
+                      <Link className="cart-product-image" to={`/producto/${product.id}`} aria-label={`Ver ${product.name}`}>
+                        {product.image ? <img src={product.image} alt="" /> : <ShoppingBag size={38} />}
+                      </Link>
 
                     <div className="cart-product-info">
                       <span className="cart-product-category">
                         {product.category || "Producto"}
                       </span>
 
-                      <h3>{product.name}</h3>
+                      <h3><Link to={`/producto/${product.id}`}>{product.name}</Link></h3>
 
                       <div className="cart-product-prices">
                         <strong>
@@ -148,7 +148,7 @@ function Carrito() {
                           <Minus size={15} />
                         </button>
 
-                        <span>{product.quantity}</span>
+                        <span aria-live="polite" aria-label={`${product.quantity} unidades`}>{product.quantity}</span>
 
                         <button
                           onClick={() => handleIncrease(product)}

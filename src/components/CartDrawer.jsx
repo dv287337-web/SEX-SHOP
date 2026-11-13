@@ -19,8 +19,10 @@ export default function CartDrawer() {
     <aside className="cart-drawer" role="dialog" aria-modal="true" aria-label="Tu carrito" data-lenis-prevent inert={!cartDrawerOpen}>
       <header className="cart-drawer-header"><span><ShoppingBag /> Tu carrito <small>({cartCount})</small></span><button onClick={closeCartDrawer} aria-label="Cerrar"><X /></button></header>
       {cart.length ? <>
-        <div className="cart-drawer-items" data-lenis-prevent>{cart.map((item) => <article className="cart-drawer-item" key={item.id}>
-          <div className="cart-drawer-thumb"><ShoppingBag /></div><div className="cart-drawer-info"><strong>{item.name}</strong><span>S/ {item.price.toFixed(2)}</span>
+           <div className="cart-drawer-items" data-lenis-prevent>{cart.map((item) => <article className="cart-drawer-item" key={item.id}>
+           <Link className="cart-drawer-thumb" to={`/producto/${item.id}`} onClick={closeCartDrawer} aria-label={`Ver ${item.name}`}>
+             {item.image ? <img src={item.image} alt="" /> : <ShoppingBag />}
+           </Link><div className="cart-drawer-info"><strong><Link to={`/producto/${item.id}`} onClick={closeCartDrawer}>{item.name}</Link></strong><span>S/ {item.price.toFixed(2)} c/u</span>
             <div className="cart-drawer-qty"><button aria-label="Reducir cantidad" onClick={() => item.quantity > 1 ? updateQuantity(item.id, item.quantity - 1) : removeFromCart(item.id)}><Minus size={14}/></button><span>{item.quantity}</span><button aria-label="Aumentar cantidad" onClick={() => updateQuantity(item.id, item.quantity + 1)}><Plus size={14}/></button><button aria-label="Eliminar producto" onClick={() => removeFromCart(item.id)}><Trash2 size={15}/></button></div>
           </div><b>S/ {(item.price * item.quantity).toFixed(2)}</b>
         </article>)}</div>

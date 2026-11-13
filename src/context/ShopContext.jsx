@@ -309,6 +309,10 @@ export function ShopProvider({ children }) {
     );
   };
 
+  const clearFavorites = () => {
+    setFavorites([]);
+  };
+
   // Agregar productos al carrito
   const addToCart = (product, options = {}) => {
     animateCartArrival();
@@ -377,6 +381,7 @@ export function ShopProvider({ children }) {
     toggleFavorite,
     isFavorite,
     removeFavorite,
+    clearFavorites,
     cart,
     addToCart,
     updateQuantity,

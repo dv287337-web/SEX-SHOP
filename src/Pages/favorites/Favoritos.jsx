@@ -13,11 +13,18 @@ function Favoritos() {
   const {
     favorites,
     removeFavorite,
-    addToCart
+    addToCart,
+    showToast,
+    clearFavorites
   } = useShop();
 
   const handleAddToCart = (product) => {
     addToCart(product);
+  };
+
+  const handleClearFavorites = () => {
+    clearFavorites();
+    showToast({ title: "Favoritos vaciados", message: "Se eliminaron todos tus productos guardados.", type: "info" });
   };
 
   return (
@@ -37,19 +44,24 @@ function Favoritos() {
           </div>
 
           <strong>
-            {favorites.length} productos
+            {favorites.length} {favorites.length === 1 ? "producto" : "productos"}
           </strong>
         </div>
 
         {favorites.length > 0 ? (
-          <div className="favorites-grid">
+          <>
+            <div className="favorites-actions">
+              <button type="button" className="favorites-clear-button" onClick={handleClearFavorites}>
+                <Trash2 size={16} /> Vaciar favoritos
+              </button>
+            </div>
+            <div className="favorites-grid">
             {favorites.map((product) => (
               <article className="favorite-card" key={product.id}>
                 <div className="favorite-card-image">
-                  <div className="product-placeholder">
-                    <Sparkles size={42} />
-                    <span>Imagen del producto</span>
-                  </div>
+                   <Link to={`/producto/${product.id}`} aria-label={`Ver ${product.name}`}>
+                     {product.image ? <img src={product.image} alt="" className="favorite-card-img" /> : <div className="product-placeholder"><Sparkles size={42} /><span>Imagen del producto</span></div>}
+                   </Link>
 
                   {product.tag && (
                     <span className="product-tag">
@@ -70,7 +82,7 @@ function Favoritos() {
                 <div className="favorite-card-info">
                   <span>{product.category}</span>
 
-                  <h3>{product.name}</h3>
+                   <h3><Link to={`/producto/${product.id}`}>{product.name}</Link></h3>
 
                   <div className="favorite-card-price">
                     <strong>
@@ -94,7 +106,8 @@ function Favoritos() {
                 </div>
               </article>
             ))}
-          </div>
+            </div>
+          </>
         ) : (
           <div className="favorites-empty">
             <div className="favorites-empty-icon">
