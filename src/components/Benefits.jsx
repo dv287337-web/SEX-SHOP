@@ -37,7 +37,7 @@ function Benefits() {
   ];
 
   return (
-    <section className="benefits">
+    <section className="benefits" id="beneficios">
       {benefits.map((benefit, index) => (
         <div className="benefit-item" data-reveal key={index}>
           <div className="benefit-icon">

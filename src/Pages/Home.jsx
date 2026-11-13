@@ -13,6 +13,7 @@ function Home() {
   const storyRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
 
+  const { scrollYProgress: pageScrollProgress } = useScroll();
   const { scrollYProgress } = useScroll({
     target: storyRef,
     offset: ["start end", "end start"],
@@ -23,6 +24,11 @@ function Home() {
 
   return (
     <>
+      <motion.div
+        className="home-scroll-progress"
+        style={{ scaleX: pageScrollProgress }}
+        aria-hidden="true"
+      />
       <Hero />
       <Benefits />
       <FeaturedProducts />

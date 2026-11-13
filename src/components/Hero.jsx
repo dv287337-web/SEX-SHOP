@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Lock, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronDown, Lock, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import campaignImage from "../assets/campaign-hero.jpg";
@@ -235,6 +235,11 @@ function Hero() {
           ))}
         </div>
       </div>
+
+      <a className="hero-scroll-cue" href="#beneficios" aria-label="Desplazarte para explorar más">
+        <span>EXPLORA MÁS</span>
+        <ChevronDown size={16} />
+      </a>
     </section>
   );
 }
