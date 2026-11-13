@@ -19,11 +19,12 @@ export default function ProductDetail() {
   const { productId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { addToCart, openCartDrawer } = useShop();
+  const { addToCart, openCartDrawer, customProducts } = useShop();
 
   const product =
     location.state?.product ||
     getProductFromSession(productId) ||
+    customProducts?.find((p) => String(p.id) === String(productId)) ||
     allCatalogProducts.find((p) => String(p.id) === String(productId));
 
   if (!product) {

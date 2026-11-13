@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { Search, SearchX } from "lucide-react";
 import { allCatalogProducts } from "../../data/catalogProducts";
+import { useShop } from "../../context/ShopContext";
 
 function normalizeText(value) {
   return String(value || "")
@@ -14,13 +15,29 @@ function openProduct(product) {
 }
 
 export default function SearchResults() {
+  const { customProducts } = useShop();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q")?.trim() || "";
   const normalizedQuery = normalizeText(query);
   const terms = normalizedQuery.split(/\s+/).filter(Boolean);
 
+  const fullProductList = [
+    ...(customProducts || []).map(p => ({
+      ...p,
+      id: String(p.id),
+      name: p.name,
+      price: Number(p.price),
+      oldPrice: p.old_price ? Number(p.old_price) : null,
+      material: p.material || "Silicona",
+      category: p.category || "General",
+      tag: p.tag || "NUEVO",
+      image: p.image
+    })),
+    ...allCatalogProducts
+  ];
+
   const results = terms.length
-    ? allCatalogProducts.filter((product) => {
+    ? fullProductList.filter((product) => {
         const searchableFields = [
           product.name,
           product.category,
