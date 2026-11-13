@@ -99,6 +99,18 @@ body {
   overflow-x: hidden;
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+}
+
 /* Custom Minimalist Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
