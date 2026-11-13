@@ -8681,6 +8681,12 @@ html.motion-ready .motion-reveal {
   overflow: hidden;
   scrollbar-width: none;
   perspective: 1200px;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.categories-carousel .categories-grid:active {
+  cursor: grabbing;
 }
 
 .categories-carousel .category-card {
@@ -8691,7 +8697,7 @@ html.motion-ready .motion-reveal {
   height: clamp(285px, 32vw, 405px);
   margin: 0;
   transform-origin: center center;
-  transition: transform 700ms cubic-bezier(.16, 1, .3, 1), opacity 500ms ease, filter 500ms ease, box-shadow 700ms ease;
+  transition: transform 520ms cubic-bezier(.22, .8, .24, 1), opacity 420ms ease, filter 420ms ease, box-shadow 520ms ease;
   will-change: transform, opacity;
 }
 

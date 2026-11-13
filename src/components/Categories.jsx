@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import categorySprite from "../assets/category-editorial-grid.jpg";
@@ -65,8 +65,31 @@ const categories = [
 
 function Categories() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const gestureStart = useRef(null);
+  const lastWheelChange = useRef(0);
   const changeCategory = (direction) => {
     setActiveIndex((current) => (current + direction + categories.length) % categories.length);
+  };
+
+  const handleGestureStart = (event) => {
+    gestureStart.current = event.clientX ?? event.touches?.[0]?.clientX ?? null;
+  };
+
+  const handleGestureEnd = (event) => {
+    if (gestureStart.current === null) return;
+    const endX = event.clientX ?? event.changedTouches?.[0]?.clientX ?? gestureStart.current;
+    const distance = endX - gestureStart.current;
+    gestureStart.current = null;
+    if (Math.abs(distance) < 42) return;
+    changeCategory(distance < 0 ? 1 : -1);
+  };
+
+  const handleWheel = (event) => {
+    if (Math.abs(event.deltaX) < Math.abs(event.deltaY)) return;
+    const now = Date.now();
+    if (now - lastWheelChange.current < 520) return;
+    lastWheelChange.current = now;
+    changeCategory(event.deltaX > 0 ? 1 : -1);
   };
 
   const getOffset = (index) => {
@@ -94,7 +117,12 @@ function Categories() {
         <button type="button" className="categories-carousel-button categories-carousel-button--prev" onClick={() => changeCategory(-1)} aria-label="Ver categoría anterior">
           <ArrowLeft size={18} />
         </button>
-        <div className="categories-grid">
+        <div
+          className="categories-grid"
+          onPointerDown={handleGestureStart}
+          onPointerUp={handleGestureEnd}
+          onWheel={handleWheel}
+        >
           {categories.map((category) => {
               const index = categories.indexOf(category);
               const offset = getOffset(index);
