@@ -37,7 +37,7 @@ export default function FavoritesDrawer() {
             {favorites.map((product) => (
               <article className="favorites-drawer-item" key={product.id}>
                  <Link className="favorites-drawer-thumb" to={`/producto/${product.id}`} onClick={closeFavoritesDrawer} aria-label={`Ver ${product.name}`}>
-                   {product.image ? <img src={product.image} alt="" /> : <Heart />}
+                   {product.image ? <img src={product.image} alt="" loading="lazy" decoding="async" /> : <Heart />}
                  </Link>
                  <div className="favorites-drawer-info">
                    <strong><Link to={`/producto/${product.id}`} onClick={closeFavoritesDrawer}>{product.name}</Link></strong>

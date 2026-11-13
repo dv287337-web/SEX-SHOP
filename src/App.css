@@ -44,7 +44,7 @@
 }
 
 .adult span {
-  background: #ed2676;
+  background: #c51b60;
   color: white;
   border-radius: 50%;
   padding: 4px;
@@ -422,6 +422,7 @@
   flex-shrink: 0;
 }
 
+.benefit-text h2,
 .benefit-text h3 {
   font-size: 12px;
   font-weight: 700;
@@ -2188,6 +2189,7 @@ html.motion-ready .trust-section .trust-card.motion-reveal.is-revealed:hover { t
     height: 24px;
   }
 
+  .benefit-text h2,
   .benefit-text h3 {
     font-size: 10px;
   }
@@ -4107,6 +4109,7 @@ html.motion-ready .trust-section .trust-card.motion-reveal.is-revealed:hover { t
     padding: 7px 4px;
   }
 
+  .benefit-text h2,
   .benefit-text h3 {
     font-size: 10px;
   }
@@ -8203,6 +8206,38 @@ input.price-slider {
   outline-offset: 5px;
 }
 
+.hero-trust-badge {
+  color: #c9b2bd;
+}
+
+.hero-dot {
+  display: grid;
+  width: 28px;
+  height: 24px;
+  place-items: center;
+  background: transparent;
+}
+
+.hero-dot-fill {
+  display: block;
+  width: 8px;
+  height: 4px;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 58%);
+  transition: width 450ms cubic-bezier(.16, 1, .3, 1), background 450ms ease, box-shadow 450ms ease;
+}
+
+.hero-dot.is-active {
+  width: 52px;
+  background: transparent;
+}
+
+.hero-dot.is-active .hero-dot-fill {
+  width: 34px;
+  background: #f52276;
+  box-shadow: 0 0 14px rgb(245 34 118 / 65%);
+}
+
 @keyframes hero-scroll-bounce {
   0%, 100% { transform: translateY(-2px); }
   50% { transform: translateY(3px); }
@@ -8625,5 +8660,30 @@ html.motion-ready .motion-reveal {
     transform: none;
     opacity: 1;
     filter: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-featured-section {
+    padding-top: 44px;
+    padding-bottom: 28px;
+  }
+
+  .trust-section {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+
+  .trust-heading {
+    margin-bottom: 22px;
+  }
+
+  .home-collections {
+    padding-top: 34px;
+    padding-bottom: 44px;
+  }
+
+  .brand-story {
+    margin-top: 0;
   }
 }

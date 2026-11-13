@@ -107,7 +107,7 @@ function Carrito() {
                 {cart.map((product) => (
                   <article className="cart-product" key={product.id}>
                       <Link className="cart-product-image" to={`/producto/${product.id}`} aria-label={`Ver ${product.name}`}>
-                        {product.image ? <img src={product.image} alt="" /> : <ShoppingBag size={38} />}
+                        {product.image ? <img src={product.image} alt="" loading="lazy" decoding="async" /> : <ShoppingBag size={38} />}
                       </Link>
 
                     <div className="cart-product-info">

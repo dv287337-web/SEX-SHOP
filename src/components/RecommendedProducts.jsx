@@ -1,6 +1,5 @@
 import { Heart, ShoppingBag, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { allCatalogProducts } from "../data/catalogProducts";
 import { useShop } from "../context/ShopContext";
 
 export default function RecommendedProducts() {
@@ -9,7 +8,7 @@ export default function RecommendedProducts() {
     .map((product) => product.category)
     .filter(Boolean);
 
-  const candidates = [...(customProducts || []), ...allCatalogProducts];
+  const candidates = customProducts || [];
   const products = candidates
     .filter((product, index, list) => product?.id && list.findIndex((item) => String(item.id) === String(product.id)) === index)
     .filter((product) => !cart.some((item) => String(item.id) === String(product.id)))
@@ -19,6 +18,8 @@ export default function RecommendedProducts() {
       return bMatch - aMatch;
     })
     .slice(0, 4);
+
+  if (!products.length) return null;
 
   return (
     <section className="recommended-section" aria-labelledby="recommended-title">
@@ -33,8 +34,8 @@ export default function RecommendedProducts() {
       <div className="recommended-grid">
         {products.map((product) => (
           <article className="recommended-card" data-reveal key={product.id}>
-            <Link className="recommended-image" to={`/producto/${product.id}`}>
-              {product.image ? <img src={product.image} alt="" loading="lazy" /> : <Sparkles size={30} />}
+            <Link className="recommended-image" to={`/producto/${product.id}`} aria-label={`Ver ${product.name}`}>
+              {product.image ? <img src={product.image} alt="" loading="lazy" decoding="async" /> : <Sparkles size={30} />}
             </Link>
             <div className="recommended-body">
               <span>{product.category || "Selección especial"}</span>

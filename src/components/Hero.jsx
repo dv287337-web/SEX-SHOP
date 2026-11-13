@@ -236,7 +236,7 @@ function Hero() {
         </div>
       </div>
 
-      <a className="hero-scroll-cue" href="#beneficios" aria-label="Desplazarte para explorar más">
+      <a className="hero-scroll-cue" href="#beneficios">
         <span>EXPLORA MÁS</span>
         <ChevronDown size={16} />
       </a>

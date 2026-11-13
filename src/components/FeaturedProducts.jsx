@@ -42,6 +42,7 @@ export default function FeaturedProducts() {
                 src={product.image} 
                 alt={product.name}
                 loading="lazy"
+                decoding="async"
                 onError={(e) => {
                   e.target.src = "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=600";
                 }}

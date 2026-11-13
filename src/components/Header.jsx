@@ -102,7 +102,7 @@ function Header() {
             <span className="header-action-label">Mi cuenta</span>
           </Link>
 
-          <button className="header-favorites-trigger" type="button" aria-label={`Abrir favoritos, ${favorites.length} productos`} onClick={openFavoritesDrawer}>
+          <button className="header-favorites-trigger" type="button" onClick={openFavoritesDrawer}>
             <Heart />
             <span className="header-action-label">Favoritos</span>
             <i className="header-count" key={favorites.length}>
@@ -110,7 +110,7 @@ function Header() {
             </i>
           </button>
 
-          <button className="header-cart-trigger" type="button" aria-label={`Abrir carrito, ${cartCount} productos`} onClick={openCartDrawer}>
+          <button className="header-cart-trigger" type="button" onClick={openCartDrawer}>
             <ShoppingBag />
             <span className="header-action-label">Mi carrito</span>
             <i className="header-count" key={cartCount}>

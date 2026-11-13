@@ -60,7 +60,7 @@ function Favoritos() {
               <article className="favorite-card" key={product.id}>
                 <div className="favorite-card-image">
                    <Link to={`/producto/${product.id}`} aria-label={`Ver ${product.name}`}>
-                     {product.image ? <img src={product.image} alt="" className="favorite-card-img" /> : <div className="product-placeholder"><Sparkles size={42} /><span>Imagen del producto</span></div>}
+                     {product.image ? <img src={product.image} alt="" loading="lazy" decoding="async" className="favorite-card-img" /> : <div className="product-placeholder"><Sparkles size={42} /><span>Imagen del producto</span></div>}
                    </Link>
 
                   {product.tag && (
