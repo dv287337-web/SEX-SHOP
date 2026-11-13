@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -8,30 +9,31 @@ import CartDrawer from "./components/CartDrawer";
 import FavoritesDrawer from "./components/FavoritesDrawer";
 import SmoothScroll from "./components/SmoothScroll";
 import LuxuryToast from "./components/LuxuryToast";
-import Home from "./Pages/Home";
+import BackToTop from "./components/BackToTop";
 
 // Catálogos
-import ParaElla from "./Pages/catalog/ParaElla";
-import ParaEl from "./Pages/catalog/ParaEl";
-import ParaParejas from "./Pages/catalog/ParaParejas";
-import Lenceria from "./Pages/catalog/Lenceria";
-import Juguetes from "./Pages/catalog/Juguetes";
-import Cosmetica from "./Pages/catalog/Cosmetica";
-import BDSM from "./Pages/catalog/BDSM";
-import Ofertas from "./Pages/catalog/Ofertas";
+const Home = lazy(() => import("./Pages/Home"));
+const ParaElla = lazy(() => import("./Pages/catalog/ParaElla"));
+const ParaEl = lazy(() => import("./Pages/catalog/ParaEl"));
+const ParaParejas = lazy(() => import("./Pages/catalog/ParaParejas"));
+const Lenceria = lazy(() => import("./Pages/catalog/Lenceria"));
+const Juguetes = lazy(() => import("./Pages/catalog/Juguetes"));
+const Cosmetica = lazy(() => import("./Pages/catalog/Cosmetica"));
+const BDSM = lazy(() => import("./Pages/catalog/BDSM"));
+const Ofertas = lazy(() => import("./Pages/catalog/Ofertas"));
 
 // Nuevas páginas
-import MiCuenta from "./Pages/account/MiCuenta";
-import Favoritos from "./Pages/favorites/Favoritos";
-import Carrito from "./Pages/cart/Carrito";
-import ProductDetail from "./Pages/product/ProductDetail";
-import SearchResults from "./Pages/search/SearchResults";
-import AboutStore from "./Pages/about/AboutStore";
-import PrivacySecurity from "./Pages/legal/PrivacySecurity";
-import PaymentMethods from "./Pages/legal/PaymentMethods";
-import DiscreetShipping from "./Pages/legal/DiscreetShipping";
-import StorePickup from "./Pages/help/StorePickup";
-import AdminDashboard from "./Pages/admin/AdminDashboard";
+const MiCuenta = lazy(() => import("./Pages/account/MiCuenta"));
+const Favoritos = lazy(() => import("./Pages/favorites/Favoritos"));
+const Carrito = lazy(() => import("./Pages/cart/Carrito"));
+const ProductDetail = lazy(() => import("./Pages/product/ProductDetail"));
+const SearchResults = lazy(() => import("./Pages/search/SearchResults"));
+const AboutStore = lazy(() => import("./Pages/about/AboutStore"));
+const PrivacySecurity = lazy(() => import("./Pages/legal/PrivacySecurity"));
+const PaymentMethods = lazy(() => import("./Pages/legal/PaymentMethods"));
+const DiscreetShipping = lazy(() => import("./Pages/legal/DiscreetShipping"));
+const StorePickup = lazy(() => import("./Pages/help/StorePickup"));
+const AdminDashboard = lazy(() => import("./Pages/admin/AdminDashboard"));
 
 import "./App.css";
 
@@ -43,7 +45,8 @@ function App() {
       <ScrollRevealController />
 
       <main>
-        <Routes>
+        <Suspense fallback={<div className="route-loading" role="status">Cargando experiencia…</div>}>
+          <Routes>
           {/* Página principal */}
           <Route path="/" element={<Home />} />
 
@@ -71,11 +74,13 @@ function App() {
 
           {/* Panel Administrador */}
           <Route path="/admin" element={<AdminDashboard />} />
-        </Routes>
+          </Routes>
+        </Suspense>
       </main>
 
       <Footer />
       <WhatsAppButton />
+      <BackToTop />
       <CartDrawer />
       <FavoritesDrawer />
       <LuxuryToast />

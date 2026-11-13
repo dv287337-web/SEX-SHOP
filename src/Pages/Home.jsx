@@ -5,6 +5,7 @@ import Benefits from "../components/Benefits";
 import FeaturedProducts from "../components/FeaturedProducts";
 import HomeCollections from "../components/HomeCollections";
 import TrustSection from "../components/TrustSection";
+import RecommendedProducts from "../components/RecommendedProducts";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import categorySprite from "../assets/category-editorial-grid.jpg";
@@ -35,6 +36,7 @@ function Home() {
       <Categories />
       <TrustSection />
       <HomeCollections />
+      <RecommendedProducts />
 
       {/* Brand Story Editorial Section with Parallax */}
       <section ref={storyRef} className="brand-story">
