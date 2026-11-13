@@ -9736,15 +9736,15 @@ html.motion-ready .motion-reveal {
 .intro-splash-mark-art {
   position: relative;
   z-index: 1;
-  width: 72%;
-  height: 72%;
+  width: 75%;
+  height: 75%;
   fill: none;
   color: #ffb2d1;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 1.25;
-  filter: drop-shadow(0 0 5px rgb(255 63 150 / 80%));
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 6px rgb(255 63 150 / 90%));
   transform: rotate(4deg);
 }
 

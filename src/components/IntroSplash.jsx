@@ -41,11 +41,10 @@ export default function IntroSplash() {
         <div className="intro-splash-mark">
           <span className="intro-splash-mark-glow" />
           <svg className="intro-splash-mark-art" viewBox="0 0 120 120" aria-hidden="true">
-            <path d="M43 29c-8 9-11 18-9 27 2 8 8 12 13 16 5 4 5 10 1 17" />
-            <path d="M76 29c8 9 11 18 9 27-2 8-8 12-13 16-5 4-5 10-1 17" />
-            <path d="M45 45c4 5 9 7 15 7s11-2 15-7" />
-            <path d="M47 71c5 7 8 14 13 20 5-6 8-13 13-20" />
-            <path d="M39 33c4-8 10-12 20-12s16 4 20 12" />
+            <path d="M60 23c-16 0-27 11-27 27 0 12 7 19 16 25 7 5 8 12 3 22" />
+            <path d="M60 23c16 0 27 11 27 27 0 12-7 19-16 25-7 5-8 12-3 22" />
+            <path d="M42 59c5 6 11 9 18 9s13-3 18-9" />
+            <path d="M49 76c4 2 8 6 11 12 3-6 7-10 11-12" />
           </svg>
           <Heart className="intro-splash-heart" size={24} fill="currentColor" strokeWidth={1.5} />
         </div>
