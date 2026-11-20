@@ -9,7 +9,7 @@ import {
   List,
   Star,
   ChevronDown,
-  Sparkles,
+  Shirt,
 } from "lucide-react";
 
 import { useShop } from "../../context/ShopContext";
@@ -129,7 +129,7 @@ function Lenceria() {
           </p>
         </div>
 
-        <Sparkles className="catalog-banner-icon" />
+        <Shirt className="catalog-banner-icon" aria-hidden="true" />
       </div>
 
       {/* MIGAS DE PAN */}

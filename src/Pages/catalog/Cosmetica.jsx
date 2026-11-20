@@ -9,7 +9,7 @@ import {
   List,
   Star,
   ChevronDown,
-  Sparkles,
+  SprayCan,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { mergeCustomProducts } from "../../utils/catalogHelpers";
@@ -107,7 +107,7 @@ function Cosmetica() {
           </p>
         </div>
 
-        <Sparkles className="catalog-banner-icon" />
+        <SprayCan className="catalog-banner-icon" aria-hidden="true" />
       </div>
 
       <div className="catalog-breadcrumb">

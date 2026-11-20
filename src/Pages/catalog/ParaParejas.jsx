@@ -9,7 +9,7 @@ import {
   List,
   ChevronDown,
   Star,
-  Sparkles,
+  HeartHandshake,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { mergeCustomProducts } from "../../utils/catalogHelpers";
@@ -105,7 +105,7 @@ function ParaParejas() {
             Descubran juntos nuevas formas de conectar, explorar y disfrutar.
           </p>
         </div>
-        <Sparkles className="catalog-banner-icon" />
+        <HeartHandshake className="catalog-banner-icon" aria-hidden="true" />
       </div>
 
       <div className="catalog-breadcrumb">

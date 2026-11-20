@@ -9,6 +9,7 @@ import {
   List,
   ChevronDown,
   Star,
+  Venus,
 
 } from "lucide-react";
 
@@ -127,6 +128,7 @@ function ParaElla() {
             Descubre una colección pensada para explorar, disfrutar y sentir.
           </p>
         </div>
+        <Venus className="catalog-banner-icon" aria-hidden="true" />
       </section>
 
       {/* MIGAS DE PAN */}

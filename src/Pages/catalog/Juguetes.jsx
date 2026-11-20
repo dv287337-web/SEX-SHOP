@@ -9,6 +9,7 @@ import {
   List,
   ChevronDown,
   Star,
+  Vibrate,
 
 } from "lucide-react";
 
@@ -126,6 +127,7 @@ function Juguetes() {
             Explora nuestra colección y encuentra nuevas formas de disfrutar.
           </p>
         </div>
+        <Vibrate className="catalog-banner-icon" aria-hidden="true" />
       </section>
 
       {/* MIGAS DE PAN */}

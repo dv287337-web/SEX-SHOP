@@ -99,7 +99,7 @@ function Ofertas() {
           </p>
         </div>
 
-        <Tag className="catalog-banner-icon" />
+        <Tag className="catalog-banner-icon" aria-hidden="true" />
       </div>
 
       <div className="catalog-breadcrumb">

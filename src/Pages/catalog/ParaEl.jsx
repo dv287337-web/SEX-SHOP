@@ -9,6 +9,7 @@ import {
   List,
   ChevronDown,
   Star,
+  Mars,
 
 } from "lucide-react";
 
@@ -125,6 +126,7 @@ function ParaEl() {
             Explora nuestra selección de productos diseñados para disfrutar sin límites.
           </p>
         </div>
+        <Mars className="catalog-banner-icon" aria-hidden="true" />
       </section>
 
       {/* MIGAS DE PAN */}

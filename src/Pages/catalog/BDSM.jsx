@@ -9,7 +9,7 @@ import {
   List,
   Star,
   ChevronDown,
-  Shield,
+  Link2,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { mergeCustomProducts } from "../../utils/catalogHelpers";
@@ -100,7 +100,7 @@ function BDSM() {
           </p>
         </div>
 
-        <Shield className="catalog-banner-icon" />
+        <Link2 className="catalog-banner-icon" aria-hidden="true" />
       </div>
 
       <div className="catalog-breadcrumb">

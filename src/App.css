@@ -10400,3 +10400,41 @@ html.motion-ready .motion-reveal {
     transition: none;
   }
 }
+
+/* Icono temático en el banner superior de cada catálogo. */
+.catalog-page .catalog-banner {
+  isolation: isolate;
+}
+
+.catalog-page .catalog-banner > .catalog-banner-icon {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  width: clamp(58px, 7vw, 88px);
+  height: clamp(58px, 7vw, 88px);
+  margin-right: clamp(4px, 3vw, 42px);
+  color: #e6186d !important;
+  opacity: 1 !important;
+  stroke-width: 1.45;
+  filter: drop-shadow(0 5px 12px rgb(230 24 109 / 20%)) !important;
+  transition: transform 380ms cubic-bezier(.16, 1, .3, 1), filter 280ms ease;
+}
+
+.catalog-page .catalog-banner:hover > .catalog-banner-icon {
+  filter: drop-shadow(0 8px 18px rgb(230 24 109 / 38%)) !important;
+  transform: scale(1.08) rotate(-4deg);
+}
+
+@media (max-width: 700px) {
+  .catalog-page .catalog-banner > .catalog-banner-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-page .catalog-banner > .catalog-banner-icon {
+    transition: none;
+  }
+}
