@@ -27,6 +27,7 @@ const Ofertas = lazy(() => import("./Pages/catalog/Ofertas"));
 const MiCuenta = lazy(() => import("./Pages/account/MiCuenta"));
 const Favoritos = lazy(() => import("./Pages/favorites/Favoritos"));
 const Carrito = lazy(() => import("./Pages/cart/Carrito"));
+const Checkout = lazy(() => import("./Pages/checkout/Checkout"));
 const ProductDetail = lazy(() => import("./Pages/product/ProductDetail"));
 const SearchResults = lazy(() => import("./Pages/search/SearchResults"));
 const AboutStore = lazy(() => import("./Pages/about/AboutStore"));
@@ -66,6 +67,7 @@ function App() {
           <Route path="/mi-cuenta" element={<MiCuenta />} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/carrito" element={<Carrito />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/producto/:productId" element={<ProductDetail />} />
           <Route path="/buscar" element={<SearchResults />} />
           <Route path="/sobre-nosotros" element={<AboutStore />} />

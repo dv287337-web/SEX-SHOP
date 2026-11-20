@@ -8,7 +8,7 @@ import {
   Tag,
 } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useShop } from "../../context/ShopContext";
 
 function Carrito() {
@@ -21,6 +21,7 @@ function Carrito() {
     cartTotal,
     showToast,
   } = useShop();
+  const navigate = useNavigate();
 
   const handleDecrease = (product) => {
     if (product.quantity > 1) {
@@ -51,11 +52,7 @@ function Carrito() {
   };
 
   const handleCheckout = () => {
-    showToast({
-      title: "Checkout en preparación",
-      message: "Próximamente podrás finalizar tu pedido directamente con Yape, Plin y Tarjeta.",
-      type: "info",
-    });
+    navigate("/checkout");
   };
 
   return (
