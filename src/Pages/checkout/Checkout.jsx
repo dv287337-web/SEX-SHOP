@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Building2, Check, CreditCard, LockKeyhole, MapPin, Smartphone, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
+import { regions } from "@perucode/ubigeo-peru";
 import { useShop } from "../../context/ShopContext";
 
 const initialForm = {
@@ -18,6 +19,19 @@ const paymentMethods = [
   { id: "plin", label: "Plin", description: "Pago móvil", icon: Smartphone },
   { id: "card", label: "Tarjeta", description: "Débito o crédito", icon: CreditCard },
 ];
+
+const peruDistricts = regions
+  .all()
+  .flatMap((region) => {
+    const expandedRegion = regions.expand(region.id);
+    return expandedRegion.provinces.flatMap((province) =>
+      province.districts.map((district) => ({
+        label: `${district.name} — ${province.name}, ${region.name}`,
+        value: district.name,
+      }))
+    );
+  })
+  .sort((a, b) => a.label.localeCompare(b.label, "es"));
 
 export default function Checkout() {
   const { cart, cartCount, cartTotal, showToast } = useShop();
@@ -113,7 +127,25 @@ export default function Checkout() {
             {form.delivery === "delivery" && (
               <div className="checkout-fields checkout-fields--two checkout-address-fields">
                 <label className="checkout-field--wide">Dirección<input name="address" value={form.address} onChange={updateField} required autoComplete="street-address" /></label>
-                <label>Distrito<input name="district" value={form.district} onChange={updateField} required /></label>
+                <label>
+                  Distrito
+                  <input
+                    name="district"
+                    list="peru-districts"
+                    value={form.district}
+                    onChange={updateField}
+                    placeholder="Escribe para buscar tu distrito"
+                    required
+                    autoComplete="address-level2"
+                  />
+                  <datalist id="peru-districts">
+                    {peruDistricts.map((district) => (
+                      <option key={district.label} value={district.value}>
+                        {district.label}
+                      </option>
+                    ))}
+                  </datalist>
+                </label>
               </div>
             )}
           </section>
