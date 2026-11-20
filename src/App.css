@@ -9650,6 +9650,89 @@ html.motion-ready .motion-reveal {
   }
 }
 
+/* Interacción del logotipo: zoom sutil y corazones flotantes. */
+.logo {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+.logo div {
+  position: relative;
+  z-index: 2;
+  transform-origin: left center;
+  transition: transform 320ms cubic-bezier(.16, 1, .3, 1), filter 320ms ease;
+}
+
+.logo:hover div {
+  filter: drop-shadow(0 5px 12px rgb(230 24 109 / 24%));
+  transform: scale(1.045);
+}
+
+.logo:hover div b {
+  animation: logo-heart-beat 900ms ease-in-out infinite;
+}
+
+.logo::before,
+.logo::after {
+  position: absolute;
+  z-index: 1;
+  color: #f32a80;
+  content: "♥";
+  font-family: Georgia, serif;
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logo::before {
+  left: 34%;
+  bottom: 34%;
+}
+
+.logo::after {
+  left: 52%;
+  bottom: 18%;
+  color: #ff75ae;
+  font-size: 10px;
+}
+
+.logo:hover::before {
+  animation: logo-heart-float-one 1.25s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.logo:hover::after {
+  animation: logo-heart-float-two 1.45s cubic-bezier(.16, 1, .3, 1) .12s both;
+}
+
+@keyframes logo-heart-beat {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.2); }
+}
+
+@keyframes logo-heart-float-one {
+  0% { opacity: 0; transform: translate(0, 8px) scale(.45) rotate(-10deg); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-12px, -34px) scale(1) rotate(-20deg); }
+}
+
+@keyframes logo-heart-float-two {
+  0% { opacity: 0; transform: translate(0, 8px) scale(.4) rotate(12deg); }
+  20% { opacity: .9; }
+  100% { opacity: 0; transform: translate(15px, -29px) scale(.9) rotate(24deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo div,
+  .logo::before,
+  .logo::after,
+  .logo:hover div b {
+    animation: none;
+    transition: none;
+  }
+}
+
 /* Pantalla de bienvenida inicial. */
 .intro-splash {
   position: fixed;
