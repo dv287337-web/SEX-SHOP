@@ -10562,7 +10562,8 @@ html.motion-ready .motion-reveal {
   font-weight: 700;
 }
 
-.checkout-fields input {
+.checkout-fields input,
+.checkout-fields select {
   width: 100%;
   height: 46px;
   padding: 0 13px;
@@ -10575,7 +10576,18 @@ html.motion-ready .motion-reveal {
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.checkout-fields input:focus {
+.checkout-fields select {
+  cursor: pointer;
+}
+
+.checkout-fields select:disabled {
+  cursor: not-allowed;
+  color: #a6959d;
+  background: #f8f4f6;
+}
+
+.checkout-fields input:focus,
+.checkout-fields select:focus {
   border-color: #e6186d;
   box-shadow: 0 0 0 4px rgb(230 24 109 / 10%);
 }

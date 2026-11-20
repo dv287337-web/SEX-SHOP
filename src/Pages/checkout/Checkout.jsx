@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Building2, Check, CreditCard, LockKeyhole, MapPin, Smartphone, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
-import { regions } from "@perucode/ubigeo-peru";
+import { districts, provinces, regions } from "@perucode/ubigeo-peru";
 import { useShop } from "../../context/ShopContext";
 
 const initialForm = {
   name: "",
   email: "",
   phone: "",
-  address: "",
+  department: "",
+  city: "",
   district: "",
+  address: "",
   delivery: "delivery",
   payment: "yape",
 };
@@ -20,27 +22,29 @@ const paymentMethods = [
   { id: "card", label: "Tarjeta", description: "Débito o crédito", icon: CreditCard },
 ];
 
-const peruDistricts = regions
-  .all()
-  .flatMap((region) => {
-    const expandedRegion = regions.expand(region.id);
-    return expandedRegion.provinces.flatMap((province) =>
-      province.districts.map((district) => ({
-        label: `${district.name} — ${province.name}, ${region.name}`,
-        value: district.name,
-      }))
-    );
-  })
-  .sort((a, b) => a.label.localeCompare(b.label, "es"));
+const departments = regions.all().sort((a, b) => a.name.localeCompare(b.name, "es"));
 
 export default function Checkout() {
   const { cart, cartCount, cartTotal, showToast } = useShop();
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const selectedDepartment = departments.find((item) => item.name === form.department);
+  const cities = selectedDepartment
+    ? [...provinces.byRegionId(selectedDepartment.id)].sort((a, b) => a.name.localeCompare(b.name, "es"))
+    : [];
+  const selectedCity = cities.find((item) => item.name === form.city);
+  const availableDistricts = selectedCity
+    ? [...districts.byProvinceId(selectedCity.id)].sort((a, b) => a.name.localeCompare(b.name, "es"))
+    : [];
 
   const updateField = (event) => {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
+    setForm((current) => ({
+      ...current,
+      [name]: value,
+      ...(name === "department" ? { city: "", district: "" } : {}),
+      ...(name === "city" ? { district: "" } : {}),
+    }));
   };
 
   const handleSubmit = (event) => {
@@ -100,6 +104,37 @@ export default function Checkout() {
           <section className="checkout-card">
             <div className="checkout-section-heading">
               <span>01</span>
+              <div><h2>Ubicación de entrega</h2><p>Primero selecciona dónde recibirás tu pedido.</p></div>
+            </div>
+            <div className="checkout-fields checkout-fields--two">
+              <label>
+                Departamento
+                <select name="department" value={form.department} onChange={updateField} required>
+                  <option value="">Selecciona un departamento</option>
+                  {departments.map((department) => <option key={department.id} value={department.name}>{department.name}</option>)}
+                </select>
+              </label>
+              <label>
+                Ciudad / provincia
+                <select name="city" value={form.city} onChange={updateField} required disabled={!form.department}>
+                  <option value="">Selecciona una ciudad</option>
+                  {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
+                </select>
+              </label>
+              <label>
+                Distrito
+                <select name="district" value={form.district} onChange={updateField} required disabled={!form.city}>
+                  <option value="">Selecciona un distrito</option>
+                  {availableDistricts.map((district) => <option key={district.id} value={district.name}>{district.name}</option>)}
+                </select>
+              </label>
+              <label className="checkout-field--wide">Dirección<input name="address" value={form.address} onChange={updateField} required autoComplete="street-address" /></label>
+            </div>
+          </section>
+
+          <section className="checkout-card">
+            <div className="checkout-section-heading">
+              <span>02</span>
               <div><h2>Datos de contacto</h2><p>Los usaremos para confirmar tu pedido.</p></div>
             </div>
             <div className="checkout-fields checkout-fields--two">
@@ -111,7 +146,7 @@ export default function Checkout() {
 
           <section className="checkout-card">
             <div className="checkout-section-heading">
-              <span>02</span>
+              <span>03</span>
               <div><h2>Entrega discreta</h2><p>Protegemos tu privacidad en cada envío.</p></div>
             </div>
             <div className="checkout-delivery-options">
@@ -124,35 +159,11 @@ export default function Checkout() {
                 <MapPin size={19} /><span><strong>Recojo en tienda</strong><small>Coordina la fecha después de confirmar.</small></span>
               </label>
             </div>
-            {form.delivery === "delivery" && (
-              <div className="checkout-fields checkout-fields--two checkout-address-fields">
-                <label className="checkout-field--wide">Dirección<input name="address" value={form.address} onChange={updateField} required autoComplete="street-address" /></label>
-                <label>
-                  Distrito
-                  <input
-                    name="district"
-                    list="peru-districts"
-                    value={form.district}
-                    onChange={updateField}
-                    placeholder="Escribe para buscar tu distrito"
-                    required
-                    autoComplete="address-level2"
-                  />
-                  <datalist id="peru-districts">
-                    {peruDistricts.map((district) => (
-                      <option key={district.label} value={district.value}>
-                        {district.label}
-                      </option>
-                    ))}
-                  </datalist>
-                </label>
-              </div>
-            )}
           </section>
 
           <section className="checkout-card">
             <div className="checkout-section-heading">
-              <span>03</span>
+              <span>04</span>
               <div><h2>Forma de pago</h2><p>Selecciona tu método preferido.</p></div>
             </div>
             <div className="checkout-payment-options">
