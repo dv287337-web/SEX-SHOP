@@ -1,24 +1,36 @@
 import { useEffect, useState } from "react";
-import { Box, Heart, LoaderCircle, LockKeyhole, ShieldCheck } from "lucide-react";
+import { Box, Heart, LoaderCircle, LockKeyhole, ShieldCheck, X } from "lucide-react";
 
 export default function IntroSplash() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(() => sessionStorage.getItem("sexshop-intro-seen") !== "true");
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (!isVisible) return undefined;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const duration = prefersReducedMotion ? 450 : 1050;
     const progressTimer = window.setInterval(() => {
-      setProgress((currentProgress) => Math.min(currentProgress + 2, 100));
-    }, 36);
-    const exitTimer = window.setTimeout(() => setIsExiting(true), 1800);
-    const hideTimer = window.setTimeout(() => setIsVisible(false), 2350);
+      setProgress((currentProgress) => Math.min(currentProgress + 5, 100));
+    }, duration / 20);
+    const exitTimer = window.setTimeout(() => setIsExiting(true), duration);
+    const hideTimer = window.setTimeout(() => {
+      sessionStorage.setItem("sexshop-intro-seen", "true");
+      setIsVisible(false);
+    }, duration + 300);
 
     return () => {
       window.clearInterval(progressTimer);
       window.clearTimeout(exitTimer);
       window.clearTimeout(hideTimer);
     };
-  }, []);
+  }, [isVisible]);
+
+  const skipIntro = () => {
+    sessionStorage.setItem("sexshop-intro-seen", "true");
+    setIsExiting(true);
+    window.setTimeout(() => setIsVisible(false), 180);
+  };
 
   if (!isVisible) return null;
 
@@ -28,6 +40,10 @@ export default function IntroSplash() {
       role="status"
       aria-label="Cargando SexShop"
     >
+      <button type="button" className="intro-splash-skip" onClick={skipIntro} aria-label="Saltar introducción">
+        <span>Saltar</span>
+        <X size={16} />
+      </button>
       <span className="intro-splash-ribbon intro-splash-ribbon-top" />
       <span className="intro-splash-ribbon intro-splash-ribbon-bottom" />
       <span className="intro-splash-lace intro-splash-lace-top-left" />

@@ -94,9 +94,21 @@ function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const parallaxBgY = useTransform(scrollYProgress, [0, 1], ["0%", "24%"]);
-  const parallaxContentY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.42]);
+  const parallaxBgY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? ["0%", "0%"] : ["0%", "24%"]
+  );
+  const parallaxContentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? ["0%", "0%"] : ["0%", "-12%"]
+  );
+  const heroOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.85],
+    prefersReducedMotion ? [1, 1] : [1, 0.42]
+  );
 
   useEffect(() => {
     if (!shouldAutoplay) return undefined;

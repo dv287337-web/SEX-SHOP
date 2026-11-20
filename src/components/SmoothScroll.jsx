@@ -11,13 +11,15 @@ export default function SmoothScroll() {
     if (typeof window === "undefined") return undefined;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    if (prefersReducedMotion || isTouchDevice) return undefined;
 
     const lenis = new Lenis({
-      duration: prefersReducedMotion ? 0.1 : 1.25,
+      duration: 1.05,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
-      smoothWheel: !prefersReducedMotion,
+      smoothWheel: true,
       wheelMultiplier: 1.0,
       touchMultiplier: 1.2,
       infinite: false,

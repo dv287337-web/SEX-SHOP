@@ -7,7 +7,10 @@ import {
   ShoppingBag,
   Truck,
   CreditCard,
-  ShieldCheck
+  ShieldCheck,
+  Menu,
+  X,
+  House
 } from "lucide-react";
 
 import { Link, NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
@@ -30,10 +33,15 @@ function Header() {
   const [searchParams] = useSearchParams();
   const queryFromUrl = searchParams.get("q") || "";
   const [searchTerm, setSearchTerm] = useState(queryFromUrl);
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   useEffect(() => {
     setSearchTerm(queryFromUrl);
+    setIsMenuOpen(false);
   }, [queryFromUrl]);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -118,9 +126,20 @@ function Header() {
             </i>
           </button>
         </div>
+
+        <button
+          type="button"
+          className="header-menu-toggle"
+          onClick={() => setIsMenuOpen((current) => !current)}
+          aria-expanded={isMenuOpen}
+          aria-controls="main-navigation"
+          aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+        >
+          {isMenuOpen ? <X /> : <Menu />}
+        </button>
       </div>
 
-      <nav className="navigation">
+      <nav id="main-navigation" className={`navigation${isMenuOpen ? " is-open" : ""}`}>
         {navigation.map((item) => (
           <NavLink
             key={item.path}
@@ -130,6 +149,26 @@ function Header() {
             {item.name}
           </NavLink>
         ))}
+      </nav>
+
+      <nav className="mobile-bottom-nav" aria-label="Accesos rápidos">
+        <Link to="/" aria-label="Inicio">
+          <House />
+          <span>Inicio</span>
+        </Link>
+        <Link to="/buscar" aria-label="Buscar productos">
+          <Search />
+          <span>Buscar</span>
+        </Link>
+        <button type="button" onClick={openFavoritesDrawer} aria-label="Abrir favoritos">
+          <Heart />
+          <span>Favoritos</span>
+        </button>
+        <button type="button" onClick={openCartDrawer} aria-label="Abrir carrito">
+          <ShoppingBag />
+          <span>Carrito</span>
+          {cartCount > 0 && <i>{cartCount}</i>}
+        </button>
       </nav>
     </header>
   );

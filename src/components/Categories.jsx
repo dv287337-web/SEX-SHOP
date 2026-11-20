@@ -121,9 +121,9 @@ function Categories() {
           <h2>NUESTRAS CATEGORÍAS</h2>
         </div>
 
-        <a href="#categorias">
-          EXPLORAR TODAS →
-        </a>
+          <Link to="/para-ella">
+            VER CATÁLOGO →
+          </Link>
       </div>
 
       <div className="categories-carousel" role="region" aria-roledescription="carrusel" aria-label="Nuestras categorías">

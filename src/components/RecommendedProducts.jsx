@@ -19,7 +19,7 @@ export default function RecommendedProducts() {
     })
     .slice(0, 4);
 
-  if (!products.length) return null;
+  if (!products.length || !preferredCategories.length) return null;
 
   return (
     <section className="recommended-section" aria-labelledby="recommended-title">

@@ -37,6 +37,15 @@ export default function FeaturedProducts() {
             <div 
               className="home-featured-image-box"
               onClick={() => handleOpenProduct(product)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  handleOpenProduct(product);
+                }
+              }}
+              role="button"
+              tabIndex="0"
+              aria-label={`Ver ${product.name}`}
             >
               <img 
                 src={product.image} 
@@ -75,6 +84,14 @@ export default function FeaturedProducts() {
               <h3 
                 className="home-featured-title"
                 onClick={() => handleOpenProduct(product)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    handleOpenProduct(product);
+                  }
+                }}
+                role="button"
+                tabIndex="0"
               >
                 {product.name}
               </h3>

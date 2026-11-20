@@ -32,8 +32,8 @@ function Home() {
       />
       <Hero />
       <Benefits />
-      <FeaturedProducts />
       <Categories />
+      <FeaturedProducts />
       <TrustSection />
       <HomeCollections />
       <RecommendedProducts />
