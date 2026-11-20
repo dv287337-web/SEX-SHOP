@@ -16,20 +16,7 @@ import { useShop } from "../../context/ShopContext";
 import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 // PRODUCTOS
-const products = [
-  { id: 1, name: "Masturbador masculino premium", category: "Masturbadores", material: "TPE", price: 119.90, oldPrice: 149.90, rating: 4.9, discount: 20, tag: "MÁS VENDIDO" },
-  { id: 2, name: "Masturbador compacto discreto", category: "Masturbadores", material: "Silicona", price: 89.90, oldPrice: null, rating: 4.7, discount: 0, tag: "NUEVO" },
-  { id: 3, name: "Anillo estimulador masculino", category: "Anillos", material: "Silicona", price: 49.90, oldPrice: 64.90, rating: 4.6, discount: 23, tag: "OFERTA" },
-  { id: 4, name: "Anillo vibrador recargable", category: "Anillos", material: "Silicona", price: 69.90, oldPrice: null, rating: 4.8, discount: 0, tag: "" },
-  { id: 5, name: "Estimulador masculino", category: "Estimuladores", material: "Silicona", price: 79.90, oldPrice: 99.90, rating: 4.8, discount: 20, tag: "POPULAR" },
-  { id: 6, name: "Bala estimuladora compacta", category: "Estimuladores", material: "Silicona", price: 44.90, oldPrice: null, rating: 4.5, discount: 0, tag: "" },
-  { id: 7, name: "Plug anal de silicona", category: "Juguetes anales", material: "Silicona", price: 59.90, oldPrice: null, rating: 4.7, discount: 0, tag: "" },
-  { id: 8, name: "Kit de exploración masculino", category: "Juguetes anales", material: "Mixto", price: 109.90, oldPrice: 139.90, rating: 4.8, discount: 21, tag: "OFERTA" },
-  { id: 9, name: "Aceite de masaje sensorial", category: "Cosmética", material: "Natural", price: 39.90, oldPrice: null, rating: 4.6, discount: 0, tag: "" },
-  { id: 10, name: "Gel íntimo efecto cálido", category: "Cosmética", material: "Natural", price: 34.90, oldPrice: 44.90, rating: 4.5, discount: 22, tag: "OFERTA" },
-  { id: 11, name: "Set de accesorios masculinos", category: "Accesorios", material: "Mixto", price: 89.90, oldPrice: null, rating: 4.7, discount: 0, tag: "ESPECIAL" },
-  { id: 12, name: "Kit íntimo para parejas", category: "Accesorios", material: "Mixto", price: 129.90, oldPrice: 159.90, rating: 4.9, discount: 19, tag: "RECOMENDADO" }
-];
+const products = [];
 
 // IDENTIFICADORES ÚNICOS
 export const catalogProducts = products.map((product) => ({

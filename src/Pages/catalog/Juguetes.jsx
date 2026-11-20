@@ -16,20 +16,7 @@ import { useShop } from "../../context/ShopContext";
 import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 // PRODUCTOS
-const products = [
-  { id: 1, name: "Vibrador clásico recargable", category: "Vibradores", material: "Silicona", price: 89.90, oldPrice: 119.90, rating: 4.8, discount: 25, tag: "MÁS VENDIDO" },
-  { id: 2, name: "Vibrador elegante compacto", category: "Vibradores", material: "Silicona", price: 69.90, oldPrice: null, rating: 4.7, discount: 0, tag: "NUEVO" },
-  { id: 3, name: "Estimulador de succión", category: "Estimuladores", material: "Silicona", price: 129.90, oldPrice: 159.90, rating: 4.9, discount: 19, tag: "POPULAR" },
-  { id: 4, name: "Bala vibradora discreta", category: "Estimuladores", material: "Silicona", price: 49.90, oldPrice: null, rating: 4.6, discount: 0, tag: "" },
-  { id: 5, name: "Anillo vibrador recargable", category: "Anillos", material: "Silicona", price: 59.90, oldPrice: 79.90, rating: 4.5, discount: 25, tag: "OFERTA" },
-  { id: 6, name: "Anillo estimulador doble", category: "Anillos", material: "Silicona", price: 39.90, oldPrice: null, rating: 4.4, discount: 0, tag: "" },
-  { id: 7, name: "Plug anal elegante", category: "Juguetes anales", material: "Silicona", price: 54.90, oldPrice: null, rating: 4.7, discount: 0, tag: "RECOMENDADO" },
-  { id: 8, name: "Kit de exploración", category: "Juguetes anales", material: "Mixto", price: 99.90, oldPrice: 129.90, rating: 4.8, discount: 23, tag: "OFERTA" },
-  { id: 9, name: "Masturbador masculino", category: "Para él", material: "TPE", price: 119.90, oldPrice: null, rating: 4.8, discount: 0, tag: "" },
-  { id: 10, name: "Estimulador masculino", category: "Para él", material: "Silicona", price: 79.90, oldPrice: 99.90, rating: 4.6, discount: 20, tag: "OFERTA" },
-  { id: 11, name: "Set de accesorios para parejas", category: "Para parejas", material: "Mixto", price: 149.90, oldPrice: null, rating: 4.9, discount: 0, tag: "ESPECIAL" },
-  { id: 12, name: "Control remoto para parejas", category: "Para parejas", material: "Silicona", price: 109.90, oldPrice: 139.90, rating: 4.7, discount: 21, tag: "POPULAR" }
-];
+const products = [];
 
 // IDENTIFICADORES ÚNICOS PARA JUGUETES
 export const catalogProducts = products.map((product) => ({

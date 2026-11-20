@@ -16,20 +16,7 @@ import { useShop } from "../../context/ShopContext";
 import { mergeCustomProducts } from "../../utils/catalogHelpers";
 
 // PRODUCTOS
-const products = [
-  { id: 1, name: "Vibrador elegante recargable", category: "Vibradores", material: "Silicona", price: 89.90, oldPrice: 119.90, rating: 4.9, discount: 25, tag: "MÁS VENDIDO" },
-  { id: 2, name: "Estimulador de succión", category: "Estimuladores", material: "Silicona", price: 129.90, oldPrice: 159.90, rating: 4.8, discount: 19, tag: "POPULAR" },
-  { id: 3, name: "Bala vibradora compacta", category: "Estimuladores", material: "Silicona", price: 49.90, oldPrice: null, rating: 4.7, discount: 0, tag: "NUEVO" },
-  { id: 4, name: "Vibrador de diseño premium", category: "Vibradores", material: "Silicona", price: 149.90, oldPrice: null, rating: 4.9, discount: 0, tag: "" },
-  { id: 5, name: "Conjunto de lencería delicada", category: "Lencería", material: "Encaje", price: 79.90, oldPrice: 99.90, rating: 4.6, discount: 20, tag: "OFERTA" },
-  { id: 6, name: "Body de encaje elegante", category: "Lencería", material: "Encaje", price: 99.90, oldPrice: null, rating: 4.8, discount: 0, tag: "" },
-  { id: 7, name: "Aceite de masaje sensorial", category: "Cosmética", material: "Natural", price: 39.90, oldPrice: null, rating: 4.5, discount: 0, tag: "" },
-  { id: 8, name: "Gel íntimo de efecto cálido", category: "Cosmética", material: "Natural", price: 34.90, oldPrice: 44.90, rating: 4.6, discount: 22, tag: "OFERTA" },
-  { id: 9, name: "Anillo estimulador", category: "Accesorios", material: "Silicona", price: 54.90, oldPrice: null, rating: 4.5, discount: 0, tag: "" },
-  { id: 10, name: "Kit de exploración", category: "Accesorios", material: "Mixto", price: 109.90, oldPrice: 139.90, rating: 4.8, discount: 21, tag: "RECOMENDADO" },
-  { id: 11, name: "Estimulador discreto", category: "Estimuladores", material: "Silicona", price: 69.90, oldPrice: null, rating: 4.7, discount: 0, tag: "" },
-  { id: 12, name: "Set de bienestar íntimo", category: "Accesorios", material: "Mixto", price: 119.90, oldPrice: 149.90, rating: 4.8, discount: 20, tag: "ESPECIAL" }
-];
+const products = [];
 
 // IDENTIFICADORES ÚNICOS PARA PARA ELLA
 export const catalogProducts = products.map((product) => ({
