@@ -152,11 +152,8 @@ function Categories() {
                 <Link
                   to={category.path}
                   className={`category-card ${category.style} position-${offset} ${index === activeIndex ? "is-active" : ""}`}
-                  onClick={(event) => {
-                    if (index !== activeIndex) {
-                      event.preventDefault();
-                      setActiveIndex(index);
-                    }
+                  onClick={() => {
+                    setActiveIndex(index);
                   }}
                   aria-current={index === activeIndex ? "true" : undefined}
                   key={category.name}
