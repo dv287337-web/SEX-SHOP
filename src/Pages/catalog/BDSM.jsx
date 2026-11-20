@@ -361,7 +361,7 @@ function BDSM() {
             </div>
           ) : (
             <div className="catalog-empty">
-              <ShoppingBag size={38} />
+              <ShoppingBag size={42} />
               <h3>No encontramos productos</h3>
               <p>Prueba modificando los filtros seleccionados.</p>
               <button className="clear-filters" onClick={clearFilters}>

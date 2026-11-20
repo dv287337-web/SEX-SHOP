@@ -9,7 +9,7 @@ import {
   List,
   ChevronDown,
   Star,
-  Package
+
 } from "lucide-react";
 
 import { useShop } from "../../context/ShopContext";
@@ -275,14 +275,10 @@ function ParaEl() {
           {filteredProducts.length === 0 ? (
 
             <div className="catalog-empty">
-              <Package size={42} />
+              <ShoppingBag size={42} />
               <h3>No encontramos productos</h3>
               <p>Prueba modificando los filtros seleccionados.</p>
-
-              <button
-                className="clear-filters"
-                onClick={clearFilters}
-              >
+              <button className="clear-filters" onClick={clearFilters}>
                 Ver todos los productos
               </button>
             </div>
