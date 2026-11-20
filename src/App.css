@@ -10194,3 +10194,75 @@ html.motion-ready .motion-reveal {
     margin-top: 0;
   }
 }
+
+
+/* ==========================================================================
+   ANIMACIÓN REVELADO DE BOTÓN AÑADIR AL CARRITO EN HOVER (CATÁLOGOS)
+   ========================================================================== */
+
+/* En desktop/laptop: el botón se oculta de forma fluida y emerge elegantemente al pasar el cursor */
+@media (hover: hover) and (min-width: 768px) {
+  .catalog-page .product-card .add-cart-button {
+    height: auto;
+    max-height: 0;
+    min-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.96);
+    pointer-events: none;
+    transition:
+      opacity 300ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      max-height 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      margin-top 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      padding 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 300ms,
+      background-color 200ms ease,
+      box-shadow 220ms ease;
+    will-change: opacity, transform;
+  }
+
+  /* Al hacer hover o focus en la tarjeta del producto */
+  .catalog-page .product-card:hover .add-cart-button,
+  .catalog-page .product-card:focus-within .add-cart-button {
+    max-height: 60px;
+    min-height: 44px;
+    margin-top: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    box-shadow: 0 10px 24px rgba(230, 24, 109, 0.28);
+  }
+
+  .catalog-page .product-card:hover .add-cart-button:hover {
+    background: #E6186D !important;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 14px 28px rgba(230, 24, 109, 0.38);
+  }
+
+  .catalog-page .product-card:hover .add-cart-button:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+/* En pantallas táctiles o móviles: se mantiene visible de forma accesible */
+@media (hover: none), (max-width: 767px) {
+  .catalog-page .product-card .add-cart-button {
+    max-height: 60px;
+    min-height: 44px;
+    margin-top: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
+}
