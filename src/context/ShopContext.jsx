@@ -26,6 +26,13 @@ export function ShopProvider({ children }) {
       return [];
     }
   });
+  const [orders, setOrders] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("sexshop-orders")) || [];
+    } catch {
+      return [];
+    }
+  });
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [favoritesDrawerOpen, setFavoritesDrawerOpen] = useState(false);
   const [lastAddedId, setLastAddedId] = useState(null);
@@ -42,6 +49,7 @@ export function ShopProvider({ children }) {
     }
   });
   const [isProductsLoading, setIsProductsLoading] = useState(false);
+  const [isOrdersLoading, setIsOrdersLoading] = useState(false);
 
   // Carga inicial y sincronización con Supabase si está disponible
   const fetchProductsFromSupabase = useCallback(async () => {
@@ -72,6 +80,39 @@ export function ShopProvider({ children }) {
   useEffect(() => {
     fetchProductsFromSupabase();
   }, [fetchProductsFromSupabase]);
+
+  const fetchOrdersFromSupabase = useCallback(async () => {
+    if (!isSupabaseConfigured || !supabase) return;
+    try {
+      setIsOrdersLoading(true);
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.warn("Supabase orders warning:", error.message);
+        return;
+      }
+
+      if (Array.isArray(data)) {
+        const normalizedOrders = data.map((order) => ({
+          ...order,
+          createdAt: order.created_at,
+        }));
+        setOrders(normalizedOrders);
+        localStorage.setItem("sexshop-orders", JSON.stringify(normalizedOrders));
+      }
+    } catch (err) {
+      console.warn("Error cargando solicitudes:", err);
+    } finally {
+      setIsOrdersLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchOrdersFromSupabase();
+  }, [fetchOrdersFromSupabase]);
 
   // Función para agregar producto
   const addCustomProduct = async (productData) => {
@@ -273,6 +314,24 @@ export function ShopProvider({ children }) {
     localStorage.setItem("sexshop-cart", JSON.stringify(cart));
   }, [cart]);
 
+  useEffect(() => {
+    localStorage.setItem("sexshop-orders", JSON.stringify(orders));
+  }, [orders]);
+
+  useEffect(() => {
+    const handleOrdersStorage = (event) => {
+      if (event.key !== "sexshop-orders") return;
+      try {
+        setOrders(JSON.parse(event.newValue || "[]"));
+      } catch {
+        setOrders([]);
+      }
+    };
+
+    window.addEventListener("storage", handleOrdersStorage);
+    return () => window.removeEventListener("storage", handleOrdersStorage);
+  }, []);
+
   // Agregar o quitar favoritos
   const toggleFavorite = (product) => {
     const isAlreadyFavorite = favorites.some((item) => item.id === product.id);
@@ -366,6 +425,62 @@ export function ShopProvider({ children }) {
     setCart([]);
   };
 
+  const createOrder = async (orderData) => {
+    const order = {
+      ...orderData,
+      id: `SS-${Date.now().toString().slice(-6)}`,
+      createdAt: new Date().toISOString(),
+      status: "pending",
+    };
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from("orders")
+          .insert([{
+            id: order.id,
+            customer: order.customer,
+            shipping: order.shipping,
+            items: order.items,
+            total: order.total,
+            delivery: order.delivery,
+            payment: order.payment,
+            status: order.status,
+          }])
+          .select()
+          .single();
+
+        if (!error && data) {
+          const savedOrder = { ...data, createdAt: data.created_at };
+          setOrders((current) => [savedOrder, ...current]);
+          return savedOrder;
+        }
+        if (error) console.warn("Supabase create order warning:", error.message);
+      } catch (err) {
+        console.warn("Error guardando solicitud:", err);
+      }
+    }
+
+    setOrders((current) => [order, ...current]);
+    return order;
+  };
+
+  const updateOrderStatus = async (orderId, status) => {
+    if (isSupabaseConfigured && supabase) {
+      const { error } = await supabase
+        .from("orders")
+        .update({ status })
+        .eq("id", orderId);
+      if (error) console.warn("Supabase update order warning:", error.message);
+    }
+
+    setOrders((current) =>
+      current.map((order) => (
+        order.id === orderId ? { ...order, status } : order
+      ))
+    );
+  };
+
   const cartCount = cart.reduce(
     (total, item) => total + item.quantity,
     0
@@ -387,6 +502,9 @@ export function ShopProvider({ children }) {
     updateQuantity,
     removeFromCart,
     clearCart,
+    orders,
+    createOrder,
+    updateOrderStatus,
     cartCount,
     cartTotal,
     cartDrawerOpen,
@@ -404,7 +522,9 @@ export function ShopProvider({ children }) {
     updateCustomProduct,
     deleteCustomProduct,
     refreshProducts: fetchProductsFromSupabase,
-    isProductsLoading
+    isProductsLoading,
+    refreshOrders: fetchOrdersFromSupabase,
+    isOrdersLoading
   };
 
   return (

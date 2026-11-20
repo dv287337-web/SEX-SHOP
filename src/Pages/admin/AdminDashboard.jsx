@@ -11,7 +11,10 @@ import {
   AlertCircle,
   PackageCheck,
   Sparkles,
-  RefreshCw
+  RefreshCw,
+  ClipboardList,
+  Clock3,
+  CheckCircle2
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CATALOG_CATEGORIES, isSupabaseConfigured } from "../../utils/supabase";
@@ -20,7 +23,7 @@ import AdminLogin from "./AdminLogin";
 import { useShop } from "../../context/ShopContext";
 
 export default function AdminDashboard() {
-  const { showToast, customProducts, addCustomProduct, updateCustomProduct, deleteCustomProduct, refreshProducts, isProductsLoading } = useShop();
+  const { showToast, customProducts, addCustomProduct, updateCustomProduct, deleteCustomProduct, refreshProducts, isProductsLoading, orders, updateOrderStatus, refreshOrders, isOrdersLoading } = useShop();
 
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return sessionStorage.getItem("sexshop_admin_auth") === "true";
@@ -91,6 +94,15 @@ export default function AdminDashboard() {
     });
   }, [customProducts, searchTerm, selectedCategory]);
 
+  const pendingOrders = orders.filter((order) => order.status === "pending").length;
+
+  const orderStatusLabels = {
+    pending: "Pendiente",
+    contacted: "Contactado",
+    completed: "Completado",
+    cancelled: "Cancelado",
+  };
+
   if (!isAuthenticated) {
     return <AdminLogin onLogin={setIsAuthenticated} />;
   }
@@ -155,12 +167,90 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon admin-stat-icon--highlight">
+            <ClipboardList size={22} />
+          </div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-label">Solicitudes de pedido</span>
+            <span className="admin-stat-value">{orders.length}</span>
+            <span className="admin-stat-meta">{pendingOrders} pendientes</span>
+          </div>
+        </div>
+
         <div className="admin-stat-card admin-stat-card--cta">
           <button onClick={handleOpenCreateModal} className="admin-btn admin-btn--primary admin-btn--full">
             <Plus size={18} />
             Subir Nuevo Producto
           </button>
         </div>
+      </section>
+
+      <section className="admin-orders-panel">
+        <div className="admin-section-title">
+          <div>
+            <span className="admin-header-pill"><ClipboardList size={14} /> PEDIDOS RECIBIDOS</span>
+            <h2>Solicitudes de clientes</h2>
+            <p>Revisa los datos de entrega y actualiza el estado de cada solicitud.</p>
+          </div>
+          <div className="admin-orders-actions">
+            <span className="admin-orders-count">{orders.length} total</span>
+            <button
+              className="admin-btn admin-btn--ghost admin-btn--icon-only"
+              onClick={refreshOrders}
+              disabled={isOrdersLoading}
+              title="Recargar solicitudes"
+            >
+              <RefreshCw size={16} className={isOrdersLoading ? "spin" : ""} />
+            </button>
+          </div>
+        </div>
+
+        {orders.length === 0 ? (
+          <div className="admin-orders-empty">
+            <Clock3 size={28} />
+            <span>Aún no hay solicitudes de pedido.</span>
+          </div>
+        ) : (
+          <div className="admin-orders-list">
+            {orders.map((order) => (
+              <article className="admin-order-card" key={order.id}>
+                <div className="admin-order-main">
+                  <div className="admin-order-heading">
+                    <strong>{order.id}</strong>
+                    <span>{new Intl.DateTimeFormat("es-PE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(order.createdAt))}</span>
+                  </div>
+                  <div className="admin-order-customer">
+                    <strong>{order.customer.name}</strong>
+                    <span>{order.customer.phone} · {order.customer.email}</span>
+                  </div>
+                  <div className="admin-order-location">
+                    {order.shipping.department}, {order.shipping.city}, {order.shipping.district} · {order.shipping.address}
+                  </div>
+                  <div className="admin-order-items">
+                    {order.items.map((item) => `${item.quantity} × ${item.name}`).join(" · ")}
+                  </div>
+                </div>
+                <div className="admin-order-side">
+                  <strong className="admin-order-total">S/ {Number(order.total).toFixed(2)}</strong>
+                  <span className={`admin-order-status admin-order-status--${order.status}`}>
+                    {order.status === "completed" && <CheckCircle2 size={13} />}
+                    {orderStatusLabels[order.status] || order.status}
+                  </span>
+                  <select
+                    value={order.status}
+                    onChange={(event) => updateOrderStatus(order.id, event.target.value)}
+                    aria-label={`Estado de ${order.id}`}
+                  >
+                    {Object.entries(orderStatusLabels).map(([value, label]) => (
+                      <option key={value} value={value}>{label}</option>
+                    ))}
+                  </select>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Filtros y Buscador */}

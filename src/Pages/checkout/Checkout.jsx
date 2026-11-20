@@ -25,9 +25,10 @@ const paymentMethods = [
 const departments = regions.all().sort((a, b) => a.name.localeCompare(b.name, "es"));
 
 export default function Checkout() {
-  const { cart, cartCount, cartTotal, showToast } = useShop();
+  const { cart, cartCount, cartTotal, showToast, createOrder, clearCart } = useShop();
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [orderReference, setOrderReference] = useState("");
   const selectedDepartment = departments.find((item) => item.name === form.department);
   const cities = selectedDepartment
     ? [...provinces.byRegionId(selectedDepartment.id)].sort((a, b) => a.name.localeCompare(b.name, "es"))
@@ -47,12 +48,36 @@ export default function Checkout() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const order = await createOrder({
+      customer: {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+      },
+      delivery: form.delivery,
+      payment: form.payment,
+      shipping: {
+        department: form.department,
+        city: form.city,
+        district: form.district,
+        address: form.address,
+      },
+      items: cart.map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity,
+      })),
+      total: cartTotal,
+    });
+    setOrderReference(order.id);
     setSubmitted(true);
+    clearCart();
     showToast({
       title: "Solicitud preparada",
-      message: "Te mostraremos los pasos para completar tu pago.",
+      message: "Tu solicitud ya fue enviada a la administración.",
       type: "success",
     });
   };
@@ -81,7 +106,7 @@ export default function Checkout() {
         </p>
         <div className="checkout-success-reference">
           <span>Referencia de pedido</span>
-          <strong>SS-{Date.now().toString().slice(-6)}</strong>
+           <strong>{orderReference}</strong>
         </div>
         <Link to="/" className="checkout-primary-button">Volver a la tienda</Link>
       </main>

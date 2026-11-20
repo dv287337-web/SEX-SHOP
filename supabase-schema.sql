@@ -62,3 +62,36 @@ CREATE POLICY "Imágenes públicas de productos"
 CREATE POLICY "Subida de imágenes de productos"
   ON storage.objects FOR INSERT
   WITH CHECK (bucket_id = 'product-images');
+
+-- 4. Solicitudes de pedido recibidas desde el checkout
+CREATE TABLE IF NOT EXISTS public.orders (
+  id TEXT PRIMARY KEY,
+  customer JSONB NOT NULL,
+  shipping JSONB NOT NULL,
+  items JSONB NOT NULL,
+  total NUMERIC(10, 2) NOT NULL,
+  delivery TEXT NOT NULL,
+  payment TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_orders_created_at ON public.orders(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON public.orders(status);
+
+ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Recepción pública de solicitudes"
+  ON public.orders
+  FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Lectura de solicitudes para administración"
+  ON public.orders
+  FOR SELECT
+  USING (true);
+
+CREATE POLICY "Actualización de estado de solicitudes"
+  ON public.orders
+  FOR UPDATE
+  USING (true);
