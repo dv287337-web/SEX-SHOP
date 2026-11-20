@@ -10356,3 +10356,47 @@ html.motion-ready .motion-reveal {
     pointer-events: auto;
   }
 }
+
+/* Iconografía editorial junto a cada categoría. */
+.categories-carousel .category-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.categories-carousel .category-title svg {
+  flex: 0 0 auto;
+  width: clamp(30px, 3.6vw, 48px);
+  height: clamp(30px, 3.6vw, 48px);
+  color: #ffd3e2;
+  filter: drop-shadow(0 3px 8px rgb(230 24 109 / 30%));
+  transition: color 260ms ease, filter 260ms ease, transform 360ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.categories-carousel .category-title h3 {
+  margin: 0;
+}
+
+.categories-carousel .category-card:hover .category-title svg,
+.categories-carousel .category-card.is-active .category-title svg {
+  color: #ff5b9d;
+  filter: drop-shadow(0 4px 12px rgb(230 24 109 / 55%));
+  transform: scale(1.08) rotate(-4deg);
+}
+
+@media (max-width: 700px) {
+  .categories-carousel .category-title {
+    gap: 8px;
+  }
+
+  .categories-carousel .category-title svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .categories-carousel .category-title svg {
+    transition: none;
+  }
+}

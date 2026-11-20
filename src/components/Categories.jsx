@@ -1,6 +1,17 @@
 
 import { useRef, useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  HeartHandshake,
+  Link2,
+  Mars,
+  Shirt,
+  SprayCan,
+  Tag,
+  Venus,
+  Vibrate
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import categorySprite from "../assets/category-editorial-grid.jpg";
 
@@ -8,56 +19,56 @@ const categories = [
   {
     name: "Para Ella",
     subtitle: "DESCUBRIR COLECCIÓN",
-    icon: "♀",
+    icon: Venus,
     style: "ella",
     path: "/para-ella"
   },
   {
     name: "Para Él",
     subtitle: "DESCUBRIR COLECCIÓN",
-    icon: "♂",
+    icon: Mars,
     style: "el",
     path: "/para-el"
   },
   {
     name: "Para Parejas",
     subtitle: "DESCUBRIR COLECCIÓN",
-    icon: "♥",
+    icon: HeartHandshake,
     style: "parejas",
     path: "/para-parejas"
   },
   {
     name: "Lencería",
     subtitle: "DESCUBRIR COLECCIÓN",
-    icon: "✦",
+    icon: Shirt,
     style: "lenceria",
     path: "/lenceria"
   },
   {
     name: "Juguetes",
     subtitle: "DESCUBRIR COLECCIÓN",
-    icon: "♡",
+    icon: Vibrate,
     style: "juguetes",
     path: "/juguetes"
   },
   {
     name: "Cosmética Erótica",
     subtitle: "DESCUBRIR COLECCIÓN",
-    icon: "❀",
+    icon: SprayCan,
     style: "cosmetica",
     path: "/cosmetica-erotica"
   },
   {
     name: "BDSM",
     subtitle: "DESCUBRIR COLECCIÓN",
-    icon: "♠",
+    icon: Link2,
     style: "bdsm",
     path: "/bdsm"
   },
   {
     name: "Ofertas",
     subtitle: "DESCUBRIR OFERTAS",
-    icon: "✧",
+    icon: Tag,
     style: "ofertas",
     path: "/ofertas"
   }
@@ -154,10 +165,13 @@ function Categories() {
                     "--sprite-y": index < 4 ? "0%" : "100%",
                     "--category-sprite": `url(${categorySprite})`
                   }}
-                >
+                  >
                   <div className="category-image" aria-hidden="true" />
                   <div className="category-info">
-                    <h3>{category.name}</h3>
+                    <div className="category-title">
+                      <category.icon aria-hidden="true" strokeWidth={1.8} />
+                      <h3>{category.name}</h3>
+                    </div>
                     <span>{category.subtitle} →</span>
                   </div>
                 </Link>
