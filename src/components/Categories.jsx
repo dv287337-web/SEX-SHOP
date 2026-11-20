@@ -12,7 +12,7 @@ import {
   Venus,
   Vibrate
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import categorySprite from "../assets/category-editorial-grid.jpg";
 
 const categories = [
@@ -76,6 +76,7 @@ const categories = [
 
 function Categories() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
   const gestureStart = useRef(null);
   const lastWheelChange = useRef(0);
   const changeCategory = (direction) => {
@@ -83,7 +84,6 @@ function Categories() {
   };
 
   const handleGestureStart = (event) => {
-    event.currentTarget.setPointerCapture?.(event.pointerId);
     gestureStart.current = event.clientX ?? event.touches?.[0]?.clientX ?? null;
   };
 
@@ -92,7 +92,6 @@ function Categories() {
     const endX = event.clientX ?? event.changedTouches?.[0]?.clientX ?? gestureStart.current;
     const distance = endX - gestureStart.current;
     gestureStart.current = null;
-    event.currentTarget.releasePointerCapture?.(event.pointerId);
     if (Math.abs(distance) < 42) return;
     changeCategory(distance < 0 ? 1 : -1);
   };
@@ -139,9 +138,8 @@ function Categories() {
           }}
           onPointerDown={handleGestureStart}
           onPointerUp={handleGestureEnd}
-          onPointerCancel={(event) => {
+          onPointerCancel={() => {
             gestureStart.current = null;
-            event.currentTarget.releasePointerCapture?.(event.pointerId);
           }}
           onWheel={handleWheel}
         >
@@ -152,8 +150,9 @@ function Categories() {
                 <Link
                   to={category.path}
                   className={`category-card ${category.style} position-${offset} ${index === activeIndex ? "is-active" : ""}`}
-                  onClick={() => {
-                    setActiveIndex(index);
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigate(category.path);
                   }}
                   aria-current={index === activeIndex ? "true" : undefined}
                   key={category.name}
