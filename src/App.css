@@ -9664,6 +9664,12 @@ html.motion-ready .motion-reveal {
   transition: transform 320ms cubic-bezier(.16, 1, .3, 1), filter 320ms ease;
 }
 
+.logo div b {
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: logo-heart-beat 1.8s ease-in-out infinite;
+}
+
 .logo:hover div {
   filter: drop-shadow(0 5px 12px rgb(230 24 109 / 24%));
   transform: scale(1.045);
@@ -9725,6 +9731,7 @@ html.motion-ready .motion-reveal {
 
 @media (prefers-reduced-motion: reduce) {
   .logo div,
+  .logo div b,
   .logo::before,
   .logo::after,
   .logo:hover div b {
