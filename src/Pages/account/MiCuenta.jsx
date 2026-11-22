@@ -30,17 +30,7 @@ function MiCuenta() {
           <img className="account-decoration-image" src={accountImage} alt="Detalle editorial de bienestar íntimo" />
           <div className="account-decoration-overlay" />
           <div className="account-decoration-content">
-            <span className="account-decoration-icon">♥</span>
-            <span className="account-decoration-eyebrow">BIENESTAR ÍNTIMO</span>
             <h2>Tu placer, <span>sin límites.</span></h2>
-            <p>
-              Descubre una experiencia pensada para ti.
-            </p>
-
-            <div className="account-security">
-              <ShieldCheck size={20} />
-              <span>Privacidad y discreción garantizadas</span>
-            </div>
           </div>
         </div>
 
