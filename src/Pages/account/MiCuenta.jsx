@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { UserRound, LockKeyhole, Mail, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import {
+  UserRound,
+  LockKeyhole,
+  Mail,
+  Eye,
+  EyeOff,
+  ShieldCheck,
+  PackageCheck,
+  HeartHandshake,
+  Sparkles,
+} from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 
 function MiCuenta() {
@@ -30,6 +40,21 @@ function MiCuenta() {
             <ShieldCheck size={20} />
             <span>Tu privacidad es nuestra prioridad</span>
           </div>
+
+          <div className="account-decoration-points">
+            <div>
+              <PackageCheck size={17} />
+              <span><strong>Pedidos organizados</strong><small>Consulta tus solicitudes cuando quieras.</small></span>
+            </div>
+            <div>
+              <HeartHandshake size={17} />
+              <span><strong>Una experiencia más cercana</strong><small>Guarda tus preferencias y favoritos.</small></span>
+            </div>
+            <div>
+              <Sparkles size={17} />
+              <span><strong>Beneficios exclusivos</strong><small>Descubre novedades pensadas para ti.</small></span>
+            </div>
+          </div>
         </div>
 
         <div className="account-form-container">
@@ -42,6 +67,23 @@ function MiCuenta() {
             <h1>Iniciar sesión</h1>
             <p>Ingresa tus credenciales para continuar.</p>
           </div>
+
+          <button
+            type="button"
+            className="account-google-button"
+            onClick={() =>
+              showToast({
+                title: "Acceso con Google",
+                message: "Próximamente podrás ingresar con tu cuenta de Google.",
+                type: "info",
+              })
+            }
+          >
+            <span className="account-google-mark">G</span>
+            Continuar con Google
+          </button>
+
+          <div className="account-divider"><span>o continúa con tu correo</span></div>
 
           <form className="account-form" onSubmit={handleSubmit}>
             <label htmlFor="email">Correo electrónico</label>
