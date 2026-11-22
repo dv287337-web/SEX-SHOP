@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
+import accountImage from "../../assets/account-login.jpg";
 
 function MiCuenta() {
   const [mostrarPassword, setMostrarPassword] = useState(false);
@@ -29,30 +30,35 @@ function MiCuenta() {
     <section className="account-page">
       <div className="account-container">
         <div className="account-decoration">
-          <span className="account-decoration-icon">♥</span>
-          <h2>Bienvenido a <span>SexShop</span></h2>
-          <p>
-            Un espacio pensado para descubrir, disfrutar
-            y vivir tu experiencia con total confianza.
-          </p>
+          <img className="account-decoration-image" src={accountImage} alt="Detalle editorial de bienestar íntimo" />
+          <div className="account-decoration-overlay" />
+          <div className="account-decoration-content">
+            <span className="account-decoration-icon">♥</span>
+            <span className="account-decoration-eyebrow">BIENESTAR ÍNTIMO</span>
+            <h2>Tu placer, <span>sin límites.</span></h2>
+            <p>
+              Un espacio pensado para descubrir, disfrutar
+              y vivir tu experiencia con total confianza.
+            </p>
 
-          <div className="account-security">
-            <ShieldCheck size={20} />
-            <span>Tu privacidad es nuestra prioridad</span>
-          </div>
+            <div className="account-security">
+              <ShieldCheck size={20} />
+              <span>Tu privacidad es nuestra prioridad</span>
+            </div>
 
-          <div className="account-decoration-points">
-            <div>
-              <PackageCheck size={17} />
-              <span><strong>Pedidos organizados</strong><small>Consulta tus solicitudes cuando quieras.</small></span>
-            </div>
-            <div>
-              <HeartHandshake size={17} />
-              <span><strong>Una experiencia más cercana</strong><small>Guarda tus preferencias y favoritos.</small></span>
-            </div>
-            <div>
-              <Sparkles size={17} />
-              <span><strong>Beneficios exclusivos</strong><small>Descubre novedades pensadas para ti.</small></span>
+            <div className="account-decoration-points">
+              <div>
+                <PackageCheck size={17} />
+                <span><strong>Pedidos organizados</strong><small>Consulta tus solicitudes cuando quieras.</small></span>
+              </div>
+              <div>
+                <HeartHandshake size={17} />
+                <span><strong>Una experiencia más cercana</strong><small>Guarda tus preferencias y favoritos.</small></span>
+              </div>
+              <div>
+                <Sparkles size={17} />
+                <span><strong>Beneficios exclusivos</strong><small>Descubre novedades pensadas para ti.</small></span>
+              </div>
             </div>
           </div>
         </div>

@@ -11364,3 +11364,143 @@ html.motion-ready .motion-reveal {
     transition: none;
   }
 }
+
+/* Acceso editorial inspirado en una composición split-screen. */
+.account-container {
+  grid-template-columns: minmax(360px, .9fr) minmax(420px, 1.1fr);
+  min-height: 650px;
+}
+
+.account-form-container {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.account-decoration {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 650px;
+  padding: 0;
+  justify-content: flex-end;
+  background: #28161d;
+}
+
+.account-decoration::after {
+  display: none;
+}
+
+.account-decoration-image,
+.account-decoration-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.account-decoration-image {
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.account-decoration-overlay {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgb(24 8 13 / 2%) 28%, rgb(24 8 13 / 82%) 100%),
+    linear-gradient(90deg, rgb(24 8 13 / 10%), transparent 65%);
+}
+
+.account-decoration-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 44px clamp(26px, 5vw, 60px);
+}
+
+.account-decoration-content > * {
+  position: relative;
+  z-index: 2;
+}
+
+.account-decoration-eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  color: #ffb2cd;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.account-decoration-content h2 {
+  max-width: 390px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: clamp(32px, 3.5vw, 49px);
+}
+
+.account-decoration-content p {
+  max-width: 370px;
+  color: #f4dfe7;
+}
+
+.account-decoration-content .account-security {
+  margin-top: 20px;
+}
+
+.account-decoration-content .account-decoration-points {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.account-decoration-content .account-decoration-points > div {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 10px;
+  background: rgb(20 5 12 / 26%);
+}
+
+.account-decoration-content .account-decoration-points small {
+  display: none;
+}
+
+@media (max-width: 860px) and (min-width: 769px) {
+  .account-container {
+    grid-template-columns: minmax(330px, .9fr) minmax(340px, 1.1fr);
+  }
+
+  .account-decoration-content .account-decoration-points {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .account-container {
+    grid-template-columns: 1fr;
+  }
+
+  .account-form-container {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .account-decoration {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 540px;
+  }
+
+  .account-decoration-content {
+    padding: 34px 24px;
+  }
+
+  .account-decoration-content .account-decoration-points {
+    grid-template-columns: 1fr;
+  }
+
+  .account-decoration-content .account-decoration-points small {
+    display: block;
+  }
+}
