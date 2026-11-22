@@ -6,6 +6,7 @@ import {
   Eye,
   EyeOff,
   ShieldCheck,
+  ArrowRight,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import accountImage from "../../assets/account-login.jpg";
@@ -41,8 +42,8 @@ function MiCuenta() {
             </div>
 
             <span className="account-eyebrow">TU ESPACIO PERSONAL</span>
-            <h1>Iniciar sesión</h1>
-            <p>Ingresa tus credenciales para continuar.</p>
+            <h1>Bienvenido de nuevo</h1>
+            <p>Accede a tu cuenta para consultar tus pedidos, favoritos y beneficios.</p>
           </div>
 
           <button
@@ -118,12 +119,12 @@ function MiCuenta() {
             </div>
 
             <button type="submit" className="account-submit">
-              INICIAR SESIÓN
+              Entrar a mi cuenta <ArrowRight size={17} />
             </button>
           </form>
 
           <div className="account-register">
-            <p>¿Aún no tienes una cuenta?</p>
+            <p>¿Es tu primera visita?</p>
             <button
               type="button"
               onClick={() =>
@@ -134,13 +135,13 @@ function MiCuenta() {
                 })
               }
             >
-              Regístrate aquí
+              Crear una cuenta
             </button>
           </div>
 
           <div className="account-footer">
             <ShieldCheck size={16} />
-            <span>Compra con confianza y discreción</span>
+            <span>Compra segura · Envíos discretos · Privacidad protegida</span>
           </div>
         </div>
       </div>

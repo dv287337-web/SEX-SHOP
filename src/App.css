@@ -11504,3 +11504,72 @@ html.motion-ready .motion-reveal {
     display: block;
   }
 }
+
+/* Refinamiento final del acceso: tipografía limpia y CTA más claro. */
+.account-form-container {
+  font-family: var(--font-body);
+}
+
+.account-heading h1 {
+  font-family: var(--font-body);
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 750;
+  letter-spacing: -.045em;
+}
+
+.account-heading p {
+  max-width: 330px;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+.account-form > label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .7px;
+}
+
+.account-input {
+  min-height: 54px;
+  border-radius: 12px;
+}
+
+.account-input input {
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.account-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: .6px;
+}
+
+.account-register p {
+  margin-bottom: 4px;
+}
+
+.account-footer {
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .account-heading h1 {
+    font-size: 30px;
+  }
+
+  .account-heading p {
+    max-width: 300px;
+  }
+
+  .account-footer {
+    max-width: 260px;
+    margin-inline: auto;
+  }
+}
