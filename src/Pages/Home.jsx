@@ -8,7 +8,7 @@ import TrustSection from "../components/TrustSection";
 import RecommendedProducts from "../components/RecommendedProducts";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import categorySprite from "../assets/category-editorial-grid.jpg";
+import brandStoryImage from "../assets/brand-story.jpg";
 
 function Home() {
   const storyRef = useRef(null);
@@ -44,7 +44,7 @@ function Home() {
           <motion.div
             className="brand-story-art"
             style={{
-              "--category-sprite": `url(${categorySprite})`,
+               "--brand-story-image": `url(${brandStoryImage})`,
               y: parallaxImageY,
               scale: parallaxScale,
             }}
