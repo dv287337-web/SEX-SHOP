@@ -6,9 +6,6 @@ import {
   Eye,
   EyeOff,
   ShieldCheck,
-  PackageCheck,
-  HeartHandshake,
-  Sparkles,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import accountImage from "../../assets/account-login.jpg";
@@ -37,28 +34,12 @@ function MiCuenta() {
             <span className="account-decoration-eyebrow">BIENESTAR ÍNTIMO</span>
             <h2>Tu placer, <span>sin límites.</span></h2>
             <p>
-              Un espacio pensado para descubrir, disfrutar
-              y vivir tu experiencia con total confianza.
+              Descubre una experiencia pensada para ti.
             </p>
 
             <div className="account-security">
               <ShieldCheck size={20} />
-              <span>Tu privacidad es nuestra prioridad</span>
-            </div>
-
-            <div className="account-decoration-points">
-              <div>
-                <PackageCheck size={17} />
-                <span><strong>Pedidos organizados</strong><small>Consulta tus solicitudes cuando quieras.</small></span>
-              </div>
-              <div>
-                <HeartHandshake size={17} />
-                <span><strong>Una experiencia más cercana</strong><small>Guarda tus preferencias y favoritos.</small></span>
-              </div>
-              <div>
-                <Sparkles size={17} />
-                <span><strong>Beneficios exclusivos</strong><small>Descubre novedades pensadas para ti.</small></span>
-              </div>
+              <span>Privacidad y discreción garantizadas</span>
             </div>
           </div>
         </div>
