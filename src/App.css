@@ -6143,9 +6143,13 @@ html.motion-ready .category-card.motion-reveal.is-revealed {
 .brand-story-art {
   width: 100%;
   height: 125%;
-  background-image: linear-gradient(0deg, #24111b12, #24111b12), var(--brand-story-image);
+  background-image:
+    linear-gradient(135deg, rgb(28 8 20 / 42%), transparent 48%, rgb(112 25 68 / 18%)),
+    linear-gradient(0deg, rgb(36 17 27 / 12%), rgb(36 17 27 / 12%)),
+    var(--brand-story-image);
   background-size: cover;
   background-position: center;
+  filter: saturate(0.92) contrast(1.03) brightness(0.92);
   will-change: transform;
 }
 
