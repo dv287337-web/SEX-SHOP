@@ -42,9 +42,15 @@ function MiCuenta() {
       }
     } catch (error) {
       console.error("Error iniciando sesión con Google:", error);
+      const isProviderDisabled =
+        error?.code === "validation_failed" &&
+        /provider is not enabled/i.test(error?.message || "");
+
       showToast({
         title: "No se pudo iniciar sesión",
-        message: error.message || "Inténtalo nuevamente en unos segundos.",
+        message: isProviderDisabled
+          ? "Google aún no está habilitado en Supabase. Actívalo desde Authentication > Providers > Google."
+          : error.message || "Inténtalo nuevamente en unos segundos.",
         type: "error",
       });
       setIsGoogleLoading(false);
