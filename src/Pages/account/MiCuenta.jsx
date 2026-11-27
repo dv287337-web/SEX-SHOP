@@ -16,6 +16,12 @@ import accountImage from "../../assets/account-login.jpg";
 function MiCuenta() {
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [session, setSession] = useState(null);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const { showToast } = useShop();
@@ -34,12 +40,12 @@ function MiCuenta() {
 
       setSession(nextSession);
 
-      if (event === "SIGNED_IN") {
-        showToast({
-          title: "Inicio de sesión exitoso",
-          message: "Tu cuenta de Google se vinculó correctamente.",
-          type: "success",
-        });
+       if (event === "SIGNED_IN") {
+         showToast({
+           title: "Inicio de sesión exitoso",
+           message: "Tu cuenta se vinculó correctamente.",
+           type: "success",
+         });
       }
     });
 
@@ -115,13 +121,75 @@ function MiCuenta() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleEmailAuth = async (event) => {
     event.preventDefault();
-    showToast({
-      title: "Cuenta de usuario",
-      message: "Próximamente habilitaremos el inicio de sesión y registro.",
-      type: "info",
-    });
+
+    if (!isSupabaseConfigured || !supabase) {
+      showToast({
+        title: "Cuenta por correo",
+        message: "Configura Supabase para habilitar el acceso con correo y contraseña.",
+        type: "info",
+      });
+      return;
+    }
+
+    if (isRegistering && password !== passwordConfirmation) {
+      showToast({
+        title: "Las contraseñas no coinciden",
+        message: "Revisa ambos campos e inténtalo nuevamente.",
+        type: "error",
+      });
+      return;
+    }
+
+    try {
+      setIsEmailLoading(true);
+
+      if (isRegistering) {
+        const { data, error } = await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: {
+            data: {
+              full_name: fullName.trim(),
+            },
+            emailRedirectTo: `${window.location.origin}/mi-cuenta`,
+          },
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+          showToast({
+            title: "Cuenta creada",
+            message: "Tu cuenta ya está activa. Bienvenido a SexShop.",
+            type: "success",
+          });
+        } else {
+          showToast({
+            title: "Revisa tu correo",
+            message: "Te enviamos un enlace para confirmar tu cuenta antes de ingresar.",
+            type: "info",
+          });
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+
+        if (error) throw error;
+      }
+    } catch (error) {
+      console.error("Error en autenticación por correo:", error);
+      showToast({
+        title: isRegistering ? "No se pudo crear la cuenta" : "No se pudo iniciar sesión",
+        message: error.message || "Verifica tus datos e inténtalo nuevamente.",
+        type: "error",
+      });
+    } finally {
+      setIsEmailLoading(false);
+    }
   };
 
   const profileName =
@@ -152,8 +220,12 @@ function MiCuenta() {
             </div>
 
             <span className="account-eyebrow">TU ESPACIO PERSONAL</span>
-            <h1>Bienvenido de nuevo</h1>
-            <p>Accede a tu cuenta para consultar tus pedidos, favoritos y beneficios.</p>
+             <h1>{isRegistering ? "Crea tu cuenta" : "Bienvenido de nuevo"}</h1>
+             <p>
+               {isRegistering
+                 ? "Regístrate para consultar tus pedidos, favoritos y beneficios."
+                 : "Accede a tu cuenta para consultar tus pedidos, favoritos y beneficios."}
+             </p>
           </div>
 
           {session ? (
@@ -201,7 +273,26 @@ function MiCuenta() {
 
               <div className="account-divider"><span>o continúa con tu correo</span></div>
 
-              <form className="account-form" onSubmit={handleSubmit}>
+              <form className="account-form" onSubmit={handleEmailAuth}>
+                {isRegistering && (
+                  <>
+                    <label htmlFor="full-name">Nombre completo</label>
+
+                    <div className="account-input">
+                      <UserRound size={19} />
+                      <input
+                        id="full-name"
+                        type="text"
+                        placeholder="Tu nombre"
+                        value={fullName}
+                        onChange={(event) => setFullName(event.target.value)}
+                        autoComplete="name"
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+
                 <label htmlFor="email">Correo electrónico</label>
 
                 <div className="account-input">
@@ -210,6 +301,9 @@ function MiCuenta() {
                     id="email"
                     type="email"
                     placeholder="tucorreo@ejemplo.com"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    autoComplete="email"
                     required
                   />
                 </div>
@@ -222,6 +316,9 @@ function MiCuenta() {
                     id="password"
                     type={mostrarPassword ? "text" : "password"}
                     placeholder="Ingresa tu contraseña"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    autoComplete={isRegistering ? "new-password" : "current-password"}
                     required
                   />
 
@@ -235,29 +332,51 @@ function MiCuenta() {
                   </button>
                 </div>
 
-                <div className="account-options">
-                  <label className="remember-option">
-                    <input type="checkbox" />
-                    Recordarme
-                  </label>
+                {isRegistering ? (
+                  <>
+                    <label htmlFor="password-confirmation">Confirmar contraseña</label>
 
-                  <button
-                    type="button"
-                    className="forgot-password"
-                    onClick={() =>
-                      showToast({
-                        title: "Recuperación de contraseña",
-                        message: "Próximamente habilitaremos la recuperación de acceso.",
-                        type: "info",
-                      })
-                    }
-                  >
-                    ¿Olvidaste tu contraseña?
-                  </button>
-                </div>
+                    <div className="account-input">
+                      <LockKeyhole size={19} />
+                      <input
+                        id="password-confirmation"
+                        type={mostrarPassword ? "text" : "password"}
+                        placeholder="Repite tu contraseña"
+                        value={passwordConfirmation}
+                        onChange={(event) => setPasswordConfirmation(event.target.value)}
+                        autoComplete="new-password"
+                        required
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="account-options">
+                    <label className="remember-option">
+                      <input type="checkbox" />
+                      Recordarme
+                    </label>
 
-                <button type="submit" className="account-submit">
-                  Entrar a mi cuenta <ArrowRight size={17} />
+                    <button
+                      type="button"
+                      className="forgot-password"
+                      onClick={() =>
+                        showToast({
+                          title: "Recuperación de contraseña",
+                          message: "Próximamente habilitaremos la recuperación de acceso.",
+                          type: "info",
+                        })
+                      }
+                    >
+                      ¿Olvidaste tu contraseña?
+                    </button>
+                  </div>
+                )}
+
+                <button type="submit" className="account-submit" disabled={isEmailLoading}>
+                  {isEmailLoading
+                    ? (isRegistering ? "Creando cuenta..." : "Ingresando...")
+                    : (isRegistering ? "Crear mi cuenta" : "Entrar a mi cuenta")}
+                  {!isEmailLoading && <ArrowRight size={17} />}
                 </button>
               </form>
 
@@ -265,15 +384,9 @@ function MiCuenta() {
                 <p>¿Es tu primera visita?</p>
                 <button
                   type="button"
-                  onClick={() =>
-                    showToast({
-                      title: "Registro de clientes",
-                      message: "Próximamente habilitaremos el registro de nuevas cuentas.",
-                      type: "info",
-                    })
-                  }
+                  onClick={() => setIsRegistering((current) => !current)}
                 >
-                  Crear una cuenta
+                  {isRegistering ? "Volver a iniciar sesión" : "Crear una cuenta"}
                 </button>
               </div>
             </>
