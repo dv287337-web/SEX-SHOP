@@ -11782,11 +11782,17 @@ html.motion-ready .motion-reveal {
   .header-actions a,
   .header-actions .header-favorites-trigger,
   .header-actions .header-cart-trigger {
+    display: grid;
     width: 42px;
     height: 42px;
+    flex: 0 0 42px;
     justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 0;
     border: 1px solid #49343e;
     border-radius: 50%;
+    line-height: 1;
   }
 
   .header-actions a svg,
