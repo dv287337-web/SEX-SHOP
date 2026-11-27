@@ -8081,7 +8081,7 @@ input.price-slider {
   margin: 0 auto;
 }
 
-.home-featured-heading {
+.home-featured-section .home-section-heading .home-featured-heading {
   font-family: var(--font-display);
   font-size: clamp(30px, 3.5vw, 42px);
   font-weight: 500;
