@@ -11809,4 +11809,24 @@ html.motion-ready .motion-reveal {
     padding: 2px 4px;
     transform: translateY(-50%);
   }
+
+  .header-actions .header-favorites-trigger,
+  .header-actions .header-cart-trigger {
+    width: 68px;
+    flex-basis: 68px;
+    border-radius: 999px;
+  }
+
+  .header-actions .header-favorites-trigger .header-count,
+  .header-actions .header-cart-trigger .header-count {
+    position: static;
+    display: grid;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    place-items: center;
+    padding: 0;
+    transform: none;
+    animation: none;
+  }
 }
