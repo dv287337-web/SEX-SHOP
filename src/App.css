@@ -11584,6 +11584,86 @@ html.motion-ready .motion-reveal {
   text-align: center;
 }
 
+.account-signed-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 24px;
+  border: 1px solid #eadde3;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fff 0%, #fdf7fa 100%);
+  text-align: center;
+}
+
+.account-signed-in-badge {
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: #e8f8ef;
+  color: #25804a;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.account-signed-in h2 {
+  margin: 18px 0 5px;
+  color: #38232d;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 500;
+}
+
+.account-signed-in p {
+  color: #806b75;
+  font-size: 13px;
+}
+
+.account-signed-in-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  color: #806b75;
+  font-size: 11px;
+}
+
+.account-signed-in-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2eaa63;
+  box-shadow: 0 0 0 4px #dcf4e5;
+}
+
+.account-signout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  margin-top: 24px;
+  border: 1px solid #e1cbd6;
+  border-radius: 10px;
+  background: transparent;
+  color: #8e2855;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.account-signout-button:hover {
+  border-color: #cda9ba;
+  background: #fff4f8;
+}
+
+.account-signout-button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
 @media (max-width: 768px) {
   .account-heading h1 {
     font-size: 30px;
