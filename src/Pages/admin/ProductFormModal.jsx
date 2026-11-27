@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { 
   UploadCloud, 
   X, 
@@ -12,39 +12,52 @@ import {
 } from "lucide-react";
 import { CATALOG_CATEGORIES, uploadProductImage } from "../../utils/supabase";
 
+const emptyFormData = {
+  name: "",
+  category: "para-ella",
+  price: "",
+  old_price: "",
+  material: "Silicona médica",
+  tag: "NUEVO",
+  description: "",
+  stock: 10,
+  image: ""
+};
+
+function getProductFormData(product) {
+  if (!product) return emptyFormData;
+
+  return {
+    name: product.name ?? "",
+    category: product.category ?? "para-ella",
+    price: product.price ?? "",
+    old_price: product.old_price ?? product.oldPrice ?? "",
+    material: product.material ?? "",
+    tag: product.tag ?? "",
+    description: product.description ?? "",
+    stock: product.stock ?? 0,
+    image: product.image ?? ""
+  };
+}
+
 export default function ProductFormModal({ isOpen, onClose, onSave, editingProduct = null }) {
-  const [formData, setFormData] = useState(() => {
-    if (editingProduct) {
-      return {
-        name: editingProduct.name || "",
-        category: editingProduct.category || "para-ella",
-        price: editingProduct.price || "",
-        old_price: editingProduct.old_price || editingProduct.oldPrice || "",
-        material: editingProduct.material || "Silicona médica",
-        tag: editingProduct.tag || "NUEVO",
-        description: editingProduct.description || "",
-        stock: editingProduct.stock ?? 10,
-        image: editingProduct.image || ""
-      };
-    }
-    return {
-      name: "",
-      category: "para-ella",
-      price: "",
-      old_price: "",
-      material: "Silicona médica",
-      tag: "NUEVO",
-      description: "",
-      stock: 10,
-      image: ""
-    };
-  });
+  const [formData, setFormData] = useState(() => getProductFormData(editingProduct));
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(editingProduct?.image || "");
   const [uploading, setUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const nextFormData = getProductFormData(editingProduct);
+    setFormData(nextFormData);
+    setImageFile(null);
+    setImagePreview(nextFormData.image);
+    setIsDragging(false);
+  }, [isOpen, editingProduct]);
 
   if (!isOpen) return null;
 
