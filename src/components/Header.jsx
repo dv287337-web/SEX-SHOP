@@ -24,6 +24,23 @@ function normalizeSearchText(value) {
     .toLocaleLowerCase("es");
 }
 
+function highlightSearchMatch(value, query) {
+  const text = String(value || "Producto destacado");
+  const lowerText = text.toLocaleLowerCase("es");
+  const lowerQuery = query.toLocaleLowerCase("es");
+  const matchStart = lowerText.indexOf(lowerQuery);
+
+  if (matchStart < 0 || !lowerQuery) return text;
+
+  return (
+    <>
+      {text.slice(0, matchStart)}
+      <mark>{text.slice(matchStart, matchStart + query.length)}</mark>
+      {text.slice(matchStart + query.length)}
+    </>
+  );
+}
+
 function Header() {
   const { favorites, cartCount, customProducts, openCartDrawer, openFavoritesDrawer } = useShop();
   const { pathname } = useLocation();
@@ -58,6 +75,7 @@ function Header() {
         .filter((product, index, products) => {
           const searchableText = normalizeSearchText([
             product.name,
+            product.title,
             product.category,
             product.material,
             product.type,
@@ -169,7 +187,9 @@ function Header() {
                     }}
                   />
                   <span className="search-suggestion-info">
-                    <strong>{product.name}</strong>
+                    <strong>
+                      {highlightSearchMatch(product.name || product.title, searchTerm.trim())}
+                    </strong>
                     <small>{product.material || product.category || "Producto destacado"}</small>
                   </span>
                   <b>S/ {Number(product.price || 0).toFixed(2)}</b>
