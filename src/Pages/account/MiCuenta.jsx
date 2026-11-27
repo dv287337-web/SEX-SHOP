@@ -23,6 +23,10 @@ function MiCuenta() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [isRecoveryMode, setIsRecoveryMode] = useState(false);
+  const [recoveryPassword, setRecoveryPassword] = useState("");
+  const [recoveryConfirmation, setRecoveryConfirmation] = useState("");
+  const [isRecoverySaving, setIsRecoverySaving] = useState(false);
   const [session, setSession] = useState(null);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const { showToast } = useShop();
@@ -39,7 +43,11 @@ function MiCuenta() {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, nextSession) => {
       if (!isMounted) return;
 
-      setSession(nextSession);
+       setSession(nextSession);
+
+       if (event === "PASSWORD_RECOVERY") {
+         setIsRecoveryMode(true);
+       }
 
        if (event === "SIGNED_IN") {
          showToast({
@@ -236,6 +244,54 @@ function MiCuenta() {
     }
   };
 
+  const handleUpdatePassword = async (event) => {
+    event.preventDefault();
+
+    if (recoveryPassword.length < 6) {
+      showToast({
+        title: "Contraseña demasiado corta",
+        message: "Usa al menos 6 caracteres.",
+        type: "error",
+      });
+      return;
+    }
+
+    if (recoveryPassword !== recoveryConfirmation) {
+      showToast({
+        title: "Las contraseñas no coinciden",
+        message: "Revisa ambos campos e inténtalo nuevamente.",
+        type: "error",
+      });
+      return;
+    }
+
+    try {
+      setIsRecoverySaving(true);
+      const { error } = await supabase.auth.updateUser({
+        password: recoveryPassword,
+      });
+
+      if (error) throw error;
+
+      setIsRecoveryMode(false);
+      setRecoveryPassword("");
+      setRecoveryConfirmation("");
+      showToast({
+        title: "Contraseña actualizada",
+        message: "Ya puedes ingresar con tu nueva contraseña.",
+        type: "success",
+      });
+    } catch (error) {
+      showToast({
+        title: "No se pudo actualizar",
+        message: error.message || "Solicita un nuevo enlace e inténtalo nuevamente.",
+        type: "error",
+      });
+    } finally {
+      setIsRecoverySaving(false);
+    }
+  };
+
   const profileName =
     session?.user?.user_metadata?.full_name ||
     session?.user?.user_metadata?.name ||
@@ -264,15 +320,59 @@ function MiCuenta() {
             </div>
 
             <span className="account-eyebrow">TU ESPACIO PERSONAL</span>
-             <h1>{isRegistering ? "Crea tu cuenta" : "Bienvenido de nuevo"}</h1>
+             <h1>
+               {isRecoveryMode ? "Restablece tu contraseña" : isRegistering ? "Crea tu cuenta" : "Bienvenido de nuevo"}
+             </h1>
              <p>
-               {isRegistering
+               {isRecoveryMode
+                 ? "Elige una nueva contraseña segura para recuperar el acceso."
+                 : isRegistering
                  ? "Regístrate para consultar tus pedidos, favoritos y beneficios."
                  : "Accede a tu cuenta para consultar tus pedidos, favoritos y beneficios."}
              </p>
           </div>
 
-          {session ? (
+           {isRecoveryMode ? (
+             <form className="account-form account-recovery-form" onSubmit={handleUpdatePassword}>
+               <div className="account-recovery-message">
+                 <ShieldCheck size={22} />
+                 <p>El enlace es válido. Define una nueva contraseña para continuar.</p>
+               </div>
+
+               <label htmlFor="recovery-password">Nueva contraseña</label>
+               <div className="account-input">
+                 <LockKeyhole size={19} />
+                 <input
+                   id="recovery-password"
+                   type={mostrarPassword ? "text" : "password"}
+                   placeholder="Ingresa tu nueva contraseña"
+                   value={recoveryPassword}
+                   onChange={(event) => setRecoveryPassword(event.target.value)}
+                   autoComplete="new-password"
+                   required
+                 />
+               </div>
+
+               <label htmlFor="recovery-confirmation">Confirmar contraseña</label>
+               <div className="account-input">
+                 <LockKeyhole size={19} />
+                 <input
+                   id="recovery-confirmation"
+                   type={mostrarPassword ? "text" : "password"}
+                   placeholder="Repite tu nueva contraseña"
+                   value={recoveryConfirmation}
+                   onChange={(event) => setRecoveryConfirmation(event.target.value)}
+                   autoComplete="new-password"
+                   required
+                 />
+               </div>
+
+               <button type="submit" className="account-submit" disabled={isRecoverySaving}>
+                 {isRecoverySaving ? "Guardando..." : "Guardar nueva contraseña"}
+                 {!isRecoverySaving && <ArrowRight size={17} />}
+               </button>
+             </form>
+           ) : session ? (
             <div className="account-signed-in">
               <div className="account-profile-avatar">
                 {profileAvatar ? (

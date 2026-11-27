@@ -9786,6 +9786,24 @@ html.motion-ready .motion-reveal {
   gap: 9px;
 }
 
+.account-recovery-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  border: 1px solid #f1cfdd;
+  border-radius: 10px;
+  background: #fff4f8;
+  color: #a51d52;
+}
+
+.account-recovery-message p {
+  color: #806b75;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .account-form > label {
   margin-top: 13px;
   color: #49343e;
