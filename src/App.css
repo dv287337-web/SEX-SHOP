@@ -11588,11 +11588,49 @@ html.motion-ready .motion-reveal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 28px 20px 24px;
+  max-width: 410px;
+  margin: 0 auto;
+  padding: 30px 28px 26px;
   border: 1px solid #eadde3;
   border-radius: 18px;
-  background: linear-gradient(145deg, #fff 0%, #fdf7fa 100%);
+  background:
+    radial-gradient(circle at 50% -20%, rgb(255 255 255 / 90%), transparent 48%),
+    linear-gradient(145deg, #fff 0%, #fdf7fa 100%);
+  box-shadow: 0 16px 35px rgb(84 35 58 / 8%);
   text-align: center;
+}
+
+.account-profile-avatar {
+  position: relative;
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+  margin-bottom: 16px;
+  overflow: visible;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f8d9e6, #f6edf1);
+  color: #c51b60;
+  box-shadow: 0 7px 20px rgb(154 46 95 / 16%);
+}
+
+.account-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.account-profile-online {
+  position: absolute;
+  right: -1px;
+  bottom: 2px;
+  width: 13px;
+  height: 13px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #2eaa63;
 }
 
 .account-signed-in-badge {
@@ -11613,6 +11651,26 @@ html.motion-ready .motion-reveal {
   font-weight: 500;
 }
 
+.account-signed-in h2 span {
+  color: #c51b60;
+}
+
+.account-signed-in .account-profile-email {
+  overflow: hidden;
+  max-width: 100%;
+  color: #806b75;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-profile-divider {
+  width: 100%;
+  height: 1px;
+  margin: 20px 0 4px;
+  background: #eee1e7;
+}
+
 .account-signed-in p {
   color: #806b75;
   font-size: 13px;
@@ -11627,12 +11685,9 @@ html.motion-ready .motion-reveal {
   font-size: 11px;
 }
 
-.account-signed-in-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #2eaa63;
-  box-shadow: 0 0 0 4px #dcf4e5;
+.account-signed-in-status svg {
+  flex: 0 0 auto;
+  color: #2eaa63;
 }
 
 .account-signout-button {

@@ -124,6 +124,16 @@ function MiCuenta() {
     });
   };
 
+  const profileName =
+    session?.user?.user_metadata?.full_name ||
+    session?.user?.user_metadata?.name ||
+    session?.user?.email?.split("@")[0] ||
+    "bienvenido";
+  const profileAvatar =
+    session?.user?.user_metadata?.avatar_url ||
+    session?.user?.user_metadata?.picture ||
+    "";
+
   return (
     <section className="account-page">
       <div className="account-container">
@@ -148,18 +158,23 @@ function MiCuenta() {
 
           {session ? (
             <div className="account-signed-in">
+              <div className="account-profile-avatar">
+                {profileAvatar ? (
+                  <img src={profileAvatar} alt={`Foto de perfil de ${profileName}`} />
+                ) : (
+                  <UserRound size={28} />
+                )}
+                <span className="account-profile-online" aria-label="Cuenta activa" />
+              </div>
               <span className="account-signed-in-badge">CUENTA CONECTADA</span>
               <h2>
-                Hola,{" "}
-                {session.user.user_metadata?.full_name ||
-                  session.user.user_metadata?.name ||
-                  session.user.email?.split("@")[0] ||
-                  "bienvenido"}
+                Hola, <span>{profileName}</span>
               </h2>
-              <p>{session.user.email}</p>
+              <p className="account-profile-email">{session.user.email}</p>
+              <div className="account-profile-divider" />
               <div className="account-signed-in-status">
-                <span className="account-signed-in-dot" />
-                Inicio de sesión con Google activo
+                <ShieldCheck size={15} />
+                <span>Tu cuenta está protegida y lista para disfrutar.</span>
               </div>
               <button
                 type="button"
