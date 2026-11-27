@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
 import Categories from "../components/Categories";
 import Benefits from "../components/Benefits";
@@ -13,6 +13,18 @@ import brandStoryImage from "../assets/brand-story.jpg";
 function Home() {
   const storyRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(() => (
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 700px)").matches
+  ));
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 700px)");
+    const handleMediaChange = (event) => setIsMobile(event.matches);
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
 
   const { scrollYProgress: pageScrollProgress } = useScroll();
   const { scrollYProgress } = useScroll({
@@ -20,8 +32,16 @@ function Home() {
     offset: ["start end", "end start"],
   });
 
-  const parallaxImageY = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? ["0%", "0%"] : ["-10%", "10%"]);
-  const parallaxScale = useTransform(scrollYProgress, [0, 0.5, 1], prefersReducedMotion ? [1, 1, 1] : [1.08, 1, 1.05]);
+  const parallaxImageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    isMobile || prefersReducedMotion ? ["0%", "0%"] : ["-10%", "10%"]
+  );
+  const parallaxScale = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    isMobile || prefersReducedMotion ? [1, 1, 1] : [1.08, 1, 1.05]
+  );
 
   return (
     <>

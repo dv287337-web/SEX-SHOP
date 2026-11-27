@@ -11913,3 +11913,18 @@ html.motion-ready .motion-reveal {
     box-shadow: 0 20px 34px rgb(0 0 0 / 28%), 0 0 0 1px rgb(255 255 255 / 15%);
   }
 }
+
+/* Imagen completa de brand story en pantallas pequeñas. */
+@media (max-width: 700px) {
+  .brand-story-art-container {
+    aspect-ratio: 3 / 4;
+    border-radius: 16px;
+  }
+
+  .brand-story-art {
+    height: 100%;
+    background-size: cover, cover, contain;
+    background-repeat: no-repeat;
+    background-color: #24111b;
+  }
+}
