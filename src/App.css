@@ -11814,8 +11814,9 @@ html.motion-ready .motion-reveal {
   .header-actions .header-cart-trigger {
     display: flex;
     flex-direction: row;
-    width: 68px;
-    flex-basis: 68px;
+    width: 76px;
+    flex-basis: 76px;
+    gap: 8px;
     border-radius: 999px;
   }
 
@@ -11823,9 +11824,9 @@ html.motion-ready .motion-reveal {
   .header-actions .header-cart-trigger .header-count {
     position: static;
     display: grid;
-    width: 20px;
-    min-width: 20px;
-    height: 20px;
+    width: 22px;
+    min-width: 22px;
+    height: 22px;
     place-items: center;
     padding: 0;
     transform: none;
