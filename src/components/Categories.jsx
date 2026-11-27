@@ -1,5 +1,5 @@
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -79,6 +79,7 @@ function Categories() {
   const navigate = useNavigate();
   const gestureStart = useRef(null);
   const lastWheelChange = useRef(0);
+  const gridRef = useRef(null);
   const changeCategory = (direction) => {
     setActiveIndex((current) => (current + direction + categories.length) % categories.length);
   };
@@ -111,6 +112,18 @@ function Categories() {
     return offset;
   };
 
+  useEffect(() => {
+    const activeCard = gridRef.current?.querySelector(
+      `[data-category-index="${activeIndex}"]`
+    );
+
+    activeCard?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeIndex]);
+
   return (
     <section className="categories-section" id="categorias">
 
@@ -131,6 +144,7 @@ function Categories() {
         </button>
         <div
           className="categories-grid"
+          ref={gridRef}
           tabIndex="0"
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") changeCategory(-1);
@@ -155,6 +169,7 @@ function Categories() {
                     navigate(category.path);
                   }}
                   aria-current={index === activeIndex ? "true" : undefined}
+                  data-category-index={index}
                   key={category.name}
                   style={{
                     "--sprite-x": `${(index % 4) * (100 / 3)}%`,

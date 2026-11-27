@@ -11865,3 +11865,51 @@ html.motion-ready .motion-reveal {
     height: 38px;
   }
 }
+
+/* Carrusel de categorías centrado en mobile. */
+@media (max-width: 700px) {
+  .categories-carousel .categories-grid {
+    display: flex;
+    position: relative;
+    height: 280px;
+    min-height: 0;
+    gap: 14px;
+    padding: 10px max(5%, calc((100% - min(78vw, 280px)) / 2));
+    overflow-x: auto;
+    overflow-y: hidden;
+    perspective: none;
+    scroll-padding-inline: max(5%, calc((100% - min(78vw, 280px)) / 2));
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    touch-action: pan-x;
+  }
+
+  .categories-carousel .category-card,
+  .categories-carousel .category-card.position-1,
+  .categories-carousel .category-card.position--1,
+  .categories-carousel .category-card.position-2,
+  .categories-carousel .category-card.position--2,
+  .categories-carousel .category-card.position-3,
+  .categories-carousel .category-card.position--3,
+  .categories-carousel .category-card.position-4,
+  .categories-carousel .category-card.position--4 {
+    position: relative;
+    top: auto;
+    left: auto;
+    flex: 0 0 min(78vw, 280px);
+    width: min(78vw, 280px);
+    height: 250px;
+    margin: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    filter: none;
+    scroll-snap-align: center;
+    transition: transform 320ms ease, box-shadow 320ms ease, opacity 320ms ease;
+  }
+
+  .categories-carousel .category-card.is-active {
+    transform: scale(1.025);
+    box-shadow: 0 20px 34px rgb(0 0 0 / 28%), 0 0 0 1px rgb(255 255 255 / 15%);
+  }
+}
