@@ -11771,7 +11771,7 @@ html.motion-ready .motion-reveal {
   }
 
   .header-actions {
-    width: min(100%, 270px);
+    width: min(100%, 286px);
     margin-inline: auto;
     justify-content: space-between;
     gap: 0;
@@ -11783,9 +11783,9 @@ html.motion-ready .motion-reveal {
   .header-actions .header-favorites-trigger,
   .header-actions .header-cart-trigger {
     display: grid;
-    width: 42px;
-    height: 42px;
-    flex: 0 0 42px;
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
     justify-content: center;
     align-items: center;
     gap: 0;
@@ -11803,9 +11803,10 @@ html.motion-ready .motion-reveal {
   }
 
   .header-actions i {
-    top: -3px;
-    right: -5px;
-    min-width: 17px;
+    top: 50%;
+    right: -12px;
+    min-width: 19px;
     padding: 2px 4px;
+    transform: translateY(-50%);
   }
 }
