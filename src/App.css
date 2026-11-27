@@ -8088,6 +8088,11 @@ input.price-slider {
   line-height: 1.12;
   letter-spacing: -0.035em;
   text-wrap: balance;
+  color: var(--text-primary);
+}
+
+.home-featured-section .home-section-heading p {
+  color: var(--text-secondary);
 }
 
 .home-featured-pill {
