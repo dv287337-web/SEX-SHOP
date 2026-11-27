@@ -18,6 +18,7 @@ function MiCuenta() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [isResetLoading, setIsResetLoading] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -192,6 +193,49 @@ function MiCuenta() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (!email.trim()) {
+      showToast({
+        title: "Ingresa tu correo",
+        message: "Escribe tu correo electrónico para enviarte el enlace de recuperación.",
+        type: "info",
+      });
+      return;
+    }
+
+    if (!isSupabaseConfigured || !supabase) {
+      showToast({
+        title: "Recuperación de contraseña",
+        message: "Configura Supabase para habilitar la recuperación de acceso.",
+        type: "info",
+      });
+      return;
+    }
+
+    try {
+      setIsResetLoading(true);
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: `${window.location.origin}/mi-cuenta`,
+      });
+
+      if (error) throw error;
+
+      showToast({
+        title: "Revisa tu correo",
+        message: "Te enviamos un enlace para crear una nueva contraseña.",
+        type: "success",
+      });
+    } catch (error) {
+      showToast({
+        title: "No se pudo enviar el enlace",
+        message: error.message || "Inténtalo nuevamente.",
+        type: "error",
+      });
+    } finally {
+      setIsResetLoading(false);
+    }
+  };
+
   const profileName =
     session?.user?.user_metadata?.full_name ||
     session?.user?.user_metadata?.name ||
@@ -359,15 +403,10 @@ function MiCuenta() {
                     <button
                       type="button"
                       className="forgot-password"
-                      onClick={() =>
-                        showToast({
-                          title: "Recuperación de contraseña",
-                          message: "Próximamente habilitaremos la recuperación de acceso.",
-                          type: "info",
-                        })
-                      }
+                      onClick={handleForgotPassword}
+                      disabled={isResetLoading}
                     >
-                      ¿Olvidaste tu contraseña?
+                      {isResetLoading ? "Enviando enlace..." : "¿Olvidaste tu contraseña?"}
                     </button>
                   </div>
                 )}
