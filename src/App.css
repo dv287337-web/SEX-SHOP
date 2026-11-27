@@ -136,7 +136,7 @@
   box-shadow: 0 18px 35px rgb(35 13 25 / 18%);
 }
 
-.search-suggestion {
+.search-box .search-suggestion {
   display: grid;
   grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: center;
@@ -147,14 +147,14 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #38232d;
+  color: #38232d !important;
   text-align: left;
   cursor: pointer;
   transition: background-color 160ms ease;
 }
 
-.search-suggestion:hover,
-.search-suggestion:focus-visible {
+.search-box .search-suggestion:hover,
+.search-box .search-suggestion:focus-visible {
   background: #fff1f6;
   outline: none;
 }
@@ -180,9 +180,9 @@
   white-space: nowrap;
 }
 
-.search-suggestion-info strong {
+.search-box .search-suggestion-info strong {
   display: block;
-  color: #38232d;
+  color: #38232d !important;
   font-size: 11px;
   font-weight: 700;
 }
@@ -195,7 +195,7 @@
   font-weight: 800;
 }
 
-.search-suggestion-info small {
+.search-box .search-suggestion-info small {
   color: #917b86;
   font-size: 9px;
 }
