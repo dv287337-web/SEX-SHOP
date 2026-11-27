@@ -9,11 +9,47 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
+import { isSupabaseConfigured, supabase } from "../../utils/supabase";
 import accountImage from "../../assets/account-login.jpg";
 
 function MiCuenta() {
   const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const { showToast } = useShop();
+
+  const handleGoogleLogin = async () => {
+    if (!isSupabaseConfigured || !supabase) {
+      showToast({
+        title: "Acceso con Google",
+        message: "Configura Supabase para habilitar el inicio de sesión con Google.",
+        type: "info",
+      });
+      return;
+    }
+
+    try {
+      setIsGoogleLoading(true);
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/mi-cuenta`,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error("Error iniciando sesión con Google:", error);
+      showToast({
+        title: "No se pudo iniciar sesión",
+        message: error.message || "Inténtalo nuevamente en unos segundos.",
+        type: "error",
+      });
+      setIsGoogleLoading(false);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,16 +85,12 @@ function MiCuenta() {
           <button
             type="button"
             className="account-google-button"
-            onClick={() =>
-              showToast({
-                title: "Acceso con Google",
-                message: "Próximamente podrás ingresar con tu cuenta de Google.",
-                type: "info",
-              })
-            }
+            onClick={handleGoogleLogin}
+            disabled={isGoogleLoading}
+            aria-busy={isGoogleLoading}
           >
             <span className="account-google-mark">G</span>
-            Continuar con Google
+            {isGoogleLoading ? "Conectando con Google..." : "Continuar con Google"}
           </button>
 
           <div className="account-divider"><span>o continúa con tu correo</span></div>

@@ -11333,6 +11333,12 @@ html.motion-ready .motion-reveal {
   transform: translateY(-1px);
 }
 
+.account-google-button:disabled {
+  cursor: wait;
+  opacity: .7;
+  transform: none;
+}
+
 .account-google-mark {
   display: grid;
   width: 22px;
