@@ -11812,6 +11812,8 @@ html.motion-ready .motion-reveal {
 
   .header-actions .header-favorites-trigger,
   .header-actions .header-cart-trigger {
+    display: flex;
+    flex-direction: row;
     width: 68px;
     flex-basis: 68px;
     border-radius: 999px;
