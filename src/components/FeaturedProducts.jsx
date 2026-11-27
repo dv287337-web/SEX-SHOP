@@ -23,7 +23,7 @@ export default function FeaturedProducts() {
           <Sparkles size={13} />
           NOVEDADES DE LA BOUTIQUE
         </span>
-        <h2>Recién Llegados al Catálogo</h2>
+        <h2 className="home-featured-heading">Recién llegados al catálogo</h2>
         <p>Descubre las últimas incorporaciones seleccionadas por su diseño y experiencia sensorial.</p>
       </div>
 
