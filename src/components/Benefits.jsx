@@ -3,7 +3,6 @@ import {
   Truck,
   ShieldCheck,
   CreditCard,
-  MapPin,
   Headphones
 } from "lucide-react";
 
@@ -23,11 +22,6 @@ function Benefits() {
       icon: <CreditCard />,
       title: "Pagos flexibles",
       description: "Yape, Plin y tarjetas"
-    },
-    {
-      icon: <MapPin />,
-      title: "Recojo en tienda",
-      description: "Disponible en Lima"
     },
     {
       icon: <Headphones />,
