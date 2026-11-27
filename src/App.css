@@ -11733,3 +11733,73 @@ html.motion-ready .motion-reveal {
     margin-inline: auto;
   }
 }
+
+/* Encabezado móvil compacto y mejor alineado. */
+@media (max-width: 767px) {
+  .top-bar {
+    min-height: 27px;
+    padding: 4px 12px;
+  }
+
+  .main-header {
+    gap: 8px 10px;
+    padding: 8px 14px 9px;
+  }
+
+  .main-header > .logo div {
+    font-size: 37px;
+  }
+
+  .main-header > .logo small {
+    margin-top: 2px;
+    font-size: 6.5px;
+    letter-spacing: 1.35px;
+  }
+
+  .main-header > .search-box {
+    height: 44px;
+  }
+
+  .main-header > .search-box input {
+    padding-inline: 13px;
+    font-size: 13px;
+  }
+
+  .header-menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-actions {
+    width: min(100%, 270px);
+    margin-inline: auto;
+    justify-content: space-between;
+    gap: 0;
+    padding-top: 2px;
+    border-top: 0;
+  }
+
+  .header-actions a,
+  .header-actions .header-favorites-trigger,
+  .header-actions .header-cart-trigger {
+    width: 42px;
+    height: 42px;
+    justify-content: center;
+    border: 1px solid #49343e;
+    border-radius: 50%;
+  }
+
+  .header-actions a svg,
+  .header-actions .header-favorites-trigger svg,
+  .header-actions .header-cart-trigger svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .header-actions i {
+    top: -3px;
+    right: -5px;
+    min-width: 17px;
+    padding: 2px 4px;
+  }
+}
