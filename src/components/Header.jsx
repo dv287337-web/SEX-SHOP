@@ -15,9 +15,17 @@ import {
 
 import { Link, NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
+import { allCatalogProducts } from "../data/catalogProducts";
+
+function normalizeSearchText(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es");
+}
 
 function Header() {
-  const { favorites, cartCount, openCartDrawer, openFavoritesDrawer } = useShop();
+  const { favorites, cartCount, customProducts, openCartDrawer, openFavoritesDrawer } = useShop();
   const { pathname } = useLocation();
   const isCatalogPage = [
     "/para-ella",
@@ -34,6 +42,7 @@ function Header() {
   const queryFromUrl = searchParams.get("q") || "";
   const [searchTerm, setSearchTerm] = useState(queryFromUrl);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   useEffect(() => {
     setSearchTerm(queryFromUrl);
     setIsMenuOpen(false);
@@ -43,11 +52,38 @@ function Header() {
     setIsMenuOpen(false);
   }, [pathname]);
 
+  const normalizedSearchTerm = normalizeSearchText(searchTerm.trim());
+  const searchSuggestions = normalizedSearchTerm
+    ? [...(customProducts || []), ...allCatalogProducts]
+        .filter((product, index, products) => {
+          const searchableText = normalizeSearchText([
+            product.name,
+            product.category,
+            product.material,
+            product.type,
+            product.tag,
+          ].join(" "));
+
+          return (
+            searchableText.includes(normalizedSearchTerm) &&
+            products.findIndex((candidate) => String(candidate.id) === String(product.id)) === index
+          );
+        })
+        .slice(0, 5)
+    : [];
+
   const handleSearch = (event) => {
     event.preventDefault();
     const query = searchTerm.trim();
     if (!query) return;
     navigate(`/buscar?q=${encodeURIComponent(query)}`);
+    setIsSearchOpen(false);
+  };
+
+  const handleSuggestionClick = (product) => {
+    sessionStorage.setItem(`sexshop-product-${product.id}`, JSON.stringify(product));
+    setIsSearchOpen(false);
+    navigate(`/producto/${encodeURIComponent(product.id)}`, { state: { product } });
   };
 
   const navigation = [
@@ -90,18 +126,57 @@ function Header() {
           <small>TU PLACER, SIN LÍMITES</small>
         </Link>
 
-        <form className="search-box" onSubmit={handleSearch} role="search">
+        <form
+          className={`search-box${isSearchOpen && searchSuggestions.length ? " is-suggesting" : ""}`}
+          onSubmit={handleSearch}
+          onFocus={() => setIsSearchOpen(true)}
+          onBlur={() => window.setTimeout(() => setIsSearchOpen(false), 150)}
+          role="search"
+        >
           <input
             type="text"
             placeholder="¿Qué deseas explorar hoy?"
             aria-label="Buscar productos"
             value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
+            onChange={(event) => {
+              setSearchTerm(event.target.value);
+              setIsSearchOpen(true);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") setIsSearchOpen(false);
+            }}
           />
 
           <button type="submit" aria-label="Buscar">
             <Search />
           </button>
+
+          {isSearchOpen && searchSuggestions.length > 0 && (
+            <div className="search-suggestions" role="listbox" aria-label="Sugerencias de productos">
+              {searchSuggestions.map((product) => (
+                <button
+                  type="button"
+                  className="search-suggestion"
+                  key={product.id}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => handleSuggestionClick(product)}
+                >
+                  <img
+                    src={product.image}
+                    alt=""
+                    onError={(event) => {
+                      event.currentTarget.style.visibility = "hidden";
+                    }}
+                  />
+                  <span className="search-suggestion-info">
+                    <strong>{product.name}</strong>
+                    <small>{product.material || product.category || "Producto destacado"}</small>
+                  </span>
+                  <b>S/ {Number(product.price || 0).toFixed(2)}</b>
+                </button>
+              ))}
+            </div>
+          )}
         </form>
 
         <div className="header-actions">
